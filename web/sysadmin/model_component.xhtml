@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:messages/>
+        <p:panel style="overflow: auto;">
+            <f:facet name="header"><span style="float: left;font-weight: bolder;font-variant: small-caps">Model Component Information</span></f:facet>
+
+            <h:form id="modelCategoryEntryForm">
+                <h:panelGroup layout="block">
+                    <h:panelGrid columns="6">
+                        <h:outputLabel value="Service Type:"/>
+                        <h:selectOneMenu styleClass="textarea"
+                                         value="#{modelComponentController.productTypeId}">
+                            <f:selectItem itemLabel="....Select One...."/>
+                            <f:selectItems value="#{commonOptions.productTypesOptions}"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Component Name:"/>
+                        <h:inputText styleClass="textarea" value="#{modelComponentController.modelComponent.componentName}"/>
+                        <h:outputLabel value="Description:"/>
+                        <h:inputText styleClass="textarea" value="#{modelComponentController.modelComponent.componentDescription}"/>
+                        
+                    </h:panelGrid>
+                    
+                    <h:panelGrid columns="3" style="margin-top: 20px">
+                        <p:commandButton value="#{modelComponentController.saveEditButtonText}"
+                                         action="#{modelComponentController.saveEditButtonAction()}"
+                                         icon="ui-icon-disk" ajax="false" style="margin-left: 20px"
+                                         update=":modelCategoryListForm"/>
+                        <p:commandButton value="Clear" action="#{modelComponentController.resetButtonAction()}"
+                                         icon="ui-icon-cancel" ajax="false"/>
+                    </h:panelGrid>
+
+                </h:panelGroup>
+            </h:form>
+
+            <h:form id="modelCategoryListForm">
+                <p:dataTable style="margin-top: 40px;width: 500px"
+                             var="product" value="#{modelComponentView.modelComponentList}">
+                    <p:column>
+                        <f:facet name="header">Service Type</f:facet>
+                        <h:outputText value="#{product.productTypes.productName}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Model Component</f:facet>
+                        <h:outputText value="#{product.componentName}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Description</f:facet>
+                        <h:outputText value="#{product.componentDescription}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header"></f:facet>
+                        <p:commandLink value="Edit" style="text-decoration: none;color:blue"
+                                       action="#{modelComponentController.rowSelectButtonAction(product)}"
+                                       update=":modelCategoryEntryForm"/>
+                        <p:commandLink value="Delete" style="text-decoration: none;color: red;margin-left: 20px"
+                                       action="#{modelComponentController.deleteButtonAction(product)}"
+                                       update=":modelCategoryListForm"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+
+        </p:panel>
+    </h:body>
+</html>
+

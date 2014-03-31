@@ -1,0 +1,333 @@
+
+body{
+    overflow: auto;
+    font-size: 11px;
+    background-color: #9ddcfd;
+    /*background-color: #fff;*/
+    /*background-image: url('../images/bg.gif');*/
+    background-repeat: repeat;
+}
+
+/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  LOGIN CSS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+.login_body{
+    /*background-repeat: no-repeat;*/
+    font-family:Georgia, "Times New Roman", Times, serif;
+    font-size: 12px;    
+}
+
+.login_container{
+
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    animation-iteration-count: 1;
+    animation-name: bounceIn;
+    animation-timing-function: linear;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-color: rgba(0, 0, 0, 0.2);
+    border-radius: 6px 6px 6px 6px;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
+    height: auto;
+    left: 50%;
+    margin-left: -170px;
+    margin-top: 50px;
+    position: fixed;
+    /*top: 45%;*/
+    width: 340px;
+    font-weight: bolder;
+}
+
+#header{
+    background: none repeat scroll 0 0 #fff;
+    background-image: url(../images/hysenLogo.jpg);
+    background-repeat: no-repeat;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom: 3px solid #A6BC19;
+    border-top: 1px solid #CCCCCC;
+    box-shadow: 0 1px 1px #FFFFFF inset;
+    height: 80px;
+    margin-top: -20px;
+    width: 100%;
+}
+
+.lower{
+    background: none repeat scroll 0 0 #112F63;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-top: 1px solid #CCCCCC;
+    box-shadow: 0 1px 1px #FFFFFF inset;
+    height: 69px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.input{
+
+    border: 1px solid #C7D0D2;
+    border-radius: 2px 2px 2px 2px;
+    box-shadow: 0 1.5px 3px rgba(190, 190, 190, 0.4) inset, 0 0 0 5px #F5F7F8;
+    color: #777777;
+    height: 35px;
+    margin: 12px 10px 10px 18px;
+    padding-left: 10px;
+    transition: all 0.4s ease 0s;
+    width: 290px;
+
+}
+
+label{
+    color: #555555;
+    display: inline-block;
+    font-size: 12px;
+    margin-left: 18px;
+    padding-top: 10px;
+}
+
+.login_button{
+    background-color: #A6BC19;
+    border: 1px solid #66ADD6;
+    border-radius: 30px 30px 30px 30px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+    color: #FFFFFF;
+    cursor: pointer;
+    float: right;
+    font-size: 14px;
+    font-weight: bold;
+    height: 30px;
+    margin-right: 20px;
+    margin-top: 20px;
+    width: 80px;
+    float:right;
+}
+
+/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!WELCOME PAGE CSS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+
+#app_title
+{
+    margin-left: 300px;
+    padding-top: 5px;
+}
+
+#banner
+{
+    background-image: url(../images/image001.jpg);
+    background-repeat: no-repeat;
+    /*    width: 1109px;*/
+    height: 44px;
+    margin: auto;
+    color: #99ffff;
+    /*background-color: #A6BC19;*/
+    font-weight: bolder;
+    border-bottom: 3px solid #A6BC19;
+    /*border: 0px;*/
+}
+
+#company_name_label
+{
+    vertical-align: middle;
+    font-size: 30px;
+    margin: auto;
+    letter-spacing: 3px;
+    word-spacing: 10px;
+    float: none;
+    width: 550px;
+}
+
+.container
+{
+    width: 100%;
+    height: auto;
+    display: block;
+    background-color: #fff;    
+    overflow: hidden;
+    font-size: 11px;
+}
+
+.status_bar{
+    height: 30px;
+    /*margin-bottom: 30px;*/
+    border-bottom: 1px solid #000;
+    overflow: visible;
+}
+
+.footer_bar
+{
+    border: 1px solid #417900;
+    background: none repeat scroll 0 0 #45A4DC;
+    color:white;
+    font-family: Georgia,"Times New Roman",Times,serif;
+    font-size: 14px;
+}
+
+.outputText
+{
+    background:none repeat scroll 0 0 #ffe6e6;
+    border:1px solid #0066cc;
+    padding: 2px 5px 2px 5px;
+    -moz-border-radius:3px 3px 3px 3px;
+    font-size:25px;
+    color: #A70303;
+    width: 120px;
+}
+
+.left_panel
+{
+    width: 13%;
+    height: 600px;
+    border: 1px solid #AAAAAA;
+    float: left;
+    /*background: none repeat scroll 0 0 #45A4DC;*/
+    background-color: #40ACE4;
+    /*background-image: url('../images/left_panel_bg.png');*/
+    z-index: 1000;
+}
+
+.right_panel
+{
+    float:left;
+    height:auto;
+    position:relative;
+    width:85%;
+    padding-bottom: 10px;
+    overflow: auto;
+    margin-left: 10px;
+
+}
+
+.sublink {
+    margin-bottom:0px;
+    /*padding-top:2px;*/
+    /*font-family:Georgia, "Times New Roman", Times, serif;*/
+    font-size: 11px;
+    color: #0000CC;
+}
+
+.sublink li{
+    border-bottom:solid 1px #f0f0f0;
+    line-height:25px;
+}
+.sublink li:hover{
+    /*    background:#85EF21;
+        color:#fff;*/
+}
+
+.sublink ul li a{
+    color: #A70303;
+    background: url('../images/arrowbullet.png') no-repeat center left; /*custom bullet list image*/
+    display: block;
+    padding: 2px 0;
+    padding-left: 19px; /*link text is indented 19px*/
+    text-decoration: none;
+    font-weight: bold;
+    border-bottom: 1px solid #dadada;
+    font-size: 98%;
+}
+
+.sublink ul li a:visited{
+    color: #A70303;
+}
+
+.sublink ul li a:hover{ /*hover state CSS*/
+    background-color: #fce4fc;
+}
+
+.textarea {
+    border: 1px solid #CCCCCC;
+    border-radius: 3px 3px 3px 3px;
+    /*color: #515F6C;*/
+    font-family: tahoma;
+    /*font-size: 12px;*/
+    padding: 5px;
+    /*width: auto;*/
+}
+
+.lessee_info_div{
+    width: 82%;
+    height: auto;
+    float: left;
+}
+
+.lessee_pix_div{
+    width: 17%;
+    height: auto;
+    float: right;
+}
+
+.ui-datatable, .ui-datatable-even {
+    background: #EEEEEE;
+}
+
+h2 {
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+
+h1 {
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+h2.report-group-heading {
+    /*    background: -moz-linear-gradient(center top , #666666 0%, #4A4A4A 50%, #666666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+        color: #FFFFFF !important;*/
+    background: -moz-linear-gradient(center top , #666666 0px, #4A4A4A 50%, #666666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    color: #FFFFFF !important;
+    font-size: 13px;
+    margin: 0;
+    padding: 8px 10px;
+}
+
+.report-group {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: -moz-use-text-color #CCCCCC #CCCCCC;
+    border-image: none;
+    border-right: 1px solid #CCCCCC;
+    border-style: none solid solid;
+    border-width: 0 1px 1px;
+    margin: 0 0 15px;
+    padding: 12px;
+    font-family: Verdana,Arial,Helvetica,sans-serif;
+    font-size: 12px;
+}
+
+.report-body-header{
+    display : block;
+    margin : 0 0 10px;
+    min-height: 36px;
+    /*visibility: hidden;*/
+    clear: both;
+}
+
+.commandLink-image{
+    background-image: url('../images/new.gif');
+}
+
+.site_name {
+    float: left;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 30px;
+    margin-top: 5px;
+    padding-left: 20px;
+    border-left-width: 2px;
+    border-left-style: double;
+    border-left-color: #FFF;
+    width: 400px;
+    /*.site_name {font-size: 24px;	width: 300px;	line-height: 26px;}*/
+}
+/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+

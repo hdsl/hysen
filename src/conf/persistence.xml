@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="hysenPU" transaction-type="JTA">
+    <jta-data-source>jdbc/hysen</jta-data-source>
+    <class>hysen.ejb.entities.AccessRight</class>
+    <class>hysen.ejb.entities.AuditTrail</class>
+    <class>hysen.ejb.entities.ClientContact</class>
+    <class>hysen.ejb.entities.ClientDetail</class>
+    <class>hysen.ejb.entities.ClientProduct</class>
+    <class>hysen.ejb.entities.Department</class>
+    <class>hysen.ejb.entities.Gender</class>
+    <class>hysen.ejb.entities.GeneratePk</class>
+    <class>hysen.ejb.entities.IdentificationType</class>
+    <class>hysen.ejb.entities.IndustryType</class>
+    <class>hysen.ejb.entities.InstitutionSetup</class>
+    <class>hysen.ejb.entities.KinRelation</class>
+    <class>hysen.ejb.entities.LevelOfEducation</class>
+    <class>hysen.ejb.entities.MaritalStatus</class>
+    <class>hysen.ejb.entities.Nationality</class>
+    <class>hysen.ejb.entities.ProductTypes</class>
+    <class>hysen.ejb.entities.ProductTypesModel</class>
+    <class>hysen.ejb.entities.SaleDetail</class>
+    <class>hysen.ejb.entities.SaleSummary</class>
+    <class>hysen.ejb.entities.ServiceModelComponent</class>
+    <class>hysen.ejb.entities.ServiceRequest</class>
+    <class>hysen.ejb.entities.Setting</class>
+    <class>hysen.ejb.entities.StaffDetail</class>
+    <class>hysen.ejb.entities.StockCategory</class>
+    <class>hysen.ejb.entities.StockEntry</class>
+    <class>hysen.ejb.entities.StockItem</class>
+    <class>hysen.ejb.entities.StockPricing</class>
+    <class>hysen.ejb.entities.Supplier</class>
+    <class>hysen.ejb.entities.TransType</class>
+    <class>hysen.ejb.entities.UserAccount</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <properties/>
+  </persistence-unit>
+</persistence>

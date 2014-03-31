@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:messages/>
+        <p:panel style="overflow: auto;">
+            <f:facet name="header"><span style="float: left;font-weight: bolder;font-variant: small-caps">Access Right</span></f:facet>
+
+            <h:form id="accessRightEntry">
+                <h:panelGroup layout="block">
+                    <h:panelGrid columns="6">
+                        <h:outputLabel value="Access Name:"/>
+                        <h:inputText styleClass="textarea" value="#{accessRightController.accessRight.accessRight}"/>
+                        <h:outputLabel value="Department:"/>
+                        <h:selectOneMenu value="#{accessRightController.departmentId}" styleClass="textarea">
+                            <f:selectItem itemLabel="...Select One..."/>
+                            <f:selectItems value="#{commonOptions.departmentOptions}"/>
+                        </h:selectOneMenu>
+                         <p:commandButton value="#{accessRightController.saveEditButtonText}"
+                                          action="#{accessRightController.saveEditButtonAction()}"
+                                         icon="ui-icon-disk" ajax="false" style="margin-left: 20px"
+                                         update=":accessRightList"/>
+                         <p:commandButton value="Clear" action="#{accessRightController.resetButtonAction()}"
+                                         icon="ui-icon-cancel" ajax="false"/>
+                    </h:panelGrid>
+                    
+                </h:panelGroup>
+            </h:form>
+
+            <h:form id="accessRightList">
+                <p:dataTable style="margin-top: 40px;width: 500px"
+                             var="access" value="#{accessRightView.accessRightList}">
+                    <p:column>
+                        <f:facet name="header">Access Right Name</f:facet>
+                        <h:outputText value="#{access.accessRight}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Department</f:facet>
+                        <h:outputText value="#{access.department.departmentName}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header"></f:facet>
+                        <p:commandLink value="Edit" style="text-decoration: none;color:blue"
+                                       action="#{accessRightController.selectAccessRight(access)}"
+                                       update=":accessRightEntry"/>
+                        <p:commandLink value="Delete" style="text-decoration: none;color: red;margin-left: 20px"
+                                       action="#{accessRightController.deleteButtonAction(access)}"
+                                       update=":accessRightList"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+
+        </p:panel>
+    </h:body>
+</html>
+

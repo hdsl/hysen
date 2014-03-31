@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:body>
+        <p:messages/>
+
+        <p:panel style="overflow: auto" >
+            <f:facet name="header"><span style="float: left;font-weight: bolder;font-variant: small-caps">User Account Information</span></f:facet>
+
+
+            <h:form id="userAccountForm">
+                <h:panelGrid columns="6" style="margin-left: 60px">
+                    <h:outputText value="Staff Name:"/>
+                    <h:selectOneMenu value="#{userAccountController.staffDetailId}" styleClass="textarea">
+                        <f:selectItem itemLabel="....Select Staff...."/>
+                        <f:selectItems value="#{commonOptions.staffDetailOptions}"/>
+                        <p:ajax listener="#{userAccountController.staffDetailSelect()}" event="change" update="staffPosition,staffDepartment"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="Position:"/>
+                    <h:inputText id="staffPosition" readonly="true" styleClass="outputText" style="width: 150px" value="#{userAccountController.staffPosition}"/>
+                    <h:outputLabel value="Department:"/>
+                    <h:inputText  id="staffDepartment" readonly="true" styleClass="outputText" style="width: 150px" value="#{userAccountController.staffDepartment}"/>
+
+                </h:panelGrid>
+
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Username:" style="margin-left: 65px"/>
+                    <h:inputText value="#{userAccountController.userAccount.username}"/>
+                    <h:outputLabel value="Password:" style="margin-left: 65px"/>
+                    <h:inputSecret value="#{userAccountController.password}"/>
+                    <h:outputLabel value="Confirm Password:"/>
+                    <h:inputSecret value="#{userAccountController.confirmPassword}"/>
+                    <h:outputLabel value="Password Hint:" style="margin-left: 40px"/>
+                    <h:inputTextarea value="#{userAccountController.userAccount.securityHint}"/>
+                    <h:outputText value="Access Right" style="margin-left: 40px"/>
+                    <h:selectOneMenu value="#{userAccountController.accessRight}" styleClass="textarea">
+                        <f:selectItem itemLabel="....Select One...."/>
+                        <f:selectItems value="#{commonOptions.accessRightTypes}"/>
+                    </h:selectOneMenu>
+                    <h:outputText value="Account Status" style="margin-left: 40px"/>
+                    <h:selectOneMenu value="#{userAccountController.userAccount.accountStatus}" styleClass="textarea">
+                        <f:selectItem itemLabel="..Select One.."/>
+                        <f:selectItem itemLabel="Active" itemValue="A"/>
+                        <f:selectItem itemLabel="Inactive" itemValue="I"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+
+                <h:panelGrid columns="3" style="margin-top: 20px">
+                    <p:commandButton value="#{userAccountController.saveEditButtonText}"
+                                     icon="ui-icon-disk" ajax="false"
+                                     update=":userAccountList"
+                                     styleClass="buttons" action="#{userAccountController.saveEditButtonAction()}"/>
+
+                    <p:commandButton value="Clear" styleClass="buttons"
+                                     icon="ui-icon-cancel" ajax="false"
+                                     action="#{userAccountController.resetButtonAction()}"/>
+                </h:panelGrid>
+
+            </h:form>
+
+
+            <h:form id="userAccountList">
+                <p:dataTable paginator="true" rows="7" var="emp"  style="margin-top: 20px"
+                             value="#{userAccountView.userAccountList}">     
+                    <p:column>
+                        <f:facet name="header">Staff Name</f:facet>
+                        <h:commandLink style="text-decoration: none"
+                                       value="#{emp.staffDetail.staffName}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Position</f:facet>
+                        <h:commandLink style="text-decoration: none"
+                                       value="#{emp.staffDetail.occupationType}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Department</f:facet>
+                        <h:commandLink  style="text-decoration: none"
+                                        value="#{emp.staffDetail.department.departmentName}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Access Right</f:facet>
+                        <h:commandLink  style="text-decoration: none"
+                                        value="#{emp.accessRight.accessRight}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Username</f:facet>
+                        <h:commandLink style="text-decoration: none"
+                                       value="#{emp.username}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header"></f:facet>
+                        <p:commandLink value="Edit" style="text-decoration: none;color:blue"
+                                       action="#{userAccountController.rowSelectedData(emp)}"
+                                       update=":userAccountForm"/>
+                        <p:commandLink value="Delete" style="text-decoration: none;color: red;margin-left: 20px"
+                                       update=":userAccountList"
+                                       action="#{userAccountController.deleteButtonAction(emp)}"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:panel>
+    </h:body>
+</html>
+

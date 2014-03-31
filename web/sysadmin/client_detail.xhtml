@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:messages/>
+
+        <p:panel  style="overflow: auto;">
+            <f:facet name="header"><span style="float: left;font-weight: bolder;font-variant: small-caps">Client Information</span></f:facet>
+
+            <h:form id="clientDetailListForm" rendered="#{!clientInfoController.renderForm}">
+                <h:panelGrid columns="7">
+                    <p:commandButton value="Add Client" ajax="false" icon="ui-icon-plusthick"
+                                     action="#{clientInfoController.addClient()}"/>
+                </h:panelGrid>
+
+                <p:dataTable paginator="true" var="emp" 
+                             value="#{clientInformatioView.clientDetailList}"
+                             rows="20" style="font-size: 11px;margin-top: 5px">  
+                    <p:column filterBy="#{emp.clientName}" filterMatchMode="startsWith">
+                        <f:facet name="header">Client Name</f:facet>
+                        <h:commandLink style="text-decoration: none"
+                                       value="#{emp.clientName}"/>
+                    </p:column>
+                    <p:column filterBy="#{emp.industryType.industryName}" filterMatchMode="startsWith">
+                        <f:facet name="header">Industry Type</f:facet>
+                        <h:commandLink style="text-decoration: none"
+                                       value="#{emp.industryType.industryName}"/>
+                    </p:column>
+                    <p:column filterBy="#{emp.clientPrimaryContact}" filterMatchMode="startsWith">
+                        <f:facet name="header">Client Phone Contact</f:facet>
+                        <h:commandLink style="text-decoration: none"
+                                       value="#{emp.clientPrimaryContact}"/>
+                    </p:column>
+                    <p:column filterBy="#{emp.contactPerson}" filterMatchMode="startsWith">
+                        <f:facet name="header">Contact Person</f:facet>
+                        <h:commandLink style="text-decoration: none"
+                                       value="#{emp.contactPerson}"/>
+                    </p:column>
+                    <p:column filterBy="#{emp.contactPersonPhoneNumber}" filterMatchMode="startsWith">
+                        <f:facet name="header">Phone Number</f:facet>
+                        <h:commandLink style="text-decoration: none"
+                                       value="#{emp.contactPersonPhoneNumber}"/>
+                    </p:column>
+                    <p:column filterBy="#{emp.contactPersonEmail}" filterMatchMode="startsWith">
+                        <f:facet name="header">Personal Email</f:facet>
+                        <h:commandLink style="text-decoration: none"
+                                       value="#{emp.contactPersonEmail}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header"></f:facet>
+                        <h:link outcome="pretty:clientDetailEdit" value="Edit">
+                            <f:param name="id" value="#{emp.commonId}"/>
+                        </h:link>
+                        <p:commandLink value="Edit" style="text-decoration: none;color:blue"
+                                       rendered="false"
+                                       action="#{clientInfoController.rowSelectButtonAction(emp)}"
+                                       update=":clientRegForm" ajax="false"/>
+                        <p:commandLink value="Delete" style="text-decoration: none;color: red;margin-left: 20px"
+                                       update=":clientDetailListForm"
+                                       action="#{clientInfoController.deleteButtonAction(emp)}"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+
+        </p:panel>
+    </h:body>
+</html>
+

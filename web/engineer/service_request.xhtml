@@ -1,0 +1,223 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:messages/>
+        <h:form id="toolBarForm" rendered="#{serviceController.renderRequestListForm}">
+            <p:panel style="overflow: auto;">
+                <f:facet name="header"><span style="float: left;font-weight: bolder;font-variant: small-caps">Service Request</span></f:facet>
+
+                <p:toolbar style="margin-top: 10px">
+                    <p:toolbarGroup align="left">  
+                        <p:commandButton value="New Request" icon="ui-icon-document" 
+                                         ajax="false" action="#{serviceController.showNewRequestForm()}"/>  
+
+                        <p:separator />  
+                        <h:inputText styleClass="textarea" id="requestId" value="#{serviceController.searchRequestId}"/>
+                        <p:commandButton value="Search" ajax="false" icon="ui-icon-search" action="#{serviceController.searchButtonAction()}"/>  
+                        <p:watermark value="Service Request Id" for="requestId"/>
+                        <p:separator />  
+                        <p:commandButton value="Edit Request Detail" style="margin-left: 30px"
+                                         icon="ui-icon-pencil"  ajax="false"
+                                         action="#{serviceController.selectToEditButtonAction()}"/>
+                        <p:commandButton value="Delete Request Detail" icon="ui-icon-trash"
+                                         style="margin-left: 20px"  ajax="false"
+                                         action="#{serviceController.deleteButtonAction()}"/> 
+                    </p:toolbarGroup>  
+                    <p:toolbarGroup align="right">  
+                        <h:selectOneMenu styleClass="textarea" value="#{serviceController.parameterId}">
+                            <f:selectItem itemLabel="....Select One...." itemValue="null"/>
+                            <f:selectItem itemLabel="Opened Request" itemValue="Opened"/>
+                            <f:selectItem itemLabel="Pending Request" itemValue="Pending"/>
+                            <f:selectItem itemLabel="Completed Request" itemValue="Completed"/>
+                            <f:selectItem itemLabel="Closed Request" itemValue="Closed"/>
+                            <p:ajax event="change" listener="#{serviceController.queryServiceRequest()}" update="requestDataTable"/>
+                        </h:selectOneMenu>
+                    </p:toolbarGroup>  
+                </p:toolbar>
+
+                <p:dataTable style="margin-top: 20px;font-size: 11px" id="requestDataTable"
+                             value="#{serviceController.serviceRequestList}" var="service"
+                             rowKey="#{service.commonId}"  
+                             selection="#{serviceController.serviceRequest}"
+                             selectionMode="single">
+                    <p:column>
+                        <f:facet name="header">Request Id</f:facet>
+                        <h:outputText value="#{service.commonId}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Requester Name</f:facet>
+                        <h:outputText value="#{service.clientDetail.clientName}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Service Type</f:facet>
+                        <h:outputText value="#{service.clientProduct.productTypeModel.productTypes.productName}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Location</f:facet>
+                        <h:outputText value="#{service.clientProduct.productLocation}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Service Component</f:facet>
+                        <h:outputText value="#{service.serviceComponent.componentName}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Assigned To</f:facet>
+                        <h:outputText value="#{service.staffDetail.staffName}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Request Date</f:facet>
+                        <h:outputText  value="#{service.requestDate}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Status</f:facet>
+                        <h:outputText value="#{service.requestStatus}" style="color: #142054;font-weight: bolder"/>
+                    </p:column>
+                </p:dataTable>
+
+            </p:panel>
+        </h:form>
+
+
+
+        <h:form id="requestForm" rendered="#{serviceController.renderRequestForm}">
+
+            <p:panel style="overflow: auto;">
+                <f:facet name="header"><span style="float: left;font-weight: bolder;font-variant: small-caps">New Service Request</span></f:facet>
+
+                <p:fieldset legend="Requester Detail">
+                    <h:panelGrid columns="4" style="margin-left: -20px">
+                        <h:outputLabel value="Requester Name:"/>
+                        <h:selectOneMenu styleClass="textarea"
+                                         value="#{serviceController.selectedClientId}">
+                            <f:selectItem itemLabel="....Select One...."/>
+                            <f:selectItems value="#{commonOptions.clientsDetailOptions}"/>
+                            <p:ajax event="change" listener="#{serviceController.showSelectedClientContacts()}" 
+                                    update="selectedClientContact,equipLocation,serviceProduct"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Contact:" style="float: right"/>
+                        <h:selectOneMenu styleClass="textarea" id="selectedClientContact">
+                            <f:selectItem itemLabel="....Select One...."/>
+                            <f:selectItems value="#{serviceController.selectClientContactOption}"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Service Product:" style="float: right"/>
+                        <h:selectOneMenu styleClass="textarea" id="serviceProduct"
+                                         value="#{serviceController.selectedProductType}">
+                            <f:selectItem itemLabel="....Select One...."/>
+                            <f:selectItems value="#{commonOptions.productTypesOptions}"/>
+                            <p:ajax event="change" listener="#{serviceController.showClientProductModels()}"
+                                    update="equipLocation,serviceComponent"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Equip/Location:"/>
+                        <h:selectOneMenu styleClass="textarea" id="equipLocation"
+                                         value="#{serviceController.selectedEquipLocation}">
+                            <f:selectItem itemLabel="....Select One...."/>
+                            <f:selectItems value="#{serviceController.clientEquipmentOption}"/>
+                        </h:selectOneMenu>
+
+                    </h:panelGrid>
+                </p:fieldset>
+
+                <p:fieldset legend="Request Detail" style="margin-top: 10px">
+                    <h:panelGrid columns="8">
+                        <h:outputLabel value="Request Id:"/>
+                        <h:inputText readonly="true" size="10" style="background-color: #800000;color: #fff;font-weight: bolder;font-size: 14px"
+                                     value="#{serviceController.serviceRequestId}"/>
+                        <h:outputLabel value="Mode:"/>
+                        <h:selectOneMenu styleClass="textarea"
+                                         value="#{serviceController.serviceRequest.requestMode}">
+                            <f:selectItem itemLabel="....Select One...."/>
+                            <f:selectItem itemLabel="Email" itemValue="Email"/>
+                            <f:selectItem itemLabel="Phone Call" itemValue="Phone Call"/>
+                        </h:selectOneMenu>                        
+                        <h:outputLabel value="Priority:"/>
+                        <h:selectOneMenu styleClass="textarea"
+                                         value="#{serviceController.serviceRequest.requestPriority}">
+                            <f:selectItem itemLabel="....Select One...."/>
+                            <f:selectItem itemLabel="Normal" itemValue="Normal"/>
+                            <f:selectItem itemLabel="Low" itemValue="Low"/>
+                            <f:selectItem itemLabel="Medium" itemValue="Medium"/>
+                            <f:selectItem itemLabel="High" itemValue="High"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Status:"/>
+                        <h:selectOneMenu styleClass="textarea"  required="true" requiredMessage="Request Status is required"
+                                         value="#{serviceController.serviceRequest.requestStatus}">
+                            <f:selectItem itemLabel="....Select One...."/>
+                            <f:selectItem itemLabel="Opened" itemValue="Opened"/>
+                            <f:selectItem itemLabel="Pending" itemValue="Pending"/>
+                            <f:selectItem itemLabel="Completed" itemValue="Completed"/>
+                            <f:selectItem itemLabel="Closed" itemValue="Closed"/>
+                        </h:selectOneMenu>
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="4" style="margin-left: -20px">
+                        <h:outputLabel value="Service Component:"/>
+                        <h:selectOneMenu styleClass="textarea" id="serviceComponent"
+                                         value="#{serviceController.serviceComponentId}">
+                            <f:selectItem itemLabel="....Select One...."/>
+                            <f:selectItems value="#{serviceController.modelComponentOption}"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Request Date:"/>
+                        <p:calendar navigator="true" pattern="MM/dd/yyyy HH:mm"
+                                    showOn="button" value="#{serviceController.serviceRequest.requestDate}"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2" style="margin-left: -20px">
+                        <h:outputLabel value="Description:"/>
+                        <p:editor id="editor" width="600" value="#{serviceController.serviceRequest.requestDescription}"/> 
+                    </h:panelGrid>
+                </p:fieldset>
+
+                <p:fieldset legend="Assignment(s)" style="margin-top: 10px">
+                    <h:panelGrid columns="4" style="margin-left: -20px">
+                             
+                        <h:outputLabel value="Email(s) to Notify:"/>
+                        <h:inputText styleClass="textarea" style="width: 300px" readonly="true"/>
+                        <h:outputLabel value="Start Date:" style="float: right"/>
+                        <p:calendar navigator="true" pattern="MM/dd/yyyy HH:mm"
+                                    showOn="button" value="#{serviceController.serviceRequest.serviceStartDate}"/>
+                        <h:outputLabel value="End Date:" style="float: right"/>
+                        <p:calendar navigator="true" pattern="MM/dd/yyyy HH:mm"
+                                    showOn="button" value="#{serviceController.serviceRequest.serviceEndDate}"/>
+
+                    </h:panelGrid>
+                    <!--                    <h:panelGrid columns="4" style="margin-top: 20px">
+                    
+                                            <p:commandButton value="Include Attachment"/>  
+                                            <p:fileUpload mode="simple"/>  
+                    
+                                            <p:fileUpload  mode="simple"  
+                                                           sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" auto="true"
+                                                           oncomplete="javascript:window.location.reload()"/>
+                                        </h:panelGrid>-->
+                </p:fieldset>                
+
+                <p:accordionPanel style="margin-top: 10px"
+                                  cache="true"  activeIndex="1">  
+                    <p:tab title="Resolution">  
+                        <p:editor style="width: 50%" id="resolution"
+                                  value="#{serviceController.serviceRequest.serviceResolution}"/>
+                    </p:tab>
+                </p:accordionPanel>
+
+                <h:panelGrid columns="3" style="margin-top: 20px;margin-left: 400px">
+                    <h:commandButton value="#{serviceController.saveEditButtonText}" styleClass="commandButton"
+                                     action="#{serviceController.saveEditButtonAction()}"/>
+                    <p:commandButton value="Clear Request" action="#{serviceController.resetButtonAction()}"
+                                     icon="ui-icon-cancel" ajax="false"/>
+                    <p:commandButton icon="ui-icon-arrowthick-1-w" ajax="false"
+                                     value="Return" action="#{serviceController.returnToHomePage()}"/>
+                </h:panelGrid>
+
+            </p:panel>
+        </h:form>
+    </h:body>
+</html>
+

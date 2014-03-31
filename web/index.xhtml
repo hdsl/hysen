@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Hysen Data Systems Limited : Login</title>
+        <link href="resources/css/main.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/common.css" rel="stylesheet" type="text/css"/>
+    </h:head>
+     <h:body class="login_body">
+
+        <h:panelGroup layout="block" styleClass="login_container" style="width: 340px">
+            <p:messages/>
+            <h:form>
+                <div id="header"/>
+                <h:panelGrid columns="1">
+                    <h:outputLabel value="Username:" styleClass="label"/>
+                    <h:inputText styleClass="input" value="#{loginCtrl.username}"/>
+                    <h:outputLabel value="Password:" styleClass="label"/>
+                    <h:inputSecret styleClass="input"  value="#{loginCtrl.password}"/>
+                    <h:commandLink value="forgot your password?"
+                                   style="font-weight: lighter;float: right"/>
+                </h:panelGrid>
+
+                <div class="lower">
+                    <h:panelGrid columns="2">
+                        
+                        <h:commandButton value="Login" styleClass="login_button"
+                                           action="#{loginCtrl.login()}"/>
+                    </h:panelGrid>
+                </div>
+
+            </h:form>
+        </h:panelGroup>
+    </h:body>
+</html>
+

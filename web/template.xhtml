@@ -1,0 +1,189 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <link href="#{application.contextPath}/resources/css/main.css" rel="stylesheet" type="text/css"/>
+        <link href="#{application.contextPath}/resources/css/common.css" rel="stylesheet" type="text/css"/>
+
+        <title>HDSL: Administrator Welcome</title>
+    </h:head>
+    <h:body>        
+
+        <h:panelGroup id="banner" layout="block" rendered="true">
+
+
+            <div style="float: right;width: 300px">
+                <h:form>
+                    <h:panelGrid columns="2" style="float: right;font-size: 11px;font-weight: bolder">
+                        <h:outputText value="User Name:" style="float: right"/>
+                        <h:outputText
+                            value="#{userSession.username}"/>
+                        <h:outputText value="Access Right:" style="float: right"/>
+                        <h:outputText/>
+                        <h:outputText/>
+                        <h:commandLink value="Logout"  style="color: blue;font-size: 12px" action="#{loginCtrl.logout()}"
+                                       onclick="return confirm('Are you sure you want to logout?')"/>
+                    </h:panelGrid>
+                </h:form>
+            </div>
+        </h:panelGroup>
+
+
+        <h:panelGroup layout="block" styleClass="container">            
+
+            <h:panelGroup layout="block" styleClass="left_panel">
+
+                <p:accordionPanel style="font-size: 11px "
+                                  cache="true"  activeIndex="0">
+
+
+                    <p:tab title="Dashboard">
+                        <h:panelGrid columns="1" width="100%">
+
+                        </h:panelGrid>
+                    </p:tab>
+
+                    <h:panelGroup rendered="#{navHandler.module == 'sysadmin'}">
+                        <p:tab title="Stock Management">
+                            <div class="sublink" style="margin-left: -60px;margin-right: -27px;">
+                                <ul type="none">
+                                    <li><a href="stock_category.xhtml">Stock Item Category</a></li>
+                                    <li><a href="stock_item.xhtml">Stock Items</a></li>
+                                    <li><a href="stock_entry.xhtml">Stock Entry</a></li>
+                                    <li><a href="stock_item_activity.xhtml">Stock Exit/Reversal Entry</a></li>
+                                </ul>
+                            </div>
+                        </p:tab> 
+                    </h:panelGroup>
+
+                    <h:panelGroup rendered="#{navHandler.module == 'sysadmin'}">
+                        <p:tab title="Suppliers">
+                            <div class="sublink" style="margin-left: -60px;margin-right: -27px">
+                                <ul type="none">
+                                    <li><a href="suppliers.xhtml">Supplier Information</a></li>
+                                </ul>
+                            </div>
+                        </p:tab> 
+                    </h:panelGroup>
+
+                    <p:tab title="Clients" rendered="#{navHandler.module == 'engineer'}">
+                        <div class="sublink" style="margin-left: -60px;margin-right: -27px">
+                            <ul type="none">
+                                <li><a href="#{application.contextPath}/engineer/client_detail?id=3jd3hyu4js743jws634ygs3">Client Information</a></li>
+                                <li><a href="#{application.contextPath}/engineer/client_contact?id=34ueh876i3h4f9873kj4b3">Client Contact(s)</a></li>
+                                <li><a href="#{application.contextPath}/engineer/client_products?id=3h29378jhh37wshw733h3">Client Service</a></li>
+                            </ul>
+                        </div>
+                    </p:tab> 
+
+
+                    <p:tab title="Services/Service Request" rendered="#{navHandler.module == 'engineer'}">
+                        <div class="sublink" style="margin-left: -60px;margin-right: -27px">
+                            <ul type="none">
+                                <li><a href="#{application.contextPath}/engineer/model_component?id=373ehjdfs76dsdhsd8jh">Model Component(s)</a></li>
+                                <li><a href="#{application.contextPath}/engineer/service_request?id=4hdd64hh46d6d6d6h4hhf">Service Request</a></li>
+
+                            </ul>
+                        </div>
+                    </p:tab> 
+
+                    <p:tab title="Reports" rendered="#{navHandler.module == 'engineer'}">
+                        <div class="sublink" style="margin-left: -60px;margin-right: -27px">
+                            <ul type="none">
+                                <li><a href="#{application.contextPath}/engineer/general_report?id=784jer7fefdkf74rdf">General Report</a></li>
+                            </ul>
+                        </div>
+                    </p:tab> 
+
+                    <p:tab title="Clients" rendered="#{navHandler.module == 'sysadmin'}">
+                        <div class="sublink" style="margin-left: -60px;margin-right: -27px">
+                            <ul type="none">
+                                <li><a href="#{application.contextPath}/sysadmin/client_detail?id=3jd3hyu4js743jws634ygs3">Client Information</a></li>
+                                <li><a href="#{application.contextPath}/sysadmin/client_contact?id=34ueh876i3h4f9873kj4b3">Client Contact(s)</a></li>
+                                <li><a href="#{application.contextPath}/sysadmin/client_products?id=3h29378jhh37wshw733h3">Client Service</a></li>
+                            </ul>
+                        </div>
+                    </p:tab> 
+
+                    <p:tab title="Services" rendered="#{navHandler.module == 'sysadmin'}">
+                        <div class="sublink" style="margin-left: -60px;margin-right: -27px">
+                            <ul type="none">
+                                <li><a href="#{application.contextPath}/sysadmin/service_type?id=4hdd64hh46d6d6d6h4hhf">Service Types</a></li>
+                                <li><a href="#{application.contextPath}/sysadmin/service_model?id=47hnfh6fydheisduisjdl">Service Type Models</a></li>
+                                <li><a href="#{application.contextPath}/sysadmin/model_component?id=373ehjdfs76dsdhsd8jh">Model Component(s)</a></li>
+
+                            </ul>
+                        </div>
+                    </p:tab> 
+                    <p:tab title="Service Request" rendered="#{navHandler.module == 'sysadmin'}">
+                        <div class="sublink" style="margin-left: -60px;margin-right: -27px">
+                            <ul type="none">
+                                <li><a href="#{application.contextPath}/sysadmin/service_request?id=4hdd64hh46d6d6d6h4hhf">Service Request</a></li>
+                            </ul>
+                        </div>
+                    </p:tab> 
+
+                    <p:tab title="Reports" rendered="#{navHandler.module == 'sysadmin'}">
+                        <div class="sublink" style="margin-left: -60px;margin-right: -27px">
+                            <ul type="none">
+                                <li><a href="#{application.contextPath}/sysadmin/general_report?id=784jer7fefdkf74rdf">General Report</a></li>
+                            </ul>
+                        </div>
+                    </p:tab> 
+
+                    <p:tab title="Human Resource" rendered="#{navHandler.module == 'sysadmin'}">
+                        <div class="sublink" style="margin-left: -60px;margin-right: -27px">
+                            <ul type="none">
+                                <li><a href="#{application.contextPath}/sysadmin/staff_details?id=meu6h73uhds7djwe6tshbdw">Staff Information</a></li>
+
+                            </ul>
+                        </div>
+                    </p:tab>
+
+                    <p:tab title="General Settings" rendered="#{navHandler.module == 'sysadmin'}">
+                        <div class="sublink" style="margin-left: -60px;margin-right: -27px">
+                            <ul type="none">
+                                <li><a href="#{application.contextPath}/sysadmin/access_right?id=e34dfsafadsfdedsa">Access Right</a></li>
+                                <li><a href="#{application.contextPath}/sysadmin/user_account?id=a63gwe63hsd6sdw693ebs6sd">Manage Users</a></li>
+
+                                <li><a href="user_account.xhtml">Departments</a></li>
+                                <!--                                <li><a href="user_account.xhtml">Business Types</a></li>
+                                                                <li><a href="user_account.xhtml">Equipment Types</a></li>-->
+                            </ul>
+                        </div>
+                    </p:tab>
+
+                    <!--</h:panelGroup>-->
+
+                </p:accordionPanel>
+
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" styleClass="right_panel">
+
+                <h:panelGroup rendered="#{not empty userSession.username}">
+
+                    <ui:include src="#{navHandler.module}/#{navHandler.page}.xhtml"/>
+
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{empty userSession.username}">
+
+                    <h:outputLink value="#{application.contextPath}/login" style="font-size: 14px;color: red">
+                        You don't have access to this page. Click to return to the Login Page
+                    </h:outputLink>
+
+                </h:panelGroup>
+
+            </h:panelGroup>
+
+
+        </h:panelGroup>
+
+    </h:body>
+</html>
+

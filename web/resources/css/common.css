@@ -1,0 +1,136 @@
+.data_table_panel
+{
+    width: 98%;
+}
+
+table
+{
+    border-spacing: 0px;
+}
+
+/*.data_table_panel th {
+    font-size: small;
+    color: #4e6a71;
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-right-style: solid;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: #b2d5d6;
+    border-bottom-color: #b2d5d6;
+    border-left-color: #90b4bd;
+    border-right-color: #90b4bd;
+    text-align: left;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 6px;
+    padding-right: 6px;
+    background-color: #b2d5d6;
+}*/
+
+.data_table_panel th {
+    font-size: small;
+    color: #eff5fa;
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-right-style: solid;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: #b2d5d6;
+    border-bottom-color: #b2d5d6;
+    border-left-color: #90b4bd;
+    border-right-color: #90b4bd;
+    text-align: left;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 6px;
+    padding-right: 6px;
+    background-color: #36C;
+}
+
+
+.data_table_panel td{
+    font-size: small;
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-right-style: solid;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: #b2d5d6;
+    border-bottom-color: #b2d5d6;
+    border-left-color: #b2d5d6;
+    border-right-color: #b2d5d6;
+    vertical-align: baseline;
+    padding-bottom: 0px;
+    border-spacing: 0px;
+    text-align: left;
+    vertical-align: top;
+}
+
+tr.odd_row {
+    background-color: #fefeff;
+    color: #4e6a71;
+}
+
+
+tr.even_row {
+    background-color: #eff5fa;
+    color: #4e6a71;
+}
+
+.usage_message
+{
+    background-color: silver;
+    color: #660000;
+    font-size: small;
+}
+
+.items tr:hover
+{
+    background-color: silver;
+    color: maroon;
+    cursor: url;
+}
+
+.items *
+{
+    text-align: left;
+}
+
+/*a{
+    text-decoration: none;
+    color: #666;
+    text-decoration: none;
+}*/
+
+/*a.comand_link
+{
+    background-color:  maroon;
+    font-size: 15px;
+    border: maroon 1px solid;
+    color: antiquewhite;
+    text-align: center;
+    font-weight: bolder;
+}*/
+
+.commandButton
+{
+    background-color:  maroon;
+    font-size: 15px;
+    border: maroon 1px solid;
+    color: antiquewhite;
+    text-align: center;
+    font-weight: bolder;
+}
+
+.page-header{color: #255c82; font-size: 20px; margin: 10px 10px 25px 20px; font-style:  normal; font-weight: 600; }
+.page-header img{ font-size: 8px; margin: 0px 1px -12px 10px; }

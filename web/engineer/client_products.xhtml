@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:messages/>
+        <p:panel style="overflow: auto;">
+            <f:facet name="header"><span style="float: left;font-weight: bolder;font-variant: small-caps">Client Product/Service</span></f:facet>
+
+            <h:form id="clientProductEntryForm">
+                <h:panelGroup layout="block">
+                    <h:panelGrid columns="6">
+                        <h:outputLabel value="Client Detail:"/>
+                        <h:selectOneMenu styleClass="textarea"
+                                         value="#{clientProductsController.clientDetailId}">
+                            <f:selectItem itemLabel="....Select One...."/>
+                            <f:selectItems value="#{commonOptions.clientsDetailOptions}"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Product Type:"/>
+                         <h:selectOneMenu styleClass="textarea"
+                                          value="#{clientProductsController.productId}">
+                            <f:selectItem itemLabel="....Select One...."/>
+                            <f:selectItems value="#{commonOptions.productTypesOptions}"/>
+                            <p:ajax event="change" listener="#{clientProductsController.loadProductModel()}" update="productModelOption"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Product Model:"/>
+                         <h:selectOneMenu styleClass="textarea" id="productModelOption"
+                                          value="#{clientProductsController.productModelId}">
+                            <f:selectItem itemLabel="....Select One...."/>
+                            <f:selectItems value="#{clientProductsController.productModelOption}"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Serial No."/>
+                        <h:inputText styleClass="textarea" value="#{clientProductsController.serialNumber}"/>
+                        <h:outputLabel value="Product Location:"/>
+                        <h:inputText styleClass="textarea" value="#{clientProductsController.clientProduct.productLocation}"/>
+                        
+                    </h:panelGrid>
+                    
+                    <h:panelGrid columns="3" style="margin-top: 20px">
+                        <p:commandButton value="#{clientProductsController.saveEditButtonText}"
+                                         action="#{clientProductsController.saveEditButtonAction()}"
+                                         icon="ui-icon-disk" ajax="false" style="margin-left: 20px"
+                                         update=":clientProductListForm"/>
+                        <p:commandButton value="Clear" action="#{clientProductsController.resetButtonAction()}"
+                                         icon="ui-icon-cancel" ajax="false"/>
+                    </h:panelGrid>
+
+                </h:panelGroup>
+            </h:form>
+
+            <h:form id="clientProductListForm">
+                <p:dataTable style="margin-top: 40px;" paginator="true" rows="20"
+                             var="clientProd" value="#{clientProductView.clientProductList}"
+                             selection="#{clientProductsController.clientProduct}">
+                    <p:column filterBy="#{clientProd.commonId}" filterMatchMode="startsWith">
+                        <f:facet name="header">Serial Number</f:facet>
+                        <h:outputText value="#{clientProd.serialNumber}"/>
+                    </p:column>
+                    <p:column filterBy="#{clientProd.clientDetail.clientName}" filterMatchMode="startsWith">
+                        <f:facet name="header">Client</f:facet>
+                        <h:outputText value="#{clientProd.clientDetail.clientName}"/>
+                    </p:column>
+                    <p:column filterBy="#{clientProd.productLocation}" filterMatchMode="startsWith">
+                        <f:facet name="header">Location</f:facet>
+                        <h:outputText value="#{clientProd.productLocation}"/>
+                    </p:column>
+                    <p:column filterBy="#{clientProd.productTypeModel.productModel}" filterMatchMode="startsWith">
+                        <f:facet name="header">Product Model</f:facet>
+                        <h:outputText value="#{clientProd.productTypeModel.productModel}"/>
+                    </p:column>
+                    <p:column filterBy="#{clientProd.productTypeModel.productTypes.productName}" filterMatchMode="startsWith">
+                        <f:facet name="header">Product Type</f:facet>
+                        <h:outputText value="#{clientProd.productTypeModel.productTypes.productName}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header"></f:facet>
+                        <p:commandLink value="Edit" style="text-decoration: none;color:blue"
+                                       action="#{clientProductsController.rowSelectButtonAction(clientProd)}"
+                                       update=":clientProductEntryForm"/>
+                        <p:commandLink value="Delete" style="text-decoration: none;color: red;margin-left: 20px"
+                                       action="#{clientProductsController.deleteButtonAction(clientProd)}"
+                                       update=":clientProductListForm"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+
+        </p:panel>
+    </h:body>
+</html>
+

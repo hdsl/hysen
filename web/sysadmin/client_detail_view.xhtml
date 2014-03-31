@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition template="../template_1.xhtml">
+        
+        <ui:define name="metadata">
+            <f:metadata>
+                <f:viewParam name="id" value="#{_id}"/>
+                <f:viewAction action="#{clientInfoController.rowSelectButtonAction(_id)}"/>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="content">
+            <p:panel  style="overflow: auto;">
+                <f:facet name="header"><span style="float: left;font-weight: bolder;font-variant: small-caps">Client Information</span></f:facet>
+
+                <h:form id="clientRegForm" rendered="#{clientInfoController.renderForm}">
+                    <p:panel>
+                        <f:facet name="header"><span style="float: left;font-weight: bolder;font-variant: small-caps">Client Details</span></f:facet>
+                        <h:panelGrid columns="4" style="margin-left: -20px">
+                            <h:outputLabel value="Client Name:"/>
+                            <h:inputText value="#{clientInfoController.clientDetail.clientName}"/>
+                            <h:outputLabel value="Industry Type:"/>
+                            <h:selectOneMenu styleClass="textarea"  
+                                             value="#{clientInfoController.industryTypeId}">
+                                <f:selectItem itemLabel="....Select One...."/>
+                                <f:selectItems value="#{commonOptions.industryTypeOptions}"/>
+                            </h:selectOneMenu>
+                            <h:outputLabel value="Phone Contact(s):"/>
+                            <h:inputText value="#{clientInfoController.clientDetail.clientPrimaryContact}"/>                                
+                            <h:outputLabel value="Email:"/>
+                            <h:inputText  value="#{clientInfoController.clientDetail.clientEmail}"/>
+                            <h:outputLabel value="Website:"/>                                    
+                            <h:inputText value="#{clientInfoController.clientDetail.clientWebsite}"/>
+                            <h:outputText/>
+                            <h:outputText/>
+                            <h:outputLabel value="Physical Location:"/>
+                            <h:inputTextarea value="#{clientInfoController.clientDetail.clientLocation}"/>
+                            <h:outputLabel value="Postal Address:"/>
+                            <h:inputTextarea value="#{clientInfoController.clientDetail.clientAddress}"/>
+                        </h:panelGrid>
+                    </p:panel>
+
+                    <h:panelGrid columns="3" style="margin-top: 20px">
+                        <p:commandButton  styleClass="buttons"
+                                          value="#{clientInfoController.saveEditButtonText}"
+                                          action="#{clientInfoController.saveEditButtonAction()}"
+                                          icon="ui-icon-disk" ajax="false"/>
+                        <p:commandButton value="Clear" styleClass="buttons"
+                                         action="#{clientInfoController.resetButtonAction()}"
+                                         icon="ui-icon-cancel" ajax="false"/>
+                    </h:panelGrid>
+                </h:form>
+            </p:panel>
+        </ui:define>
+
+    </ui:composition>
+</html>
+

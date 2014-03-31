@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:messages/>
+
+        <p:panel  style="overflow: auto;">
+            <f:facet name="header"><span style="float: left;font-weight: bolder;font-variant: small-caps">Staff Information</span></f:facet>
+
+            <h:form id="staffRegForm" rendered="#{staffDetailController.renderForm}">
+                <p:panel>
+                    <f:facet name="header"><span style="float: left;font-weight: bolder;font-variant: small-caps">Personal Details</span></f:facet>
+                    <h:panelGrid columns="8" style="margin-left: -20px">
+                        <h:outputLabel value="Name:"/>
+                        <h:inputText value="#{staffDetailController.staffDetail.staffName}"/>
+                        <h:outputLabel value="Gender:"/>
+                        <h:selectOneMenu styleClass="textarea"  value="#{staffDetailController.staffDetail.gender}">
+                            <f:selectItem itemLabel="...Select..." itemValue="0"/>
+                            <f:selectItem itemLabel="Female" itemValue="F"/>
+                            <f:selectItem itemLabel="Male" itemValue="M"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Date of Birth:"/>
+                        <p:calendar showOn="button" navigator="true" size="13"
+                                    value="#{staffDetailController.staffDetail.dateOfBirth}"/>                                
+                        <h:outputLabel value="Marital Status:"/>
+                        <h:selectOneMenu styleClass="textarea"  
+                                         value="#{staffDetailController.staffDetail.maritalStatus}">
+                            <f:selectItems value="#{commonOptions.maritalStatus}"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Nationality:"/>
+                        <h:selectOneMenu  styleClass="textarea"
+                                          value="#{staffDetailController.staffDetail.nationality}">
+                            <f:selectItems value="#{commonOptions.nationality}"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Hometown:"/>                                    
+                        <h:inputText value="#{staffDetailController.staffDetail.hometown}"/>
+                        <h:outputLabel value="Disability/Allergy:"/>
+                        <h:selectOneMenu  styleClass="textarea" value="#{staffDetailController.staffDetail.disabilityStatus}">
+                            <f:selectItem itemLabel="NO" itemValue="N"/>
+                            <f:selectItem itemLabel="YES" itemValue="Y"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Details:"/>
+                        <h:inputText value="#{staffDetailController.staffDetail.disabilityDetail}"/>
+                    </h:panelGrid>
+                </p:panel>
+
+                <p:panel style="margin-top: 10px">
+                    <f:facet name="header"><span style="float: left;font-weight: bolder;font-variant: small-caps">Contact Details</span></f:facet>
+                    <h:panelGrid columns="6" style="margin-left: -20px">
+                        <h:outputLabel value="Phone Contact:"/>
+                        <h:inputText  value="#{staffDetailController.staffDetail.primaryContact}"/>
+                        <h:outputLabel value="Email Address:"/>
+                        <h:inputText value="#{staffDetailController.staffDetail.emailAddress}"/>
+                        <h:outputLabel value="House Number:"/>
+                        <h:inputText  value="#{staffDetailController.staffDetail.houseNumber}"/>
+                        <h:outputLabel value="Land Mark:"/>
+                        <h:inputText value="#{staffDetailController.staffDetail.physicalLocation}"/>
+                        <h:outputLabel value="Postal Address:"/>
+                        <h:inputText value="#{staffDetailController.staffDetail.postalLocation}"/>
+                        <h:outputLabel value="Next of Kin:"/>
+                        <h:inputText value="#{staffDetailController.staffDetail.nextOfKin}"/>                              
+                        <h:outputLabel value="Next of Kin Contact:"/>
+                        <h:inputText value="#{staffDetailController.staffDetail.kinContact}"/>
+                        <h:outputLabel value="Relation To Kin:"/>
+                        <h:selectOneMenu styleClass="textarea"  value="#{staffDetailController.staffDetail.relationToKin}">
+                            <f:selectItems value="#{commonOptions.kinRelationOptions}"/>
+                        </h:selectOneMenu>
+                    </h:panelGrid>
+                </p:panel>
+
+                <p:panel style="margin-top: 10px">
+                    <f:facet name="header"><span style="float: left;font-weight: bolder;font-variant: small-caps">Occupation Details</span></f:facet>
+                    <h:panelGrid columns="6" style="margin-left: -20px">
+                        <h:outputLabel value="Position:"/>
+                        <h:inputText value="#{staffDetailController.staffDetail.occupationType}"/>
+                        <h:outputLabel value="Department:"/>
+                        <h:selectOneMenu value="#{staffDetailController.departmentId}" styleClass="textarea">
+                            <f:selectItem itemLabel="...Select One..."/>
+                            <f:selectItems value="#{commonOptions.departmentOptions}"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Date of Appointment"/>
+                        <p:calendar showOn="button" navigator="true" size="12"
+                                    value="#{staffDetailController.staffDetail.dateOfAppointment}"/>
+                        <h:outputLabel value="Occupation Status:"/>
+                        <h:selectOneMenu id="academicLevel" styleClass="textarea"
+                                         value="#{staffDetailController.staffDetail.occupationStatus}">
+                            <f:selectItem itemLabel="...Select One..." itemValue=""/>
+                            <f:selectItem itemLabel="CONTRACT" itemValue="CONTRACT"/>
+                            <f:selectItem itemLabel="PROBATION" itemValue="PROBATION"/>
+                            <f:selectItem itemLabel="PERMANENT" itemValue="PERMANENT"/>
+                            <f:selectItem itemLabel="NATIONAL SERVICE" itemValue="NATIONAL SERVICE"/>
+                        </h:selectOneMenu>
+                    </h:panelGrid>
+                </p:panel>
+
+                <h:panelGrid columns="3" style="margin-top: 20px">
+                    <p:commandButton  styleClass="buttons"
+                                      value="#{staffDetailController.saveEditButtonText}"
+                                      action="#{staffDetailController.saveEditButtonAction()}"
+                                      icon="ui-icon-disk" ajax="false"/>
+                    <p:commandButton value="Clear" styleClass="buttons"
+                                     action="#{staffDetailController.resetButtonAction()}"
+                                     icon="ui-icon-cancel" ajax="false"/>
+                </h:panelGrid>
+            </h:form>
+
+            <h:form id="staffDetailListForm" rendered="#{!staffDetailController.renderForm}">
+                <h:panelGrid columns="7">
+                    <p:commandButton value="Add Staff" ajax="false" icon="ui-icon-plusthick"
+                                     action="#{staffDetailController.addStaffDetail()}"/>
+                </h:panelGrid>
+
+                <p:dataTable paginator="true" var="emp" 
+                             value="#{staffDetailView.staffDetailList}"
+                             rows="20" style="font-size: 11px;margin-top: 5px">  
+                    <p:column filterBy="#{emp.staffName}" filterMatchMode="startsWith">
+                        <f:facet name="header">Staff Name</f:facet>
+                        <h:commandLink style="text-decoration: none"
+                                       value="#{emp.staffName}"/>
+                    </p:column>
+                    <p:column filterBy="#{emp.primaryContact}" filterMatchMode="startsWith">
+                        <f:facet name="header">Phone Contact(s)</f:facet>
+                        <h:commandLink style="text-decoration: none"
+                                       value="#{emp.primaryContact}"/>
+                    </p:column>
+                    <p:column filterBy="#{emp.emailAddress}" filterMatchMode="startsWith">
+                        <f:facet name="header">Email Address</f:facet>
+                        <h:commandLink style="text-decoration: none"
+                                       value="#{emp.emailAddress}"/>
+                    </p:column>
+                    <p:column filterBy="#{emp.department.departmentName}" filterMatchMode="startsWith">
+                        <f:facet name="header">Department</f:facet>
+                        <h:commandLink style="text-decoration: none"
+                                       value="#{emp.department.departmentName}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header"></f:facet>
+                        <p:commandLink value="Edit" style="text-decoration: none;color:blue"
+                                       action="#{staffDetailController.rowSelectDataAction(emp)}"
+                                       update=":staffRegForm"/>
+                        <p:commandLink value="Delete" style="text-decoration: none;color: red;margin-left: 20px"
+                                       update=":staffDetailListForm"
+                                       action="#{staffDetailController.deleteButtonAction(emp)}"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+
+        </p:panel>
+    </h:body>
+</html>
+

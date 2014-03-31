@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:messages/>
+        <div style="float:left; width:49%; margin-right:1%;">
+            <h:form>
+                <h:panelGroup layout="block">
+                    <h2 class="report-group-heading">Client Information Report</h2>
+                    <div class="report-group">
+                        <h:panelGrid columns="1">
+                            <h:commandLink value="Client Detail List" target="_blank"
+                                           action="#{generalReportContoller.generateClientDetailReport()}"/>
+                        </h:panelGrid>
+
+                        <h:panelGrid columns="4" style="margin-top: 20px;margin-left: -20px">
+                            <h:outputLabel value="Client Name:"/>
+                            <h:selectOneMenu styleClass="textarea" value="#{generalReportContoller.clientDetailId}">
+                                <f:selectItem itemLabel="----------- Select One -----------"/>
+                                <f:selectItem itemLabel="ALL CLIENTS" itemValue="ALL_CLIENTS"/>
+                                <f:selectItems value="#{commonOptions.clientsDetailOptions}"/>
+                            </h:selectOneMenu>
+                            <h:selectOneMenu styleClass="textarea" value="#{generalReportContoller.reportParameter}">
+                                <f:selectItem itemLabel="---- Select Report Type ----"/>
+                                <f:selectItem itemLabel="Contact List" itemValue="CONTACTS"/>
+                                <f:selectItem itemLabel="Equipments List" itemValue="EQUIPMENTS"/>
+                            </h:selectOneMenu>
+                            <h:commandLink value="Generate Report" target="_blank" action="#{generalReportContoller.generateClientReportByParameter()}"/>
+                        </h:panelGrid>
+                    </div>
+                    <h2 class="report-group-heading">Client Services Report</h2>
+                    <div class="report-group">
+
+                        <h:panelGrid columns="5" style="margin-left: -20px">
+                            <h:outputLabel value="Activity From:"/>
+                            <p:calendar navigator="true" showOn="button" size="9" value="#{generalReportContoller.activityFrom}"/>
+                            <h:outputLabel value="Activity To:"/>
+                            <p:calendar navigator="true" showOn="button" size="9" value="#{generalReportContoller.activityTo}"/>
+
+                        </h:panelGrid>
+
+                        <h:panelGrid columns="4" style="margin-left: 0px">
+
+                            <h:selectOneMenu styleClass="textarea" value="#{generalReportContoller.serviceClientId}">
+                                <f:selectItem itemLabel="---------- Select Client Name ---------"/>
+                                <f:selectItem itemLabel="ALL CLIENTS" itemValue="ALL_CLIENTS"/>
+                                <f:selectItems value="#{commonOptions.clientsDetailOptions}"/>
+                            </h:selectOneMenu>
+                            <h:selectOneMenu styleClass="textarea" value="#{generalReportContoller.serviceRequestParameter}">
+                                <f:selectItem itemLabel="---- Select Report Type ----"/>
+                                <f:selectItem itemLabel="Service(s) Request" itemValue="CLIENT_SERVICE_REQUEST"/>
+                                <f:selectItem itemLabel="" itemValue=""/>
+                            </h:selectOneMenu>
+                            <h:commandLink value="Generate Report" target="_blank" action="#{generalReportContoller.generateClientServiceRequestReport()}"/>
+                        </h:panelGrid>
+
+                    </div>
+
+                    <h2 class="report-group-heading">Service Model Report</h2>
+                    <div class="report-group">
+
+                        <h:panelGrid columns="4" style="margin-left: 0px">
+
+                            <h:selectOneMenu styleClass="textarea" value="#{generalReportContoller.serviceModelClient}">
+                                <f:selectItem itemLabel="---------- Select Client Name ---------"/>                              
+                                <f:selectItems value="#{commonOptions.clientsDetailOptions}"/>
+                                <p:ajax event="change" listener="#{generalReportContoller.customerDetailPDP()}"/>
+                            </h:selectOneMenu>
+                            <h:outputText/>
+                            <h:selectOneMenu styleClass="textarea" value="#{generalReportContoller.selectedProductType}">
+                                <f:selectItem itemLabel="---- Select Service Type ----"/>
+                                <f:selectItems value="#{commonOptions.productTypesOptions}"/>
+                                <p:ajax event="change" listener="#{generalReportContoller.populateClientServiceModel()}" update="clientServiceModel"/>
+                            </h:selectOneMenu>
+                            <h:outputText/>
+                        </h:panelGrid>
+
+                        <h:panelGrid columns="4" style="margin-left: 0px">
+                            <h:selectOneMenu styleClass="textarea" id="clientServiceModel"
+                                             value="#{generalReportContoller.serviceRequestParameter}">
+                                <f:selectItem itemLabel="---- Select Service Model ----"/>                                
+                                <f:selectItems value="#{generalReportContoller.clientEquipmentOption}"/>
+                            </h:selectOneMenu>
+                            <h:outputText/>
+                            <h:commandLink value="Generate Report" target="_blank" action="#{generalReportContoller.generateClientServiceRequestReport()}"/>
+                        </h:panelGrid>
+                    </div>
+                </h:panelGroup>
+            </h:form>
+        </div>
+
+        <div style="float:right; width:49%; margin-right:1px;">
+            <h:form>
+                <h:panelGroup layout="block">
+
+                </h:panelGroup>
+            </h:form>
+        </div>
+
+    </h:body>
+</html>
+
