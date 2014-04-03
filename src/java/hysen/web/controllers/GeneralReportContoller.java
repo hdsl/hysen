@@ -48,10 +48,11 @@ public class GeneralReportContoller implements Serializable {
     @Inject
     private CustomCrudService customCrudService;
 
-    String clientDetailId, reportParameter, serviceRequestParameter;
+    String clientDetailId, reportParameter, serviceRequestParameter, serviceModelTypeId;
 
     String serviceClientId, serviceModelClient, selectedProductType;
     private Date activityFrom, activityTo;
+    private Date serviceModelActivityFrom, serviceModelActivityTo;
     private SelectItem[] clientEquipmentOption;
 //</editor-fold>
 
@@ -64,7 +65,7 @@ public class GeneralReportContoller implements Serializable {
 //        if (conversation.isTransient()) {
 //            conversation.begin();
 //        }
-        
+
     }
 
     public void endConversation() {
@@ -86,8 +87,6 @@ public class GeneralReportContoller implements Serializable {
 
             ClientTableModel ctm = new ClientTableModel();
 
-            System.out.println("cd..........."+cd);
-            
             ctm.setClientName(cd.getClientName());
             ctm.setIndustryName(cd.getIndustryType().getIndustryName());
             ctm.setClientPrimaryContact(cd.getClientPrimaryContact());
@@ -202,6 +201,8 @@ public class GeneralReportContoller implements Serializable {
                     HysenReportMgr.instance().initDefaultParamenters(userSession.getInstList());
 
                     HysenReportMgr.instance().addParam("reportTitle", "Client Service Requests Report");
+                    HysenReportMgr.instance().addParam("transactionTo", activityFrom);
+                    HysenReportMgr.instance().addParam("transactionFrom", activityTo);
 
                     HysenReportMgr.instance().showPDFReport(srtmList, HysenReportMgr.CLIENT_REQUEST_REPORT);
 
@@ -213,22 +214,16 @@ public class GeneralReportContoller implements Serializable {
 
         endConversation();
     }
-    
-    public void customerDetailPDP(){
-         System.out.println("selected client................."+serviceModelClient);
+
+    public void customerDetailPDP() {
+        System.out.println("selected client................." + serviceModelClient);
     }
 
     public void populateClientServiceModel() {
 
-        System.out.println("selected client................."+serviceModelClient);
-        System.out.println("selected product................."+selectedProductType);
-        
-        beginConversation();
-
         int count = 0;
 
         List<ClientProduct> clientProductList = customCrudService.clientProductsList(serviceModelClient, selectedProductType);
-        System.out.println("product list.............."+clientProductList);
 
         clientEquipmentOption = new SelectItem[clientProductList.size()];
 
@@ -242,9 +237,50 @@ public class GeneralReportContoller implements Serializable {
 
     public void generateServiceModelReport() {
 
+        List<ServiceRequestTableModel> srtmList = new ArrayList<>();
+
+        ClientProduct clientProduct = crudService.find(ClientProduct.class, serviceModelTypeId);
+
+        if (clientProduct != null) {
+
+            List<ServiceRequest> serviceRequestList = customCrudService.clientServiceModelRequestList(activityFrom, activityTo, clientProduct.getCommonId());
+
+            for (ServiceRequest sr : serviceRequestList) {
+
+                ServiceRequestTableModel srtm = new ServiceRequestTableModel();
+
+                srtm.setRequestId(sr.getCommonId());
+                srtm.setRequestDate(sr.getRequestDate());
+                srtm.setServiceComponent(sr.getServiceComponent().getComponentName());
+                srtm.setRequestDescription(sr.getRequestDescription().replaceAll("<[^>]*>", ""));
+                srtm.setServiceEngineer(sr.getStaffDetail().getStaffName());
+                srtm.setRequestStatus(sr.getRequestStatus());
+                srtm.setClosedDate(sr.getServiceEndDate());
+
+                srtmList.add(srtm);
+            }
+
+            HysenReportMgr.instance().initDefaultParamenters(userSession.getInstList());
+
+            HysenReportMgr.instance().addParam("clientName", clientProduct.getClientDetail().getClientName());
+            HysenReportMgr.instance().addParam("serviceLocation", clientProduct.getProductLocation());
+            HysenReportMgr.instance().addParam("serviceType", clientProduct.getProductTypeModel().getProductTypes().getProductName());
+            HysenReportMgr.instance().addParam("serviceModel", clientProduct.getProductTypeModel().getProductModel());
+            HysenReportMgr.instance().addParam("serialNumber", clientProduct.getSerialNumber());
+            HysenReportMgr.instance().addParam("transactionTo", serviceModelActivityFrom);
+            HysenReportMgr.instance().addParam("transactionFrom", serviceModelActivityTo);
+
+            HysenReportMgr.instance().addParam("reportTitle", "Client Service Model Requests Report");
+
+            HysenReportMgr.instance().showPDFReport(srtmList, HysenReportMgr.CLIENT_SERVICE_MODEL_REQUEST_REPORT);
+
+        } else {
+            StringConstants.showApprioprateMessage("Serial Number does not exist");
+        }
     }
 
 //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Getters and Setters">
     public CrudService getCrudService() {
         return crudService;
@@ -252,6 +288,30 @@ public class GeneralReportContoller implements Serializable {
 
     public void setCrudService(CrudService crudService) {
         this.crudService = crudService;
+    }
+
+    public Date getServiceModelActivityFrom() {
+        return serviceModelActivityFrom;
+    }
+
+    public void setServiceModelActivityFrom(Date serviceModelActivityFrom) {
+        this.serviceModelActivityFrom = serviceModelActivityFrom;
+    }
+
+    public Date getServiceModelActivityTo() {
+        return serviceModelActivityTo;
+    }
+
+    public void setServiceModelActivityTo(Date serviceModelActivityTo) {
+        this.serviceModelActivityTo = serviceModelActivityTo;
+    }
+
+    public String getServiceModelTypeId() {
+        return serviceModelTypeId;
+    }
+
+    public void setServiceModelTypeId(String serviceModelTypeId) {
+        this.serviceModelTypeId = serviceModelTypeId;
     }
 
     public String getServiceModelClient() {

@@ -21,7 +21,7 @@ public class HysenReportMgr extends JasperReportManager implements Serializable 
 
     public static final String CLIENT_REQUEST_REPORT = REPORT_BASE_DIR + "client_service_request.jasper";
 //
-//    public static final String STUDENT_CONTACT_REPORT = REPORT_BASE_DIR + "student_contact.jasper";
+    public static final String CLIENT_SERVICE_MODEL_REQUEST_REPORT = REPORT_BASE_DIR + "ind_equip_request.jasper";
 //
 //    public static final String FEES_PAYMENT_RECEIPT = REPORT_BASE_DIR + "fees_receipt.jasper";
 //

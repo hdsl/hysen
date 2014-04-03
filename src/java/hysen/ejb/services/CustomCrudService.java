@@ -59,6 +59,19 @@ public class CustomCrudService {
         }
     }
 
+//    public ClientProduct clientServiceModel(String serialNumber) {
+//
+//        String qry = "SELECT s FROM ClientProduct s WHERE s.serialNumber = '" + serialNumber + "' AND s.deleted = 'N'";
+//
+//        try {
+//
+//            return (ClientProduct) em.createQuery(qry).getSingleResult();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
     public List<ServiceRequest> clientServiceRequestList(Date startDate, Date endDate, String clientId) {
 
         List<ServiceRequest> serviceRequestList;
@@ -76,6 +89,44 @@ public class CustomCrudService {
         } catch (Exception e) {
             e.printStackTrace();
             return Collections.EMPTY_LIST;
+        }
+
+    }
+
+    public List<ServiceRequest> clientServiceModelRequestList(Date startDate, Date endDate, String serialNumber) {
+
+        List<ServiceRequest> serviceRequestList;
+
+        String qry = "SELECT t FROM ServiceRequest t WHERE t.clientProduct.commonId = '" + serialNumber + "' "
+                + "AND t.requestDate BETWEEN :startDate AND :endDate AND t.deleted='N' "
+                + "ORDER BY t.requestDate ";
+
+        try {
+
+            serviceRequestList = em.createQuery(qry).setParameter("startDate", startDate, TemporalType.TIMESTAMP).setParameter("endDate", endDate, TemporalType.TIMESTAMP).getResultList();
+
+            return serviceRequestList;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.EMPTY_LIST;
+        }
+
+    }
+
+    public ServiceRequest clientPMScheduleList(String pmPeriod, int pmYear, String serialNumber) {
+
+        String qry = "SELECT t FROM ServiceRequest t WHERE t.clientProduct.commonId = '" + serialNumber + "' "
+                + "AND t.pmPeriod = '" + pmPeriod + "' AND t.pmYear='" + pmYear + "' AND t.deleted='N' "
+                + "ORDER BY t.serviceStartDate ";
+
+        try {
+
+            return (ServiceRequest) em.createQuery(qry).getSingleResult();
+
+        } catch (Exception e) {
+//            e.printStackTrace();
+            return null;
         }
 
     }

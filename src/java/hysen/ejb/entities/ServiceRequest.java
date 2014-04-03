@@ -52,6 +52,15 @@ public class ServiceRequest extends CommonEntity{
     @Column(name = "request_priority")
     private String requestPriority;
    
+    @Column(name = "service_request_id")
+    private String serviceRequestId;
+    
+    @Column(name = "pm_period")
+    private String pmPeriod;
+    
+    @Column(name = "pm_year")
+    private Integer pmYear;
+   
     @Column(name = "email_to_notify")
     private String emailToNotify;
   
@@ -93,6 +102,30 @@ public class ServiceRequest extends CommonEntity{
 
     public void setClientContactPerson(String clientContactPerson) {
         this.clientContactPerson = clientContactPerson;
+    }
+
+    public String getPmPeriod() {
+        return pmPeriod;
+    }
+
+    public void setPmPeriod(String pmPeriod) {
+        this.pmPeriod = pmPeriod;
+    }
+
+    public Integer getPmYear() {
+        return pmYear;
+    }
+
+    public void setPmYear(Integer pmYear) {
+        this.pmYear = pmYear;
+    }
+
+    public String getServiceRequestId() {
+        return serviceRequestId;
+    }
+
+    public void setServiceRequestId(String serviceRequestId) {
+        this.serviceRequestId = serviceRequestId;
     }
 
     public ProductTypes getProductType() {

@@ -54,10 +54,6 @@ public class ServiceRequestController implements Serializable {
 
     String saveEditButtonText = "Submit Request Detail", serviceComponentId, assignedEngineer;
 
-    //Unusual declaration. Check up later
-    String requestMode, requestPriority, requestStatus, requestDescription, serviceResolution;
-    Date requestDate, serviceStartDate, serviceEndDate;/////
-
     String parameterId = null;
 
     private SelectItem[] selectClientContactOption;
@@ -86,7 +82,7 @@ public class ServiceRequestController implements Serializable {
         int in = generatePk.getPkValue();
         countId = 1 + in;
 
-        serviceRequestId = "HDSL " + countId.toString();
+        serviceRequestId = "HD(SR) " + countId.toString();
         serviceRequest = new ServiceRequest();
     }
 
@@ -116,6 +112,10 @@ public class ServiceRequestController implements Serializable {
         beginConversation();
         renderRequestForm = false;
         renderRequestListForm = true;
+    }
+    
+    public void addServiceComponent(){
+        
     }
 
     public void showSelectedClientContacts() {
@@ -186,20 +186,13 @@ public class ServiceRequestController implements Serializable {
                 ServiceModelComponent modelComponent = crudService.find(ServiceModelComponent.class, serviceComponentId);
                 StaffDetail staffDetail = crudService.find(StaffDetail.class, assignedEngineer);
 
-                serviceRequest.setCommonId(serviceRequestId);
+                serviceRequest.setCommonId(StringConstants.generateID());
+                serviceRequest.setServiceRequestId(serviceRequestId);
                 serviceRequest.setClientDetail(clientDetail);
                 serviceRequest.setProductType(productTypes);
                 serviceRequest.setClientProduct(clientProduct);
                 serviceRequest.setServiceComponent(modelComponent);
                 serviceRequest.setStaffDetail(staffDetail);
-                serviceRequest.setRequestMode(requestMode);
-                serviceRequest.setRequestPriority(requestPriority);
-                serviceRequest.setRequestStatus(requestStatus);
-                serviceRequest.setRequestDescription(requestDescription);
-                serviceRequest.setServiceResolution(serviceResolution);
-                serviceRequest.setRequestDate(requestDate);
-                serviceRequest.setServiceStartDate(serviceStartDate);
-                serviceRequest.setServiceEndDate(serviceEndDate);
 
                 if (crudService.save(serviceRequest) != null) {
 
@@ -226,14 +219,6 @@ public class ServiceRequestController implements Serializable {
                 serviceRequest.setClientProduct(clientProduct);
                 serviceRequest.setServiceComponent(modelComponent);
                 serviceRequest.setStaffDetail(staffDetail);
-                serviceRequest.setRequestMode(requestMode);
-                serviceRequest.setRequestPriority(requestPriority);
-                serviceRequest.setRequestStatus(requestStatus);
-                serviceRequest.setRequestDescription(requestDescription);
-                serviceRequest.setServiceResolution(serviceResolution);
-                serviceRequest.setRequestDate(requestDate);
-                serviceRequest.setServiceStartDate(serviceStartDate);
-                serviceRequest.setServiceEndDate(serviceEndDate);
 
                 if (crudService.update(serviceRequest) == true) {
 
@@ -288,14 +273,6 @@ public class ServiceRequestController implements Serializable {
         selectedProductType = "";
         selectedEquipLocation = "";
         clientEquipmentOption = null;
-        requestMode = "";
-        requestPriority = "";
-        requestStatus = "";
-        requestDescription = "";
-        serviceResolution = "";
-        requestDate = null;
-        serviceEndDate = null;
-        serviceStartDate = null;
         saveEditButtonText = "Submit Request Detail";
     }
 
@@ -309,13 +286,8 @@ public class ServiceRequestController implements Serializable {
 
             selectedClientId = serviceRequest.getClientDetail().getCommonId();
             selectedProductType = serviceRequest.getProductType().getCommonId();
-            serviceRequestId = serviceRequest.getCommonId();
-            requestMode = serviceRequest.getRequestMode();
+            serviceRequestId = serviceRequest.getServiceRequestId();
             assignedEngineer = serviceRequest.getStaffDetail().getCommonId();
-            requestPriority = serviceRequest.getRequestPriority();
-            requestStatus = serviceRequest.getRequestStatus();
-            requestDescription = serviceRequest.getRequestDescription();
-            serviceResolution = serviceRequest.getServiceResolution();
 
             int count = 0;
 
@@ -366,78 +338,6 @@ public class ServiceRequestController implements Serializable {
 
     public void setCrudService(CrudService crudService) {
         this.crudService = crudService;
-    }
-
-    public Date getRequestDate() {
-        return requestDate;
-    }
-
-    public void setRequestDate(Date requestDate) {
-        this.requestDate = requestDate;
-    }
-
-    public Date getServiceStartDate() {
-        return serviceStartDate;
-    }
-
-    public void setServiceStartDate(Date serviceStartDate) {
-        this.serviceStartDate = serviceStartDate;
-    }
-
-    public Date getServiceEndDate() {
-        return serviceEndDate;
-    }
-
-    public void setServiceEndDate(Date serviceEndDate) {
-        this.serviceEndDate = serviceEndDate;
-    }
-//
-//    public Conversation getConversation() {
-//        return conversation;
-//    }
-//
-//    public void setConversation(Conversation conversation) {
-//        this.conversation = conversation;
-//    }
-
-    public String getRequestPriority() {
-        return requestPriority;
-    }
-
-    public void setRequestPriority(String requestPriority) {
-        this.requestPriority = requestPriority;
-    }
-
-    public String getRequestStatus() {
-        return requestStatus;
-    }
-
-    public void setRequestStatus(String requestStatus) {
-        this.requestStatus = requestStatus;
-    }
-
-    public String getRequestDescription() {
-        return requestDescription;
-    }
-
-    public void setRequestDescription(String requestDescription) {
-        this.requestDescription = requestDescription;
-    }
-
-    public String getServiceResolution() {
-        return serviceResolution;
-    }
-
-    public void setServiceResolution(String serviceResolution) {
-        this.serviceResolution = serviceResolution;
-    }
-
-    public String getRequestMode() {
-        return requestMode;
-    }
-
-    public void setRequestMode(String requestMode) {
-        this.requestMode = requestMode;
     }
 
     public String getParameterId() {

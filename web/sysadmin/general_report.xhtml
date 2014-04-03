@@ -65,6 +65,15 @@
                     <h2 class="report-group-heading">Service Model Report</h2>
                     <div class="report-group">
 
+                        <h:panelGrid columns="5" style="margin-left: -20px">
+                            
+                            <h:outputLabel value="Activity From:"/>
+                            <p:calendar navigator="true" showOn="button" size="9" value="#{generalReportContoller.serviceModelActivityFrom}"/>
+                            <h:outputLabel value="Activity To:"/>
+                            <p:calendar navigator="true" showOn="button" size="9" value="#{generalReportContoller.serviceModelActivityTo}"/>
+
+                        </h:panelGrid>
+
                         <h:panelGrid columns="4" style="margin-left: 0px">
 
                             <h:selectOneMenu styleClass="textarea" value="#{generalReportContoller.serviceModelClient}">
@@ -83,12 +92,12 @@
 
                         <h:panelGrid columns="4" style="margin-left: 0px">
                             <h:selectOneMenu styleClass="textarea" id="clientServiceModel"
-                                             value="#{generalReportContoller.serviceRequestParameter}">
+                                             value="#{generalReportContoller.serviceModelTypeId}">
                                 <f:selectItem itemLabel="---- Select Service Model ----"/>                                
                                 <f:selectItems value="#{generalReportContoller.clientEquipmentOption}"/>
                             </h:selectOneMenu>
                             <h:outputText/>
-                            <h:commandLink value="Generate Report" target="_blank" action="#{generalReportContoller.generateClientServiceRequestReport()}"/>
+                            <h:commandLink value="Generate Report" target="_blank" action="#{generalReportContoller.generateServiceModelReport()}"/>
                         </h:panelGrid>
                     </div>
                 </h:panelGroup>

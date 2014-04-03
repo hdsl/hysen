@@ -14,18 +14,24 @@ import java.util.Date;
  */
 public class ServiceRequestTableModel {
     
-    private String requestId;
-    private String clientName;
     private String serialNumber;
     private String serviceLocation;
     private String serviceType;
     private String serviceModel;
+    private String clientName;
+    private String requestId;
     private Date requestDate;
     private String serviceComponent;
     private String requestDescription;
     private String serviceEngineer;
+    private String serviceEngineerId;
     private String requestStatus;
+    private String clientProductId;
     private Date closedDate;
+    
+    private Date pmScheduledDate;
+    private Date pmCompletedDate;
+    
 
     public String getRequestId() {
         return requestId;
@@ -33,6 +39,38 @@ public class ServiceRequestTableModel {
 
     public void setRequestId(String requestId) {
         this.requestId = requestId;
+    }
+
+    public String getClientProductId() {
+        return clientProductId;
+    }
+
+    public void setClientProductId(String clientProductId) {
+        this.clientProductId = clientProductId;
+    }
+
+    public String getServiceEngineerId() {
+        return serviceEngineerId;
+    }
+
+    public void setServiceEngineerId(String serviceEngineerId) {
+        this.serviceEngineerId = serviceEngineerId;
+    }
+
+    public Date getPmScheduledDate() {
+        return pmScheduledDate;
+    }
+
+    public void setPmScheduledDate(Date pmScheduledDate) {
+        this.pmScheduledDate = pmScheduledDate;
+    }
+
+    public Date getPmCompletedDate() {
+        return pmCompletedDate;
+    }
+
+    public void setPmCompletedDate(Date pmCompletedDate) {
+        this.pmCompletedDate = pmCompletedDate;
     }
 
     public String getSerialNumber() {

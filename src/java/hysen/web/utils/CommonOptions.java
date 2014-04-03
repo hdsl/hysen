@@ -4,6 +4,9 @@
  */
 package hysen.web.utils;
 
+import com.sabonay.common.utils.DateTimeUtils;
+import com.sabonay.common.utils.NumberRange;
+import com.sabonay.modules.web.jsf.utilities.JsfUtil;
 import hysen.ejb.entities.AccessRight;
 import hysen.ejb.entities.ClientDetail;
 import hysen.ejb.entities.Department;
@@ -16,6 +19,7 @@ import hysen.ejb.entities.StaffDetail;
 import hysen.ejb.services.CrudService;
 import hysen.ejb.services.CustomCrudService;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 import javax.faces.bean.RequestScoped;
 import javax.faces.model.SelectItem;
@@ -55,6 +59,16 @@ public class CommonOptions implements Serializable {
     private SelectItem[] engineeringStaffOption;
 
     public CommonOptions() {
+        
+        List<Integer> years = NumberRange.generateRange(1980,
+                DateTimeUtils.getCurrentYear());
+
+        Collections.reverse(years);
+
+        calendarYears = JsfUtil.createSelectItems(years, false);
+
+        calenderMonthNamesOptions = JsfUtil.createSelectItems(DateTimeUtils.getMonthNames(), true);
+        
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters and Setters">
@@ -85,7 +99,7 @@ public class CommonOptions implements Serializable {
                 gender = "(Mr.)";
             }
 
-            engineeringStaffOption[count] = new SelectItem(cc.getCommonId(), cc.getStaffName().toUpperCase()+gender);
+            engineeringStaffOption[count] = new SelectItem(cc.getCommonId(), cc.getStaffName().toUpperCase() + gender);
 
             count++;
 

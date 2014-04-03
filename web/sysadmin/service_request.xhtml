@@ -140,7 +140,7 @@
                         </h:selectOneMenu>                        
                         <h:outputLabel value="Priority:"/>
                         <h:selectOneMenu styleClass="textarea"
-                                         value="#{serviceRequestController.requestPriority}">
+                                         value="#{serviceRequestController.serviceRequest.requestPriority}">
                             <f:selectItem itemLabel="....Select One...."/>
                             <f:selectItem itemLabel="Normal" itemValue="Normal"/>
                             <f:selectItem itemLabel="Low" itemValue="Low"/>
@@ -149,7 +149,7 @@
                         </h:selectOneMenu>
                         <h:outputLabel value="Status:"/>
                         <h:selectOneMenu styleClass="textarea"  required="true" requiredMessage="Request Status is required"
-                                         value="#{serviceRequestController.requestStatus}">
+                                         value="#{serviceRequestController.serviceRequest.requestStatus}">
                             <f:selectItem itemLabel="....Select One...."/>
                             <f:selectItem itemLabel="Opened" itemValue="Opened"/>
                             <f:selectItem itemLabel="Pending" itemValue="Pending"/>
@@ -167,12 +167,24 @@
                         </h:selectOneMenu>
                         <h:outputLabel value="Request Date:"/>
                         <p:calendar navigator="true" pattern="MM/dd/yyyy HH:mm"
-                                    showOn="button" value="#{serviceRequestController.requestDate}"/>
+                                    showOn="button" value="#{serviceRequestController.serviceRequest.requestDate}"/>
                     </h:panelGrid>
-                    <h:panelGrid columns="2" style="margin-left: -20px">
-                        <h:outputLabel value="Description:"/>
-                        <p:editor id="editor" width="600" value="#{serviceRequestController.requestDescription}"/> 
+
+                    <h:panelGrid columns="4" style="margin-left: -20px">
+                        <h:outputLabel value="Description:" style="color: red;font-size: 12px"/>
+                        <p:editor id="editor" width="400" height="200" value="#{serviceRequestController.serviceRequest.requestDescription}"/> 
+                        <h:outputLabel value="Resolution:" style="color: green;font-size: 12px"/>
+                        <p:editor id="resolution" width="400" height="200" value="#{serviceRequestController.serviceRequest.serviceResolution}"/> 
+
                     </h:panelGrid>
+
+                    <h:panelGrid columns="4" style="margin-left: 0px;margin-top: 10px">
+                        <h:commandButton value="Add Service Component"
+                                         action="#{serviceRequestController.saveEditButtonAction()}"/>
+
+                    </h:panelGrid>
+
+
                 </p:fieldset>
 
                 <p:fieldset legend="Assignment(s)" style="margin-top: 10px">
@@ -187,30 +199,32 @@
                         <h:inputText styleClass="textarea" style="width: 300px" readonly="true"/>
                         <h:outputLabel value="Start Date:" style="float: right"/>
                         <p:calendar navigator="true" pattern="MM/dd/yyyy HH:mm"
-                                    showOn="button" value="#{serviceRequestController.serviceStartDate}"/>
+                                    showOn="button" value="#{serviceRequestController.serviceRequest.serviceStartDate}"/>
                         <h:outputLabel value="End Date:" style="float: right"/>
                         <p:calendar navigator="true" pattern="MM/dd/yyyy HH:mm"
-                                    showOn="button" value="#{serviceRequestController.serviceEndDate}"/>
+                                    showOn="button" value="#{serviceRequestController.serviceRequest.serviceEndDate}"/>
 
                     </h:panelGrid>
-                    <!--                    <h:panelGrid columns="4" style="margin-top: 20px">
-                    
-                                            <p:commandButton value="Include Attachment"/>  
-                                            <p:fileUpload mode="simple"/>  
-                    
-                                            <p:fileUpload  mode="simple"  
-                                                           sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" auto="true"
-                                                           oncomplete="javascript:window.location.reload()"/>
-                                        </h:panelGrid>-->
                 </p:fieldset>                
 
-                <p:accordionPanel style="margin-top: 10px"
-                                  cache="true"  activeIndex="1">  
-                    <p:tab title="Resolution">  
-                        <p:editor style="width: 50%" id="resolution"
-                                  value="#{serviceRequestController.serviceResolution}"/>
-                    </p:tab>
-                </p:accordionPanel>
+                <p:dataTable style="margin-top: 5px;">
+                    <p:column style="width: 20%">
+                        <f:facet name="header">Service Component</f:facet>
+                        <h:outputText/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Request Description</f:facet>
+                        <h:outputText/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Request Resolution</f:facet>
+                        <h:outputText/>
+                    </p:column>
+                    <p:column style="width: 5%">
+                        <f:facet name="header"></f:facet>
+                        <p:commandLink value="Delete" style="text-decoration: none;color: red;margin-left: 20px"/>
+                    </p:column>
+                </p:dataTable>
 
                 <h:panelGrid columns="3" style="margin-top: 20px;margin-left: 400px">
                     <h:commandButton value="#{serviceRequestController.saveEditButtonText}" styleClass="commandButton"

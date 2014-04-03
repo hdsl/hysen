@@ -15,6 +15,8 @@
 	<parameter name="companyTelephone" class="java.lang.String"/>
 	<parameter name="footerText" class="java.lang.String"/>
 	<parameter name="companyAddress" class="java.lang.String"/>
+	<parameter name="transactionTo" class="java.util.Date"/>
+	<parameter name="transactionFrom" class="java.util.Date"/>
 	<field name="clientName" class="java.lang.String"/>
 	<field name="serviceModel" class="java.lang.String"/>
 	<field name="serialNumber" class="java.lang.String"/>
@@ -212,33 +214,33 @@
 	<title>
 		<band height="81" splitType="Stretch">
 			<line>
-				<reportElement uuid="b7ebc3a7-3bca-47b2-98d4-0822967bd070" x="-1" y="79" width="550" height="2"/>
+				<reportElement uuid="b7ebc3a7-3bca-47b2-98d4-0822967bd070" x="-1" y="79" width="797" height="2"/>
 				<graphicElement>
 					<pen lineWidth="2.0" lineColor="#CCCCCC"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement uuid="fe6be4cb-2bca-477a-ae20-863c74062851" x="0" y="78" width="549" height="1"/>
+				<reportElement uuid="fe6be4cb-2bca-477a-ae20-863c74062851" x="0" y="78" width="796" height="1"/>
 				<graphicElement>
 					<pen lineWidth="1.5"/>
 				</graphicElement>
 			</line>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="b693f51f-c27b-4051-a8ea-059259070be8" x="418" y="39" width="128" height="12" forecolor="#A0B630"/>
+				<reportElement uuid="b693f51f-c27b-4051-a8ea-059259070be8" x="642" y="39" width="152" height="12" forecolor="#A0B630"/>
 				<textElement>
 					<font size="8" isBold="true" isItalic="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{companyName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="8605f950-dd0d-4685-8554-bddcad3074e7" x="418" y="52" width="128" height="12" forecolor="#A0B630"/>
+				<reportElement uuid="8605f950-dd0d-4685-8554-bddcad3074e7" x="642" y="52" width="152" height="12" forecolor="#A0B630"/>
 				<textElement>
 					<font size="8" isBold="true" isItalic="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{companyAddress}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="b9a2d08f-7781-4960-96b0-ef7e13a6f3fb" x="418" y="64" width="128" height="12" forecolor="#A0B630"/>
+				<reportElement uuid="b9a2d08f-7781-4960-96b0-ef7e13a6f3fb" x="642" y="64" width="152" height="12" forecolor="#A0B630"/>
 				<textElement>
 					<font size="8" isBold="true" isItalic="true"/>
 				</textElement>
@@ -251,7 +253,7 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="25" splitType="Stretch">
+		<band height="40" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
 				<reportElement uuid="35150476-2852-4e6e-a5cb-1db49ba0afe2" key="textField" mode="Opaque" x="0" y="2" width="796" height="21" forecolor="#FFFFFF" backcolor="#A0B630"/>
 				<box>
@@ -262,13 +264,43 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$P{reportTitle}]]></textFieldExpression>
 			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="963d7efd-8be6-433b-89fe-fbbf64150ea8" key="textField" x="90" y="23" width="156" height="16"/>
+				<box>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{transactionFrom}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f6f2137d-4031-4b14-9793-faf403f9b8d1" key="staticText-4" x="0" y="25" width="88" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Book Antiqua" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Transaction From:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="2fdf605d-138c-4edc-b3f6-a72ea42c879e" key="textField" x="436" y="23" width="156" height="16"/>
+				<box>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{transactionTo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="3a42d731-11f7-4e31-8db1-0bdd5156c1b4" key="staticText-4" x="324" y="25" width="107" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Book Antiqua" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Transaction To:]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="31" splitType="Stretch">
+		<band height="17" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="9024c363-bf7c-4ca5-ae8e-5298205a2798" x="20" y="0" width="37" height="12"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -346,12 +378,6 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{serviceLocation}]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement uuid="1a5ff083-1e32-41ad-bd9f-7b1e6a3eeff6" x="0" y="29" width="796" height="1"/>
-				<graphicElement>
-					<pen lineWidth="1.0"/>
-				</graphicElement>
-			</line>
 		</band>
 	</detail>
 	<columnFooter>
