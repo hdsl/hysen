@@ -32,6 +32,8 @@
     <class>hysen.ejb.entities.Supplier</class>
     <class>hysen.ejb.entities.TransType</class>
     <class>hysen.ejb.entities.UserAccount</class>
+    <class>hysen.ejb.entities.Regions</class>
+    <class>hysen.ejb.entities.ServiceSoftware</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties/>
   </persistence-unit>

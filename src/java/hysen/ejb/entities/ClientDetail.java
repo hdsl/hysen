@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package hysen.ejb.entities;
 
 import javax.persistence.Column;
@@ -23,48 +22,47 @@ import javax.persistence.Table;
 @Table(name = "client_detail")
 @NamedQueries({
     @NamedQuery(name = "ClientDetail.findAll", query = "SELECT a FROM ClientDetail a")})
-public class ClientDetail extends CommonEntity{
-    
-    public ClientDetail(){
-        
-    }
-    
+public class ClientDetail extends CommonEntity {
+
     @Column(name = "client_name")
     private String clientName;
-    
+
     @Column(name = "client_location")
     private String clientLocation;
-    
+
     @Column(name = "client_address")
     private String clientAddress;
-    
+
     @Column(name = "client_email")
     private String clientEmail;
-    
+
     @Column(name = "client_primary_contact")
     private String clientPrimaryContact;
-    
+
     @Column(name = "client_other_contact")
     private String clientOtherContact;
-    
+
     @Column(name = "client_website")
     private String clientWebsite;
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "industry_type")
     private IndustryType industryType;
-    
+
     @Column(name = "contact_person")
     private String contactPerson;
-    
+
     @Column(name = "contact_person_email")
     private String contactPersonEmail;
-    
+
     @Column(name = "contact_person_phone_number")
     private String contactPersonPhoneNumber;
-    
+
     @Column(name = "contact_job_title")
-    private String contactJobTitle;    
+    private String contactJobTitle;
+
+    public ClientDetail() {
+    }
 
     public String getClientName() {
         return clientName;
@@ -161,7 +159,5 @@ public class ClientDetail extends CommonEntity{
     public void setContactPersonPhoneNumber(String contactPersonPhoneNumber) {
         this.contactPersonPhoneNumber = contactPersonPhoneNumber;
     }
-    
-    
-    
+
 }

@@ -67,6 +67,8 @@ public class ClientInfoController implements Serializable {
         beginConversation();
 
         clientDetail.setCommonId(StringConstants.generateID());
+
+        renderForm = true;
     }
 
     public String saveEditButtonAction() {

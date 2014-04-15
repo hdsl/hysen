@@ -12,62 +12,27 @@
         <p:panel style="overflow: auto;">
             <f:facet name="header"><span style="float: left;font-weight: bolder;font-variant: small-caps">Client Product/Service</span></f:facet>
 
-            <h:form id="clientProductEntryForm">
-                <h:panelGroup layout="block">
-                    <h:panelGrid columns="6">
-                        <h:outputLabel value="Client Detail:"/>
-                        <h:selectOneMenu styleClass="textarea"
-                                         value="#{clientProductsController.clientDetailId}">
-                            <f:selectItem itemLabel="....Select One...."/>
-                            <f:selectItems value="#{commonOptions.clientsDetailOptions}"/>
-                        </h:selectOneMenu>
-                        <h:outputLabel value="Product Type:"/>
-                        <h:selectOneMenu styleClass="textarea"
-                                         value="#{clientProductsController.productId}">
-                            <f:selectItem itemLabel="....Select One...."/>
-                            <f:selectItems value="#{commonOptions.productTypesOptions}"/>
-                            <p:ajax event="change" listener="#{clientProductsController.loadProductModel()}" update="productModelOption"/>
-                        </h:selectOneMenu>
-                        <h:outputLabel value="Product Model:"/>
-                        <h:selectOneMenu styleClass="textarea" id="productModelOption"
-                                         value="#{clientProductsController.productModelId}">
-                            <f:selectItem itemLabel="....Select One...."/>
-                            <f:selectItems value="#{clientProductsController.productModelOption}"/>
-                        </h:selectOneMenu>
-                        <h:outputLabel value="Serial No."/>
-                        <h:inputText styleClass="textarea" value="#{clientProductsController.serialNumber}"/>
-                        <h:outputLabel value="Product Location:"/>
-                        <h:inputText styleClass="textarea" value="#{clientProductsController.clientProduct.productLocation}"/>
+            <h:form id="clientProductListForm" rendered="#{!clientProductsController.renderClientServicePanel}">
 
-                    </h:panelGrid>
+                <h:panelGrid columns="1">
+                    <p:commandButton value="New Client Service" ajax="false" icon="ui-icon-plusthick"
+                                     action="#{clientProductsController.addClientService()}"/>
+                </h:panelGrid>
 
-                    <h:panelGrid columns="3" style="margin-top: 20px">
-                        <p:commandButton value="#{clientProductsController.saveEditButtonText}"
-                                         action="#{clientProductsController.saveEditButtonAction()}"
-                                         icon="ui-icon-disk" ajax="false" style="margin-left: 20px"
-                                         update=":clientProductListForm"/>
-                        <p:commandButton value="Clear" action="#{clientProductsController.resetButtonAction()}"
-                                         icon="ui-icon-cancel" ajax="false"/>
-                    </h:panelGrid>
-
-                </h:panelGroup>
-            </h:form>
-
-            <h:form id="clientProductListForm">
-                <p:dataTable style="margin-top: 40px;" paginator="true" rows="20"
+                <p:dataTable style="margin-top: 5px;" paginator="true" rows="20"
                              var="clientProd" value="#{clientProductView.clientProductList}"
                              selection="#{clientProductsController.clientProduct}">
+
                     <p:column filterBy="#{clientProd.clientDetail.clientName}" filterMatchMode="startsWith">
-                        <f:facet name="header">Client</f:facet>
+                        <f:facet name="header">Client Name</f:facet>
                         <h:outputText value="#{clientProd.clientDetail.clientName}"/>
                     </p:column>
-                    <p:column filterBy="#{clientProd.productTypeModel.productTypes.productName}" 
-                              filterMatchMode="startsWith">                          
-                        <f:facet name="header">Product Type</f:facet>
+                    <p:column>                          
+                        <f:facet name="header">Service Type</f:facet>
                         <h:outputText value="#{clientProd.productTypeModel.productTypes.productName}"/>
                     </p:column>
                     <p:column filterBy="#{clientProd.productTypeModel.productModel}" filterMatchMode="startsWith">
-                        <f:facet name="header">Product Model</f:facet>
+                        <f:facet name="header">Service Model</f:facet>
                         <h:outputText value="#{clientProd.productTypeModel.productModel}"/>
                     </p:column>
                     <p:column filterBy="#{clientProd.commonId}" filterMatchMode="startsWith">
@@ -79,6 +44,12 @@
                         <f:facet name="header">Location</f:facet>
                         <h:outputText value="#{clientProd.productLocation}"/>
                     </p:column>
+
+                    <p:column>
+                        <f:facet name="header">Region</f:facet>
+                        <h:outputText value="#{clientProd.regions.regionName}"/>
+                    </p:column>
+
                     <p:column>
                         <f:facet name="header"></f:facet>
                         <p:commandLink value="Edit" style="text-decoration: none;color:blue"
@@ -90,6 +61,89 @@
                     </p:column>
                 </p:dataTable>
             </h:form>
+
+
+
+
+            <h:form id="clientProductEntryForm" rendered="#{clientProductsController.renderClientServicePanel}">
+                <p:fieldset legend="Service Detail">
+                    <h:panelGrid columns="6">
+                        <h:outputLabel value="Client Detail:"/>
+                        <h:selectOneMenu styleClass="textarea"
+                                         value="#{clientProductsController.clientDetailId}">
+                            <f:selectItem itemLabel="....Select One...."/>
+                            <f:selectItems value="#{commonOptions.clientsDetailOptions}"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Service Type:" style="float: right"/>
+                        <h:selectOneMenu styleClass="textarea"
+                                         value="#{clientProductsController.productId}">
+                            <f:selectItem itemLabel="....Select One...."/>
+                            <f:selectItems value="#{commonOptions.productTypesOptions}"/>
+                            <p:ajax event="change" listener="#{clientProductsController.loadProductModel()}" update="productModelOption,modelComponents"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Service Model:"/>
+                        <h:selectOneMenu styleClass="textarea" id="productModelOption"
+                                         value="#{clientProductsController.productModelId}">
+                            <f:selectItem itemLabel="....Select One...."/>
+                            <f:selectItems value="#{clientProductsController.productModelOption}"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Serial No." style="float: right"/>
+                        <h:inputText styleClass="textarea" value="#{clientProductsController.serialNumber}"/>
+                        <h:outputLabel value="Product Location:"/>
+                        <h:inputText styleClass="textarea" value="#{clientProductsController.clientProduct.productLocation}"/>
+                        <h:outputLabel value="Region:" style="float: right"/>
+                        <h:selectOneMenu styleClass="textarea"
+                                         value="#{clientProductsController.regionId}">
+                            <f:selectItem itemLabel="....Select One...."/>
+                            <f:selectItems value="#{commonOptions.regionsOptions}"/>
+                        </h:selectOneMenu>
+                    </h:panelGrid>
+
+
+                    <h:panelGrid style="margin-top: 20px">
+                        <h:outputText value="Service Model Components" style="font-weight: bolder;color:red"/>
+                        <h:selectManyCheckbox styleClass="textarea" id="modelComponents"
+                                              value="#{clientProductsController.regionId}">
+                            <f:selectItems value="#{clientProductsController.modelComponentOption}"/>
+                        </h:selectManyCheckbox>
+                    </h:panelGrid>
+
+                </p:fieldset>
+
+                <p:fieldset style="margin-top: 10px" legend="Deployment Detail">
+                    <h:panelGrid columns="6">
+                        <h:outputLabel value="Software(s) Installed:"/>
+                        <h:selectManyMenu  styleClass="textarea"  style="width:150px;height:150px"
+                                         value="#{clientProductsController.productModelId}">
+                            <f:selectItem itemLabel="....Select One...."/>
+                            <f:selectItems value="#{commonOptions.serviceSoftwareOption}"/>
+                        </h:selectManyMenu>
+                        <h:outputLabel value="Installation Date:"/>
+                        <p:calendar navigator="true" showOn="button"/>
+                        <h:outputLabel value="Deployment Date:" style="float: right"/>
+                        <p:calendar navigator="true" showOn="button"/>
+                        <h:outputLabel value="Engineer(s):" style="float: right"/>
+                        <h:selectManyMenu  styleClass="textarea" style="width:150px;height:150px"
+                                         value="#{clientProductsController.regionId}">
+                            <f:selectItem itemLabel="....Select One...."/>
+                            <f:selectItems value="#{commonOptions.engineeringStaffOption}"/>
+                        </h:selectManyMenu >
+                    </h:panelGrid>
+
+
+                </p:fieldset>
+
+
+                <h:panelGrid columns="3" style="margin-top: 20px">
+                    <p:commandButton value="#{clientProductsController.saveEditButtonText}"
+                                     action="#{clientProductsController.saveEditButtonAction()}"
+                                     icon="ui-icon-disk" ajax="false" style="margin-left: 20px"
+                                     update=":clientProductListForm"/>
+                    <p:commandButton value="Clear" action="#{clientProductsController.resetButtonAction()}"
+                                     icon="ui-icon-cancel" ajax="false"/>
+                </h:panelGrid>
+            </h:form>
+
 
         </p:panel>
     </h:body>

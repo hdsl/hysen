@@ -37,7 +37,7 @@
 	<group name="ServiceRequestGroup">
 		<groupExpression><![CDATA[$F{clientName}]]></groupExpression>
 		<groupHeader>
-			<band height="48">
+			<band height="40">
 				<textField>
 					<reportElement uuid="49e216f5-07b3-4d91-8ee6-d9246672d7c0" mode="Opaque" x="0" y="0" width="796" height="17" backcolor="#FFFFFF"/>
 					<box leftPadding="3">
@@ -49,7 +49,7 @@
 					<textFieldExpression><![CDATA[$F{clientName}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement uuid="8abadf7a-2b3c-41d6-ba4a-33a8f9558752" key="staticText-7" mode="Opaque" x="56" y="18" width="49" height="28" forecolor="#FFFFFF" backcolor="#003366"/>
+					<reportElement uuid="8abadf7a-2b3c-41d6-ba4a-33a8f9558752" key="staticText-7" mode="Opaque" x="88" y="18" width="67" height="20" forecolor="#FFFFFF" backcolor="#003366"/>
 					<box leftPadding="2">
 						<pen lineWidth="0.5" lineColor="#009999"/>
 						<topPen lineWidth="0.5" lineColor="#009999"/>
@@ -63,7 +63,7 @@
 					<text><![CDATA[Serial No.]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="2c2d4861-ff2e-4b52-a3cb-108167626867" key="staticText-8" mode="Opaque" x="0" y="18" width="20" height="28" forecolor="#FFFFFF" backcolor="#003366"/>
+					<reportElement uuid="2c2d4861-ff2e-4b52-a3cb-108167626867" key="staticText-8" mode="Opaque" x="0" y="18" width="20" height="20" forecolor="#FFFFFF" backcolor="#003366"/>
 					<box>
 						<pen lineWidth="0.5" lineColor="#009999"/>
 						<topPen lineWidth="0.5" lineColor="#009999"/>
@@ -77,7 +77,7 @@
 					<text><![CDATA[No]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="417f4528-2b0f-4e36-8e8b-901562ee3795" key="staticText-11" mode="Opaque" x="105" y="18" width="89" height="28" forecolor="#FFFFFF" backcolor="#003366"/>
+					<reportElement uuid="417f4528-2b0f-4e36-8e8b-901562ee3795" key="staticText-11" mode="Opaque" x="154" y="18" width="89" height="20" forecolor="#FFFFFF" backcolor="#003366"/>
 					<box>
 						<pen lineWidth="0.5" lineColor="#009999"/>
 						<topPen lineWidth="0.5" lineColor="#009999"/>
@@ -91,21 +91,7 @@
 					<text><![CDATA[Model]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="640889b1-a11a-4185-8ec9-8ee85bf7854f" key="staticText-11" mode="Opaque" x="312" y="18" width="48" height="28" forecolor="#FFFFFF" backcolor="#003366"/>
-					<box>
-						<pen lineWidth="0.5" lineColor="#009999"/>
-						<topPen lineWidth="0.5" lineColor="#009999"/>
-						<leftPen lineWidth="0.5" lineColor="#009999"/>
-						<bottomPen lineWidth="0.5" lineColor="#009999"/>
-						<rightPen lineWidth="0.5" lineColor="#009999"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
-					</textElement>
-					<text><![CDATA[Request Date]]></text>
-				</staticText>
-				<staticText>
-					<reportElement uuid="c3118c8a-6108-4cb6-8091-39723c2ae340" key="staticText-11" mode="Opaque" x="360" y="18" width="110" height="28" forecolor="#FFFFFF" backcolor="#003366"/>
+					<reportElement uuid="c3118c8a-6108-4cb6-8091-39723c2ae340" key="staticText-11" mode="Opaque" x="360" y="18" width="110" height="20" forecolor="#FFFFFF" backcolor="#003366"/>
 					<box>
 						<pen lineWidth="0.5" lineColor="#009999"/>
 						<topPen lineWidth="0.5" lineColor="#009999"/>
@@ -119,7 +105,7 @@
 					<text><![CDATA[Service Component]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="c749d4f1-b589-4f80-82e0-fc239b66f9ce" key="staticText-11" mode="Opaque" x="470" y="18" width="143" height="28" forecolor="#FFFFFF" backcolor="#003366"/>
+					<reportElement uuid="c749d4f1-b589-4f80-82e0-fc239b66f9ce" key="staticText-11" mode="Opaque" x="470" y="18" width="143" height="20" forecolor="#FFFFFF" backcolor="#003366"/>
 					<box>
 						<pen lineWidth="0.5" lineColor="#009999"/>
 						<topPen lineWidth="0.5" lineColor="#009999"/>
@@ -133,7 +119,7 @@
 					<text><![CDATA[Request Description]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="3ce14c43-5290-4336-838f-d8d4be53f891" key="staticText-11" mode="Opaque" x="612" y="18" width="87" height="28" forecolor="#FFFFFF" backcolor="#003366"/>
+					<reportElement uuid="3ce14c43-5290-4336-838f-d8d4be53f891" key="staticText-11" mode="Opaque" x="612" y="18" width="87" height="20" forecolor="#FFFFFF" backcolor="#003366"/>
 					<box>
 						<pen lineWidth="0.5" lineColor="#009999"/>
 						<topPen lineWidth="0.5" lineColor="#009999"/>
@@ -147,7 +133,7 @@
 					<text><![CDATA[Engineer]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="01d685a3-6d68-4d1a-9ca4-32a8d5a8a1ff" key="staticText-11" mode="Opaque" x="698" y="18" width="41" height="28" forecolor="#FFFFFF" backcolor="#003366"/>
+					<reportElement uuid="01d685a3-6d68-4d1a-9ca4-32a8d5a8a1ff" key="staticText-11" mode="Opaque" x="698" y="18" width="41" height="20" forecolor="#FFFFFF" backcolor="#003366"/>
 					<box>
 						<pen lineWidth="0.5" lineColor="#009999"/>
 						<topPen lineWidth="0.5" lineColor="#009999"/>
@@ -161,7 +147,7 @@
 					<text><![CDATA[Status]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="7a0f91b1-8228-43aa-b67a-5f8407a759c0" key="staticText-11" mode="Opaque" x="738" y="18" width="58" height="28" forecolor="#FFFFFF" backcolor="#003366"/>
+					<reportElement uuid="7a0f91b1-8228-43aa-b67a-5f8407a759c0" key="staticText-11" mode="Opaque" x="738" y="18" width="58" height="20" forecolor="#FFFFFF" backcolor="#003366"/>
 					<box>
 						<pen lineWidth="0.5" lineColor="#009999"/>
 						<topPen lineWidth="0.5" lineColor="#009999"/>
@@ -175,7 +161,7 @@
 					<text><![CDATA[Closed Date]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="64a528d6-b702-4d11-b70f-cbdb7eb714b0" key="staticText-7" mode="Opaque" x="19" y="18" width="38" height="28" forecolor="#FFFFFF" backcolor="#003366"/>
+					<reportElement uuid="64a528d6-b702-4d11-b70f-cbdb7eb714b0" key="staticText-7" mode="Opaque" x="19" y="18" width="69" height="20" forecolor="#FFFFFF" backcolor="#003366"/>
 					<box>
 						<pen lineWidth="0.5" lineColor="#009999"/>
 						<topPen lineWidth="0.5" lineColor="#009999"/>
@@ -186,10 +172,10 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 					</textElement>
-					<text><![CDATA[Request Id]]></text>
+					<text><![CDATA[Request Date]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="f569cbad-7d83-4ad3-9e4b-0b419199c679" key="staticText-11" mode="Opaque" x="194" y="18" width="119" height="28" forecolor="#FFFFFF" backcolor="#003366"/>
+					<reportElement uuid="f569cbad-7d83-4ad3-9e4b-0b419199c679" key="staticText-11" mode="Opaque" x="242" y="18" width="119" height="20" forecolor="#FFFFFF" backcolor="#003366"/>
 					<box>
 						<pen lineWidth="0.5" lineColor="#009999"/>
 						<topPen lineWidth="0.5" lineColor="#009999"/>
@@ -214,15 +200,9 @@
 	<title>
 		<band height="81" splitType="Stretch">
 			<line>
-				<reportElement uuid="b7ebc3a7-3bca-47b2-98d4-0822967bd070" x="-1" y="79" width="797" height="2"/>
+				<reportElement uuid="fe6be4cb-2bca-477a-ae20-863c74062851" x="0" y="78" width="796" height="1" forecolor="#A0B630" backcolor="#A0B630"/>
 				<graphicElement>
-					<pen lineWidth="2.0" lineColor="#CCCCCC"/>
-				</graphicElement>
-			</line>
-			<line>
-				<reportElement uuid="fe6be4cb-2bca-477a-ae20-863c74062851" x="0" y="78" width="796" height="1"/>
-				<graphicElement>
-					<pen lineWidth="1.5"/>
+					<pen lineWidth="1.0"/>
 				</graphicElement>
 			</line>
 			<textField isBlankWhenNull="true">
@@ -253,47 +233,51 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="40" splitType="Stretch">
+		<band height="37" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement uuid="35150476-2852-4e6e-a5cb-1db49ba0afe2" key="textField" mode="Opaque" x="0" y="2" width="796" height="21" forecolor="#FFFFFF" backcolor="#A0B630"/>
+				<reportElement uuid="35150476-2852-4e6e-a5cb-1db49ba0afe2" key="textField" mode="Opaque" x="10" y="2" width="752" height="15" forecolor="#003366" backcolor="#FFFFFF"/>
 				<box>
-					<bottomPen lineWidth="0.5" lineStyle="Double" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Double" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Segoe UI" size="14" isBold="true" pdfFontName="Helvetica-Bold"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="11" isBold="true" isItalic="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{reportTitle}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="963d7efd-8be6-433b-89fe-fbbf64150ea8" key="textField" x="90" y="23" width="156" height="16"/>
-				<box>
-					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
-				</box>
-				<textElement/>
+				<reportElement uuid="963d7efd-8be6-433b-89fe-fbbf64150ea8" key="textField" x="39" y="23" width="84" height="13"/>
+				<textElement>
+					<font fontName="Calibri" size="9"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{transactionFrom}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="f6f2137d-4031-4b14-9793-faf403f9b8d1" key="staticText-4" x="0" y="25" width="88" height="15"/>
+				<reportElement uuid="f6f2137d-4031-4b14-9793-faf403f9b8d1" key="staticText-4" x="5" y="22" width="33" height="12"/>
 				<textElement textAlignment="Right">
-					<font fontName="Book Antiqua" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="Calibri" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<text><![CDATA[Transaction From:]]></text>
+				<text><![CDATA[From:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="2fdf605d-138c-4edc-b3f6-a72ea42c879e" key="textField" x="436" y="23" width="156" height="16"/>
-				<box>
-					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
-				</box>
-				<textElement/>
+				<reportElement uuid="2fdf605d-138c-4edc-b3f6-a72ea42c879e" key="textField" x="138" y="23" width="156" height="13"/>
+				<textElement>
+					<font fontName="Calibri" size="9"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{transactionTo}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="3a42d731-11f7-4e31-8db1-0bdd5156c1b4" key="staticText-4" x="324" y="25" width="107" height="15"/>
+				<reportElement uuid="3a42d731-11f7-4e31-8db1-0bdd5156c1b4" key="staticText-4" x="104" y="22" width="33" height="12"/>
 				<textElement textAlignment="Right">
-					<font fontName="Book Antiqua" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="Calibri" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<text><![CDATA[Transaction To:]]></text>
+				<text><![CDATA[To:]]></text>
 			</staticText>
+			<line>
+				<reportElement uuid="c58efb96-2f3e-4834-aeb2-b64aeeac60dc" x="1" y="35" width="796" height="1" forecolor="#A0B630" backcolor="#A0B630"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</line>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -301,12 +285,12 @@
 	</columnHeader>
 	<detail>
 		<band height="17" splitType="Stretch">
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="9024c363-bf7c-4ca5-ae8e-5298205a2798" x="20" y="0" width="37" height="12"/>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="9024c363-bf7c-4ca5-ae8e-5298205a2798" x="20" y="0" width="68" height="12"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{requestId}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{requestDate}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="64eaf792-6338-4adc-b7c1-67d24e404f8e" x="0" y="0" width="20" height="12"/>
@@ -316,25 +300,18 @@
 				<textFieldExpression><![CDATA[$V{requestCount}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="0fd9d218-cf0d-4de4-b65b-5ca8177fa159" x="60" y="0" width="48" height="12"/>
+				<reportElement uuid="0fd9d218-cf0d-4de4-b65b-5ca8177fa159" x="88" y="0" width="65" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{serialNumber}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="2f0d14d9-f7b0-4c2e-9cf0-dbf756885c1a" x="109" y="0" width="89" height="12"/>
+				<reportElement uuid="2f0d14d9-f7b0-4c2e-9cf0-dbf756885c1a" x="155" y="0" width="87" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{serviceModel}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="9d58e05c-6c2a-40d3-bab6-60eb01eb1d47" x="316" y="0" width="46" height="12"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{requestDate}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement uuid="0cc42103-c28c-40a3-89ce-36f8ca2abd2d" x="364" y="0" width="110" height="12"/>
@@ -372,7 +349,7 @@
 				<textFieldExpression><![CDATA[$F{closedDate}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="e91a088d-586b-4a01-a92b-0209f420f576" x="198" y="0" width="119" height="12"/>
+				<reportElement uuid="e91a088d-586b-4a01-a92b-0209f420f576" x="242" y="0" width="119" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>

@@ -1,5 +1,6 @@
 package hysen.ejb.services;
 
+import hysen.ejb.entities.ClientContact;
 import hysen.ejb.entities.ClientProduct;
 import hysen.ejb.entities.GeneratePk;
 import hysen.ejb.entities.ServiceRequest;
@@ -59,19 +60,55 @@ public class CustomCrudService {
         }
     }
 
-//    public ClientProduct clientServiceModel(String serialNumber) {
-//
-//        String qry = "SELECT s FROM ClientProduct s WHERE s.serialNumber = '" + serialNumber + "' AND s.deleted = 'N'";
-//
-//        try {
-//
-//            return (ClientProduct) em.createQuery(qry).getSingleResult();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
+    public ClientContact clientContactSave(ClientContact cc) {
+
+        try {
+
+            cc.setDeleted('N');
+            cc.setUpdated('N');
+            em.merge(cc);
+            em.flush();
+
+            return cc;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<ServiceRequest> clientPMServiceList(String clientId, String searchAttribute) {
+
+        List<ServiceRequest> serviceRequestList;
+
+        String qry = null;
+
+        if (searchAttribute.equals("customer_name")) {
+
+            qry = "SELECT t FROM ServiceRequest t WHERE t.clientDetail.commonId = '" + clientId + "' "
+                    + "AND t.serviceRequestId LIKE PM AND t.deleted='N' "
+                    + "ORDER BY t.serviceStartDate ";
+
+        } else if (searchAttribute.equals("engineer_name")) {
+
+            qry = "SELECT t FROM ServiceRequest t WHERE t.staffDetail.commonId = '" + clientId + "' "
+                    + "AND t.deleted='N' "
+                    + "ORDER BY t.serviceStartDate ";
+
+        }
+
+        try {
+
+            serviceRequestList = em.createQuery(qry).getResultList();
+
+            return serviceRequestList;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.EMPTY_LIST;
+        }
+
+    }
+
     public List<ServiceRequest> clientServiceRequestList(Date startDate, Date endDate, String clientId) {
 
         List<ServiceRequest> serviceRequestList;

@@ -5,15 +5,13 @@
  */
 package hysen.ejb.entities;
 
-import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -25,23 +23,31 @@ import javax.persistence.Table;
     @NamedQuery(name = "ClientContact.findAll", query = "SELECT c FROM ClientContact c")})
 public class ClientContact extends CommonEntity {
 
-   
-    @JoinColumn(name = "client_detail")
-    private ClientDetail clientDetail;
+    @Column(name = "client_detail")
+    private String clientDetail;
 
+    @Size(max = 255)
     @Column(name = "contact_name")
     private String contactName;
-
+    @Size(max = 255)
     @Column(name = "contact_email")
     private String contactEmail;
-
+    @Size(max = 255)
     @Column(name = "contact_mobile")
     private String contactMobile;
-
+    @Size(max = 255)
     @Column(name = "job_title")
     private String jobTitle;
 
     public ClientContact() {
+    }
+
+    public String getClientDetail() {
+        return clientDetail;
+    }
+
+    public void setClientDetail(String clientDetail) {
+        this.clientDetail = clientDetail;
     }
 
     public String getContactName() {
@@ -50,14 +56,6 @@ public class ClientContact extends CommonEntity {
 
     public void setContactName(String contactName) {
         this.contactName = contactName;
-    }
-
-    public ClientDetail getClientDetail() {
-        return clientDetail;
-    }
-
-    public void setClientDetail(ClientDetail clientDetail) {
-        this.clientDetail = clientDetail;
     }
 
     public String getContactEmail() {

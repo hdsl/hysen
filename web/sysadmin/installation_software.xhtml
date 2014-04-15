@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:messages/>
+        <p:panel style="overflow: auto;">
+            <f:facet name="header"><span style="float: left;font-weight: bolder;font-variant: small-caps">Installation Software</span></f:facet>
+
+            <h:form id="softwareEntryForm">
+                <h:panelGroup layout="block">
+                    <h:panelGrid columns="6">
+                        <h:outputLabel value="Software Name:"/>
+                        <h:inputText styleClass="textarea" value="#{softwareController.software.softwareDesc}"/>
+
+                        <p:commandButton value="#{softwareController.saveEditButtonText}"
+                                         action="#{softwareController.saveEditButtonAction()}"
+                                         icon="ui-icon-disk" ajax="false" style="margin-left: 20px"
+                                         update=":softwareListForm"/>
+                        <p:commandButton value="Clear" action="#{softwareController.resetButtonAction()}"
+                                         icon="ui-icon-cancel" ajax="false"/>
+                    </h:panelGrid>
+
+                </h:panelGroup>
+            </h:form>
+
+            <h:form id="softwareListForm">
+
+                <p:dataTable style="margin-top: 40px;width: 500px"
+                             var="product" value="#{softwareView.softwareList}">
+                    <p:column>
+                        <f:facet name="header">Software Name</f:facet>
+                        <h:outputText value="#{product.softwareDesc}"/>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header"></f:facet>
+                        <p:commandLink value="Edit" style="text-decoration: none;color:blue"
+                                       action="#{softwareController.rowSelectButtonAction(product)}"
+                                       update=":softwareEntryForm"/>
+                        <p:commandLink value="Delete" style="text-decoration: none;color: red;margin-left: 20px"
+                                       action="#{softwareController.deleteButtonAction(product)}"
+                                       update=":softwareListForm"/>
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+
+        </p:panel>
+    </h:body>
+</html>
+

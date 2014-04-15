@@ -29,7 +29,11 @@ public class ClientProduct extends CommonEntity{
     
     @ManyToOne
     @JoinColumn(name = "product_model")
-    private ProductTypesModel productTypeModel;
+    private ProductTypesModel productTypeModel;    
+  
+    @ManyToOne
+    @JoinColumn(name = "regions")
+    private Regions regions;
    
     @Column(name = "product_location")
     private String productLocation;
@@ -62,6 +66,14 @@ public class ClientProduct extends CommonEntity{
 
     public void setClientDetail(ClientDetail clientDetail) {
         this.clientDetail = clientDetail;
+    }
+
+    public Regions getRegions() {
+        return regions;
+    }
+
+    public void setRegions(Regions regions) {
+        this.regions = regions;
     }
 
     public ProductTypesModel getProductTypeModel() {

@@ -8,6 +8,7 @@ package hysen.web.controllers;
 import hysen.ejb.entities.ClientContact;
 import hysen.ejb.entities.ClientDetail;
 import hysen.ejb.services.CrudService;
+import hysen.ejb.services.CustomCrudService;
 import hysen.web.utils.StringConstants;
 import javax.inject.Named;
 import javax.enterprise.context.ConversationScoped;
@@ -28,9 +29,12 @@ public class ClientContactController implements Serializable {
     private CrudService crudService;
 
     @Inject
+    private CustomCrudService customCrudService;
+
+    @Inject
     private Conversation conversation;
 
-    String saveEditButtonText = "Save", industryTypeId, selectedClient;
+    String saveEditButtonText = "Save", industryTypeId, selectedClient,selectedClientId;
 
     boolean renderForm = false;
 
@@ -63,26 +67,32 @@ public class ClientContactController implements Serializable {
         if (selectedClient != null) {
 
             clientDetail = crudService.find(ClientDetail.class, selectedClient);
-
-        } else {
-            clientDetail = new ClientDetail();
+            
+            selectedClientId = clientDetail.getCommonId();
+            
+            System.out.println("client detail............."+clientDetail);
+       
         }
+        
     }
 
     public void saveEditButtonAction() {
 
-        beginConversation();
-
+//        beginConversation();
+        
         if (clientDetail == null) {
             StringConstants.showApprioprateMessage("Please select a client");
         } else {
             if (saveEditButtonText.equals("Save")) {
 
-                System.out.println("client detail................." + clientDetail);
+                 System.out.println("selected client............."+selectedClientId);
+                 
+                 System.out.println("client1............."+clientDetail.getCommonId());
+                 
                 clientContact.setCommonId(StringConstants.generateID());
-                clientContact.setClientDetail(clientDetail);
+                
+                clientContact.setClientDetail(clientDetail.getCommonId());
 
-                System.out.println("common id............" + clientContact.getCommonId());
                 if (crudService.save(clientContact) != null) {
 
                     StringConstants.showApprioprateMessage(StringConstants.SAVE_MESSAGE);
@@ -92,7 +102,7 @@ public class ClientContactController implements Serializable {
                 }
             } else {
 
-                clientContact.setClientDetail(clientDetail);
+                clientContact.setClientDetail(clientDetail.getCommonId());
                 if (crudService.update(clientDetail) == true) {
 
                     StringConstants.showApprioprateMessage(StringConstants.EDIT_MESSAGE);

@@ -8,6 +8,7 @@ package hysen.web.controllers;
 import hysen.ejb.entities.ClientContact;
 import hysen.ejb.entities.ClientDetail;
 import hysen.ejb.entities.ClientProduct;
+import hysen.ejb.entities.CommonEntity;
 import hysen.ejb.entities.GeneratePk;
 import hysen.ejb.entities.ProductTypes;
 import hysen.ejb.entities.ServiceModelComponent;
@@ -17,7 +18,6 @@ import hysen.ejb.services.CrudService;
 import hysen.ejb.services.CustomCrudService;
 import hysen.web.utils.StringConstants;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
@@ -69,7 +69,6 @@ public class ServiceRequestController implements Serializable {
     GeneratePk generatePk = new GeneratePk();
 
 //</editor-fold>
-    
     //<editor-fold defaultstate="collapsed" desc="Methods">
     public ServiceRequestController() {
         //serviceRequest = new ServiceRequest();
@@ -113,9 +112,9 @@ public class ServiceRequestController implements Serializable {
         renderRequestForm = false;
         renderRequestListForm = true;
     }
-    
-    public void addServiceComponent(){
-        
+
+    public void addServiceComponent() {
+
     }
 
     public void showSelectedClientContacts() {
@@ -194,12 +193,20 @@ public class ServiceRequestController implements Serializable {
                 serviceRequest.setServiceComponent(modelComponent);
                 serviceRequest.setStaffDetail(staffDetail);
 
-                if (crudService.save(serviceRequest) != null) {
+                CommonEntity serviceReq;
+
+                serviceReq = crudService.save(serviceRequest);
+
+                if (serviceReq != null) {
 
                     generatePk.setPkValue(countId);
                     customCrudService.generatePkUpdate(generatePk);
 
                     StringConstants.showApprioprateMessage(StringConstants.SAVE_MESSAGE);
+
+                    serviceRequestList
+                            = customCrudService.findByParameter(ServiceRequest.class, "commonId", serviceReq.getCommonId(), 'N');
+
                     resetButtonAction();
                     returnToHomePage();
                 } else {
@@ -223,7 +230,8 @@ public class ServiceRequestController implements Serializable {
                 if (crudService.update(serviceRequest) == true) {
 
                     StringConstants.showApprioprateMessage(StringConstants.EDIT_MESSAGE);
-                    searchButtonAction();
+                    serviceRequestList
+                            = customCrudService.findByParameter(ServiceRequest.class, "commonId", serviceRequest.getCommonId(), 'N');
                     resetButtonAction();
                     returnToHomePage();
                 } else {
@@ -242,7 +250,9 @@ public class ServiceRequestController implements Serializable {
             if (crudService.delete(serviceRequest, true) == true) {
 
                 StringConstants.showApprioprateMessage(StringConstants.DELETE_MESSAGE);
-                searchButtonAction();
+
+                serviceRequestList
+                        = customCrudService.findByParameter(ServiceRequest.class, "commonId", serviceRequest.getCommonId(), 'N');
 
             } else {
 

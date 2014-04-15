@@ -8,6 +8,8 @@ package hysen.web.controllers;
 import hysen.ejb.entities.ClientDetail;
 import hysen.ejb.entities.ClientProduct;
 import hysen.ejb.entities.ProductTypesModel;
+import hysen.ejb.entities.Regions;
+import hysen.ejb.entities.ServiceModelComponent;
 import hysen.ejb.services.CrudService;
 import hysen.ejb.services.CustomCrudService;
 import hysen.web.utils.StringConstants;
@@ -46,9 +48,11 @@ public class ClientProductsController implements Serializable {
     private UserSession userSession;
 
     private String productId, saveEditButtonText = "Save";
-    private String productModelId, serialNumber;
+    private String productModelId, serialNumber, regionId;
+    boolean renderClientServicePanel = false; 
     private String clientDetailId;
     private SelectItem[] productModelOption;
+    private SelectItem[] modelComponentOption;
 //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Methods">
@@ -81,43 +85,75 @@ public class ClientProductsController implements Serializable {
             count++;
         }
 
+        int modelCount = 0;
+        
+        List<ServiceModelComponent> modelComponentList
+                = customCrudService.findByParameter(ServiceModelComponent.class, "productTypes.commonId", productId, 'N');
+
+        modelComponentOption = new SelectItem[modelComponentList.size()];
+
+        for (ServiceModelComponent cc : modelComponentList) {
+
+            modelComponentOption[modelCount] = new SelectItem(cc.getCommonId(), cc.getComponentName());
+            modelCount++;
+        }
+
+    }
+    
+    public void addClientService(){
+        renderClientServicePanel = true;
     }
 
     public void saveEditButtonAction() {
 
         beginConversation();
 
-        if (saveEditButtonText.equals("Save")) {
+        if (clientDetailId.equals("null")) {
+            StringConstants.showApprioprateMessage("Please select client");
+        } else if (productId.equals("null")) {
+            StringConstants.showApprioprateMessage("Please select service type");
+        } else if (productModelId.equals("null")) {
+            StringConstants.showApprioprateMessage("Please select service model");
+        } else if (regionId.equals("null")) {
+            StringConstants.showApprioprateMessage("Please select region");
+        } else if (serialNumber.equals("") || serialNumber == null) {
+            StringConstants.showApprioprateMessage("Please enter serial number");
+        } else {
+            if (saveEditButtonText.equals("Save")) {
 
-            if (serialNumber == null) {
-                StringConstants.showApprioprateMessage("Please enter serial number");
+                if (serialNumber == null) {
+                    StringConstants.showApprioprateMessage("Please enter serial number");
+                } else {
+
+                    clientProduct.setCommonId(StringConstants.generateID());
+                    clientProduct.setClientDetail(crudService.find(ClientDetail.class, clientDetailId));
+                    clientProduct.setProductTypeModel(crudService.find(ProductTypesModel.class, productModelId));
+                    clientProduct.setRegions(crudService.find(Regions.class, regionId));
+                    clientProduct.setSerialNumber(serialNumber);
+                    clientProduct.setLastModifiedBy(userSession.getUsername());
+
+                    if (crudService.save(clientProduct) != null) {
+                        StringConstants.showApprioprateMessage(StringConstants.SAVE_MESSAGE);
+                        resetButtonAction();
+                    } else {
+                        StringConstants.showApprioprateMessage(StringConstants.SAVE_ERRORMESSAGE);
+                    }
+                }
+
             } else {
 
-                clientProduct.setCommonId(StringConstants.generateID());
                 clientProduct.setClientDetail(crudService.find(ClientDetail.class, clientDetailId));
                 clientProduct.setProductTypeModel(crudService.find(ProductTypesModel.class, productModelId));
+                clientProduct.setRegions(crudService.find(Regions.class, regionId));
                 clientProduct.setSerialNumber(serialNumber);
-                clientProduct.setLastModifiedBy(userSession.getUsername());
 
-                if (crudService.save(clientProduct) != null) {
-                    StringConstants.showApprioprateMessage(StringConstants.SAVE_MESSAGE);
+                if (crudService.update(clientProduct) == true) {
+                    StringConstants.showApprioprateMessage(StringConstants.EDIT_MESSAGE);
                     resetButtonAction();
                 } else {
-                    StringConstants.showApprioprateMessage(StringConstants.SAVE_ERRORMESSAGE);
+                    StringConstants.showApprioprateMessage(StringConstants.EDIT_ERRORMESSAGE);
                 }
-            }
 
-        } else {
-
-            clientProduct.setClientDetail(crudService.find(ClientDetail.class, clientDetailId));
-            clientProduct.setProductTypeModel(crudService.find(ProductTypesModel.class, productModelId));
-            clientProduct.setSerialNumber(serialNumber);
-
-            if (crudService.update(clientProduct) == true) {
-                StringConstants.showApprioprateMessage(StringConstants.EDIT_MESSAGE);
-                resetButtonAction();
-            } else {
-                StringConstants.showApprioprateMessage(StringConstants.EDIT_ERRORMESSAGE);
             }
 
         }
@@ -144,6 +180,7 @@ public class ClientProductsController implements Serializable {
         this.clientProduct = cp;
         clientDetailId = clientProduct.getClientDetail().getCommonId();
         productId = clientProduct.getProductTypeModel().getProductTypes().getCommonId();
+        regionId = clientProduct.getRegions().getRegionId();
         serialNumber = clientProduct.getCommonId();
 
         loadProductModel();
@@ -167,6 +204,7 @@ public class ClientProductsController implements Serializable {
     }
 
 //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Getters and Setters">
     public CustomCrudService getCustomCrudService() {
         return customCrudService;
@@ -174,6 +212,38 @@ public class ClientProductsController implements Serializable {
 
     public void setCustomCrudService(CustomCrudService customCrudService) {
         this.customCrudService = customCrudService;
+    }
+
+    public boolean isRenderClientServicePanel() {
+        return renderClientServicePanel;
+    }
+
+    public void setRenderClientServicePanel(boolean renderClientServicePanel) {
+        this.renderClientServicePanel = renderClientServicePanel;
+    }
+
+    public SelectItem[] getModelComponentOption() {
+        return modelComponentOption;
+    }
+
+    public void setModelComponentOption(SelectItem[] modelComponentOption) {
+        this.modelComponentOption = modelComponentOption;
+    }
+
+    public UserSession getUserSession() {
+        return userSession;
+    }
+
+    public void setUserSession(UserSession userSession) {
+        this.userSession = userSession;
+    }
+
+    public String getRegionId() {
+        return regionId;
+    }
+
+    public void setRegionId(String regionId) {
+        this.regionId = regionId;
     }
 
     public ProductTypesModel getPtm() {

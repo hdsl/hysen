@@ -5,6 +5,7 @@
  */
 package hysen.web.controllers;
 
+import hysen.ejb.entities.ClientDetail;
 import hysen.ejb.entities.ClientProduct;
 import hysen.ejb.entities.GeneratePk;
 import hysen.ejb.entities.ServiceRequest;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.Conversation;
+import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 
 /**
@@ -50,13 +52,19 @@ public class PMController implements Serializable {
 
     String serviceRequestId, customerId = null, productId = null, assignedEngineer, pmPeriod = null;
 
+    String searchAttribute, searchtext;
+
     Date scheduledDate;
 
     ServiceRequest serviceRequest;
 
+    List<ServiceRequest> serviceRequestList;
+
     List<ClientProduct> clientProductsList;
 
     List<ServiceRequestTableModel> srtmList;
+
+    SelectItem[] searchAttributeOption;
 
 //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Methods">
@@ -211,7 +219,83 @@ public class PMController implements Serializable {
 
     }
 
-//</editor-fold>
+    public void loadSearchParameters() {
+
+        if (searchAttribute.equals("null")) {
+
+            searchAttributeOption = null;
+
+        } else if (searchAttribute.equals("customer_name")) {
+
+            List<ClientDetail> clientDetailList
+                    = crudService.findAll(ClientDetail.class, true, "clientName");
+
+            searchAttributeOption = new SelectItem[clientDetailList.size()];
+
+            int count = 0;
+
+            for (ClientDetail si : clientDetailList) {
+
+                searchAttributeOption[count] = new SelectItem(si.getCommonId(), si.getClientName().toUpperCase());
+
+                count++;
+            }
+
+        } else if (searchAttribute.equals("engineer_name")) {
+
+            int count = 0;
+
+            List<StaffDetail> staffDetailList
+                    = customCrudService.findByParameter(StaffDetail.class, "department.commonId", "206992d5-5655-4d8c", 'N');
+
+            searchAttributeOption = new SelectItem[staffDetailList.size()];
+
+            for (StaffDetail cc : staffDetailList) {
+
+                String gender;
+
+                if (cc.getGender().equals('F')) {
+                    gender = "(Mrs.)";
+                } else {
+                    gender = "(Mr.)";
+                }
+
+                searchAttributeOption[count] = new SelectItem(cc.getCommonId(), cc.getStaffName().toUpperCase() + gender);
+
+                count++;
+
+            }
+        } else if (searchAttribute.equals("service_period")) {
+
+            searchAttributeOption = null;
+
+        }
+    }
+
+    public void searchPMList() {
+
+        System.out.println("search attibute........."+searchAttribute);
+        System.out.println("search attibute........."+searchtext);
+        serviceRequestList = new ArrayList<>();
+
+        if (searchAttribute.equals("null")) {
+
+            StringConstants.showApprioprateMessage("Please select search parameters");
+
+        } else if (searchtext.equals("null")) {
+
+            StringConstants.showApprioprateMessage("Please select search parameters");
+            
+        } else if (searchAttribute.equals("customer_name")) {
+
+            serviceRequestList = customCrudService.clientPMServiceList(searchtext, "customer_name");
+
+        } else if (searchAttribute.equals("engineer_name")) {
+            serviceRequestList = customCrudService.clientPMServiceList(searchtext, "engineer_name");
+        }
+    }
+        //</editor-fold>
+
     //<editor-fold defaultstate="collapsed" desc="Getters and Setters">
     public CrudService getCrudService() {
         return crudService;
@@ -219,6 +303,38 @@ public class PMController implements Serializable {
 
     public void setCrudService(CrudService crudService) {
         this.crudService = crudService;
+    }
+
+    public List<ServiceRequest> getServiceRequestList() {
+        return serviceRequestList;
+    }
+
+    public void setServiceRequestList(List<ServiceRequest> serviceRequestList) {
+        this.serviceRequestList = serviceRequestList;
+    }
+
+    public String getSearchAttribute() {
+        return searchAttribute;
+    }
+
+    public void setSearchAttribute(String searchAttribute) {
+        this.searchAttribute = searchAttribute;
+    }
+
+    public String getSearchtext() {
+        return searchtext;
+    }
+
+    public void setSearchtext(String searchtext) {
+        this.searchtext = searchtext;
+    }
+
+    public SelectItem[] getSearchAttributeOption() {
+        return searchAttributeOption;
+    }
+
+    public void setSearchAttributeOption(SelectItem[] searchAttributeOption) {
+        this.searchAttributeOption = searchAttributeOption;
     }
 
     public List<ServiceRequestTableModel> getSrtmList() {

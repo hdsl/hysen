@@ -68,6 +68,44 @@
                 </p:dataTable>
             </h:form>
 
+            <h:form id="clientRegForm" rendered="#{clientInfoController.renderForm}">
+                <p:panel>
+                    <f:facet name="header"><span style="float: left;font-weight: bolder;font-variant: small-caps">Client Details</span></f:facet>
+                    <h:panelGrid columns="4" style="margin-left: -20px">
+                        <h:outputLabel value="Client Name:"/>
+                        <h:inputText value="#{clientInfoController.clientDetail.clientName}"/>
+                        <h:outputLabel value="Industry Type:"/>
+                        <h:selectOneMenu styleClass="textarea"  
+                                         value="#{clientInfoController.industryTypeId}">
+                            <f:selectItem itemLabel="....Select One...."/>
+                            <f:selectItems value="#{commonOptions.industryTypeOptions}"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Phone Contact(s):"/>
+                        <h:inputText value="#{clientInfoController.clientDetail.clientPrimaryContact}"/>                                
+                        <h:outputLabel value="Email:"/>
+                        <h:inputText  value="#{clientInfoController.clientDetail.clientEmail}"/>
+                        <h:outputLabel value="Website:"/>                                    
+                        <h:inputText value="#{clientInfoController.clientDetail.clientWebsite}"/>
+                        <h:outputText/>
+                        <h:outputText/>
+                        <h:outputLabel value="Physical Location:"/>
+                        <h:inputTextarea value="#{clientInfoController.clientDetail.clientLocation}"/>
+                        <h:outputLabel value="Postal Address:"/>
+                        <h:inputTextarea value="#{clientInfoController.clientDetail.clientAddress}"/>
+                    </h:panelGrid>
+                </p:panel>
+
+                <h:panelGrid columns="3" style="margin-top: 20px">
+                    <p:commandButton  styleClass="buttons"
+                                      value="#{clientInfoController.saveEditButtonText}"
+                                      action="#{clientInfoController.saveEditButtonAction()}"
+                                      icon="ui-icon-disk" ajax="false"/>
+                    <p:commandButton value="Clear" styleClass="buttons"
+                                     action="#{clientInfoController.resetButtonAction()}"
+                                     icon="ui-icon-cancel" ajax="false"/>
+                </h:panelGrid>
+            </h:form>
+
         </p:panel>
     </h:body>
 </html>

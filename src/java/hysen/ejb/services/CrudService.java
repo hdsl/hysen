@@ -88,9 +88,11 @@ public class CrudService {
 
             if (includeLogicalDelete == true) {
                 qry = "SELECT t FROM " + t.getSimpleName() + " t ";
+               
             } else if (includeLogicalDelete == false) {
 
                 qry = "SELECT t FROM " + t.getSimpleName() + " t WHERE t.deleted = 'N' ";
+               
             }
 
             return em.createQuery(qry).getResultList();

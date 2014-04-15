@@ -15,6 +15,8 @@ import hysen.ejb.entities.KinRelation;
 import hysen.ejb.entities.MaritalStatus;
 import hysen.ejb.entities.Nationality;
 import hysen.ejb.entities.ProductTypes;
+import hysen.ejb.entities.Regions;
+import hysen.ejb.entities.ServiceSoftware;
 import hysen.ejb.entities.StaffDetail;
 import hysen.ejb.services.CrudService;
 import hysen.ejb.services.CustomCrudService;
@@ -47,6 +49,7 @@ public class CommonOptions implements Serializable {
     private SelectItem[] identificationTypes;
     private SelectItem[] accessRightTypes;
     private SelectItem[] kinRelationOptions;
+    private SelectItem[] regionsOptions;
     private SelectItem[] levelOfEducationOptions;
     private SelectItem[] stockCategoryOptions;
     private SelectItem[] stockItemsOptions;
@@ -57,9 +60,10 @@ public class CommonOptions implements Serializable {
     private SelectItem[] productTypesOptions;
     private SelectItem[] clientsDetailOptions;
     private SelectItem[] engineeringStaffOption;
+    private SelectItem[] serviceSoftwareOption;
 
     public CommonOptions() {
-        
+
         List<Integer> years = NumberRange.generateRange(1980,
                 DateTimeUtils.getCurrentYear());
 
@@ -68,7 +72,7 @@ public class CommonOptions implements Serializable {
         calendarYears = JsfUtil.createSelectItems(years, false);
 
         calenderMonthNamesOptions = JsfUtil.createSelectItems(DateTimeUtils.getMonthNames(), true);
-        
+
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters and Setters">
@@ -78,6 +82,60 @@ public class CommonOptions implements Serializable {
 
     public void setCalendarYears(SelectItem[] calendarYears) {
         this.calendarYears = calendarYears;
+    }
+
+    public SelectItem[] getServiceSoftwareOption() {        
+        
+        List<ServiceSoftware> serviceSoftwareList
+                = crudService.findAll(ServiceSoftware.class, false);
+
+        serviceSoftwareOption = new SelectItem[serviceSoftwareList.size()];
+
+        int count = 0;
+
+        for (ServiceSoftware ss : serviceSoftwareList) {
+
+            serviceSoftwareOption[count] = new SelectItem(ss.getCommonId(), ss.getSoftwareDesc());
+
+            count++;
+        }
+        
+        return serviceSoftwareOption;
+        
+    }
+
+    public void setServiceSoftwareOption(SelectItem[] serviceSoftwareOption) {
+        this.serviceSoftwareOption = serviceSoftwareOption;
+    }
+
+    public CustomCrudService getCustomCrudService() {
+        return customCrudService;
+    }
+
+    public void setCustomCrudService(CustomCrudService customCrudService) {
+        this.customCrudService = customCrudService;
+    }
+
+    public SelectItem[] getRegionsOptions() {
+
+        List<Regions> regionsList
+                = crudService.findAll(Regions.class, true);
+
+        regionsOptions = new SelectItem[regionsList.size()];
+
+        int count = 0;
+
+        for (Regions si : regionsList) {
+
+            regionsOptions[count] = new SelectItem(si.getRegionId(), si.getRegionName());
+
+            count++;
+        }
+        return regionsOptions;
+    }
+
+    public void setRegionsOptions(SelectItem[] regionsOptions) {
+        this.regionsOptions = regionsOptions;
     }
 
     public SelectItem[] getEngineeringStaffOption() {

@@ -27,7 +27,7 @@
                                         update="cName,cIndustry,cPhone,cEmail,cPostal,cLocation"/>
                             </h:selectOneMenu>
 
-                            <p:fieldset legend="Contact Detail" style="margin-top: 20px">
+                            <p:fieldset legend="New Contact Detail" style="margin-top: 20px">
 
                                 <h:panelGrid columns="4" style="margin-left: -20px">
                                     <h:outputLabel value="Contact Name:"/>
@@ -81,7 +81,8 @@
 
 
             <h:form>
-                <p:dataTable paginator="true" var="emp" rows="10" style="font-size: 11px;margin-top: 10px">  
+
+                <p:dataTable var="emp" style="font-size: 11px;margin-top: 10px">  
                     <p:column>
                         <f:facet name="header">Client Name</f:facet>
                         <h:outputText/>
