@@ -15,6 +15,14 @@
             <h:form id="softwareEntryForm">
                 <h:panelGroup layout="block">
                     <h:panelGrid columns="6">
+                        
+                        <h:outputLabel value="Service Type:"/>
+                         <h:selectOneMenu styleClass="textarea"
+                                         value="#{softwareController.serviceTypeId}">
+                            <f:selectItem itemLabel="....Select One...."/>
+                            <f:selectItems value="#{commonOptions.productTypesOptions}"/>
+                        </h:selectOneMenu>
+                        
                         <h:outputLabel value="Software Name:"/>
                         <h:inputText styleClass="textarea" value="#{softwareController.software.softwareDesc}"/>
 
@@ -33,6 +41,10 @@
 
                 <p:dataTable style="margin-top: 40px;width: 500px"
                              var="product" value="#{softwareView.softwareList}">
+                    <p:column>
+                        <f:facet name="header">Service Type</f:facet>
+                        <h:outputText value="#{product.productTypes.productName}"/>
+                    </p:column>
                     <p:column>
                         <f:facet name="header">Software Name</f:facet>
                         <h:outputText value="#{product.softwareDesc}"/>

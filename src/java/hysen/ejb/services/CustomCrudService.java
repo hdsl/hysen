@@ -151,6 +151,26 @@ public class CustomCrudService {
 
     }
 
+    public List<ServiceRequest> serviceRequestList(String clientProductId) {
+
+        List<ServiceRequest> serviceRequestList;
+
+        String qry = "SELECT t FROM ServiceRequest t WHERE t.clientProduct.commonId = '" + clientProductId + "' "
+                + "AND t.deleted='N' ORDER BY t.requestDate ";
+
+        try {
+
+            serviceRequestList = em.createQuery(qry).getResultList();
+
+            return serviceRequestList;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.EMPTY_LIST;
+        }
+
+    }
+
     public ServiceRequest clientPMScheduleList(String pmPeriod, int pmYear, String serialNumber) {
 
         String qry = "SELECT t FROM ServiceRequest t WHERE t.clientProduct.commonId = '" + serialNumber + "' "

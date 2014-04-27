@@ -7,6 +7,7 @@ package hysen.ejb.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -23,6 +24,9 @@ public class ServiceSoftware extends CommonEntity {
 
     @Column(name = "software_desc")
     private String softwareDesc;
+    
+    @JoinColumn(name = "product_types")
+    private ProductTypes productTypes;
 
     public String getSoftwareDesc() {
         return softwareDesc;
@@ -30,6 +34,14 @@ public class ServiceSoftware extends CommonEntity {
 
     public void setSoftwareDesc(String softwareDesc) {
         this.softwareDesc = softwareDesc;
+    }
+
+    public ProductTypes getProductTypes() {
+        return productTypes;
+    }
+
+    public void setProductTypes(ProductTypes productTypes) {
+        this.productTypes = productTypes;
     }
 
 }

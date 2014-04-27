@@ -29,7 +29,7 @@ public class ClientProductView implements Serializable {
 
     @PostConstruct
     public void init() {
-        clientProductList = crudService.findAll(ClientProduct.class, false);
+        clientProductList = crudService.findAll(ClientProduct.class, false,"lastModifiedDate DESC");
     }
 
     public List<ClientProduct> getClientProductList() {

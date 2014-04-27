@@ -6,8 +6,10 @@
 package hysen.web.controllers;
 
 import hysen.ejb.entities.Department;
+import hysen.ejb.entities.GeneratePk;
 import hysen.ejb.entities.StaffDetail;
 import hysen.ejb.services.CrudService;
+import hysen.ejb.services.CustomCrudService;
 import hysen.web.utils.StringConstants;
 import java.io.Serializable;
 import javax.enterprise.context.Conversation;
@@ -25,7 +27,11 @@ public class StaffDetailController implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Declaration and Initialisation">
     @Inject
+    private CustomCrudService customCrudService;
+
+    @Inject
     private CrudService crudService;
+
     @Inject
     private Conversation conversation;
 
@@ -56,9 +62,21 @@ public class StaffDetailController implements Serializable {
     }
 
     public void addStaffDetail() {
+
         beginConversation();
 
-        staffDetail.setCommonId(StringConstants.generateID());
+        GeneratePk generatePk = customCrudService.getGenPk("STAFF_ID");
+
+        int in = generatePk.getPkValue();
+
+        Integer countId = 1 + in;
+
+        staffDetail.setCommonId(countId.toString());
+        
+        generatePk.setPkValue(countId);
+        
+        customCrudService.generatePkUpdate(generatePk);
+        
     }
 
     public void saveEditButtonAction() {

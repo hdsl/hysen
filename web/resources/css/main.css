@@ -282,8 +282,8 @@ h1 {
 h2.report-group-heading {
     /*    background: -moz-linear-gradient(center top , #666666 0%, #4A4A4A 50%, #666666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
         color: #FFFFFF !important;*/
-    background: -moz-linear-gradient(center top , #666666 0px, #4A4A4A 50%, #666666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
-    color: #FFFFFF !important;
+    background: -moz-linear-gradient(center top , #D9ECF5 0px, #D9ECF5 50%, #D9ECF5 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    color: #000 !important;
     font-size: 13px;
     margin: 0;
     padding: 8px 10px;

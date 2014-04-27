@@ -5,8 +5,11 @@
  */
 package hysen.web.controllers;
 
+import hysen.ejb.entities.GeneratePk;
+import hysen.ejb.entities.ProductTypes;
 import hysen.ejb.entities.ServiceSoftware;
 import hysen.ejb.services.CrudService;
+import hysen.ejb.services.CustomCrudService;
 import hysen.web.utils.StringConstants;
 import javax.inject.Named;
 import javax.enterprise.context.ConversationScoped;
@@ -27,10 +30,13 @@ public class SoftwareController implements Serializable {
     private CrudService crudService;
 
     @Inject
+    private CustomCrudService customCrudService;
+
+    @Inject
     private Conversation conversation;
 
     ServiceSoftware software = new ServiceSoftware();
-    String saveEditButtonText = "Save";
+    String saveEditButtonText = "Save", serviceTypeId;
 //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Methods">
@@ -53,15 +59,35 @@ public class SoftwareController implements Serializable {
 
         if (saveEditButtonText.equals("Save")) {
 
-            software.setCommonId(StringConstants.generateID());
+            GeneratePk generatePk = customCrudService.getGenPk("SOFTWARE");
+
+            int in = generatePk.getPkValue();
+
+            Integer countId = 1 + in;
+
+            software.setCommonId(countId.toString());
+
+            ProductTypes productTypes = crudService.find(ProductTypes.class, serviceTypeId);
+
+            software.setProductTypes(productTypes);
 
             if (crudService.save(software) != null) {
+                
                 StringConstants.showApprioprateMessage(StringConstants.SAVE_MESSAGE);
+                
+                generatePk.setPkValue(countId);
+                customCrudService.generatePkUpdate(generatePk);
+                
                 resetButtonAction();
+                
             } else {
                 StringConstants.showApprioprateMessage(StringConstants.SAVE_ERRORMESSAGE);
             }
         } else {
+
+            ProductTypes productTypes = crudService.find(ProductTypes.class, serviceTypeId);
+
+            software.setProductTypes(productTypes);
 
             if (crudService.update(software) == true) {
                 StringConstants.showApprioprateMessage(StringConstants.EDIT_MESSAGE);
@@ -104,6 +130,22 @@ public class SoftwareController implements Serializable {
 
     public void setCrudService(CrudService crudService) {
         this.crudService = crudService;
+    }
+
+    public Conversation getConversation() {
+        return conversation;
+    }
+
+    public void setConversation(Conversation conversation) {
+        this.conversation = conversation;
+    }
+
+    public String getServiceTypeId() {
+        return serviceTypeId;
+    }
+
+    public void setServiceTypeId(String serviceTypeId) {
+        this.serviceTypeId = serviceTypeId;
     }
 
     public ServiceSoftware getSoftware() {

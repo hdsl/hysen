@@ -5,9 +5,11 @@
  */
 package hysen.web.controllers;
 
+import hysen.ejb.entities.GeneratePk;
 import hysen.ejb.entities.ProductTypes;
 import hysen.ejb.entities.ServiceModelComponent;
 import hysen.ejb.services.CrudService;
+import hysen.ejb.services.CustomCrudService;
 import hysen.web.utils.StringConstants;
 import javax.inject.Named;
 import javax.enterprise.context.ConversationScoped;
@@ -26,6 +28,9 @@ public class ModelComponentController implements Serializable {
     //<editor-fold defaultstate="collapsed" desc="Declaration and Initialisation">
     @Inject
     private CrudService crudService;
+
+    @Inject
+    private CustomCrudService customCrudService;
 
     @Inject
     Conversation conversation;
@@ -62,12 +67,20 @@ public class ModelComponentController implements Serializable {
 
                 ProductTypes productTypes = crudService.find(ProductTypes.class, productTypeId);
 
-                modelComponent.setCommonId(StringConstants.generateID());
+                GeneratePk generatePk = customCrudService.getGenPk("MODEL_COMP");
+
+                int in = generatePk.getPkValue();
+
+                Integer countId = 1 + in;
+
+                modelComponent.setCommonId(countId.toString());
                 modelComponent.setProductTypes(productTypes);
 
                 if (crudService.save(modelComponent) != null) {
 
                     StringConstants.showApprioprateMessage(StringConstants.SAVE_MESSAGE);
+                    generatePk.setPkValue(countId);
+                    customCrudService.generatePkUpdate(generatePk);
                     resetButtonAction();
                 } else {
                     StringConstants.showApprioprateMessage(StringConstants.SAVE_ERRORMESSAGE);
@@ -170,5 +183,5 @@ public class ModelComponentController implements Serializable {
         this.modelComponent = modelComponent;
     }
 //</editor-fold>
-    
+
 }

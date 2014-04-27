@@ -112,7 +112,7 @@ public class CrudService {
                 qry = "SELECT t FROM " + t.getSimpleName() + " t ORDER BY t." + orderBy + " ";
             } else if (includeLogicalDelete == false) {
 
-                qry = "SELECT t FROM " + t.getSimpleName() + " t WHERE t.deleted = 'N' ORDER BY t.'" + orderBy + "' ";
+                qry = "SELECT t FROM " + t.getSimpleName() + " t WHERE t.deleted = 'N' ORDER BY t." + orderBy + " ";
             }
 
             return em.createQuery(qry).getResultList();

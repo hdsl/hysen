@@ -105,20 +105,21 @@ public class GeneralReportContoller implements Serializable {
 
         endConversation();
     }
-
+    
     public void generateClientReportByParameter() {
 
+        System.out.println("come home..............."+clientDetailId);
+        reportParameter = "EQUIPMENTS";
         beginConversation();
 
         List<ClientProductTableModel> productTableModelList = new ArrayList<>();
 
+            System.out.println("in here111..............."+clientDetailId);
         if (clientDetailId == null || clientDetailId.equals("")) {
             StringConstants.showApprioprateMessage("Please select client");
-        } else if (reportParameter == null) {
-            StringConstants.showApprioprateMessage("Please select report parameter");
         } else {
-
             if (reportParameter.equals("EQUIPMENTS")) {
+                System.out.println("client selected.............."+clientDetailId);
 
                 if (clientDetailId.equals("ALL_CLIENTS")) {
 
@@ -280,7 +281,6 @@ public class GeneralReportContoller implements Serializable {
     }
 
 //</editor-fold>
-    
     //<editor-fold defaultstate="collapsed" desc="Getters and Setters">
     public CrudService getCrudService() {
         return crudService;

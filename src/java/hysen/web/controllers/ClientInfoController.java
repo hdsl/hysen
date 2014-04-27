@@ -142,6 +142,7 @@ public class ClientInfoController implements Serializable {
     }
 
 //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Getters and Setters">
     public CrudService getCrudService() {
         return crudService;
