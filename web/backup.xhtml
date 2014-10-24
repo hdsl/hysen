@@ -111,31 +111,7 @@
 
                         </h:panelGrid>
 
-                        <h:panelGrid columns="4" style="margin-left: 0px">
-
-                            <h:selectOneMenu styleClass="textarea" value="#{generalReportContoller.serviceModelClient}">
-                                <f:selectItem itemLabel="---------- Select Client Name ---------"/>                              
-                                <f:selectItems value="#{commonOptions.clientsDetailOptions}"/>
-                                <p:ajax event="change" listener="#{generalReportContoller.customerDetailPDP()}"/>
-                            </h:selectOneMenu>
-                            <h:outputText/>
-                            <h:selectOneMenu styleClass="textarea" value="#{generalReportContoller.selectedProductType}">
-                                <f:selectItem itemLabel="---- Select Service Type ----"/>
-                                <f:selectItems value="#{commonOptions.productTypesOptions}"/>
-                                <p:ajax event="change" listener="#{generalReportContoller.populateClientServiceModel()}" update="clientServiceModel"/>
-                            </h:selectOneMenu>
-                            <h:outputText/>
-                        </h:panelGrid>
-
-                        <h:panelGrid columns="4" style="margin-left: 0px">
-                            <h:selectOneMenu styleClass="textarea"
-                                             value="#{generalReportContoller.serviceModelTypeId}">
-                                <f:selectItem itemLabel="---- Select Service Model ----"/>                                
-                                <f:selectItems value="#{generalReportContoller.clientEquipmentOption}"/>
-                            </h:selectOneMenu>
-                            <h:outputText/>
-                            <h:commandLink value="Generate Report" target="_blank" action="#{generalReportContoller.generateServiceModelReport()}"/>
-                        </h:panelGrid>
+                       
                     </div>
                 </h:panelGroup>
             </h:form>
@@ -164,6 +140,58 @@
             </h:form>
         </p:dialog> 
 
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <!--                    <h2 class="report-group-heading">Report:</h2>-->
+                    <h:outputText styleClass="report-title-detail" value="#{generalReportContoller.reportTitle}" rendered="#{generalReportContoller.renderEquipPanel}"/>
+                    <h:outputText styleClass="report-title-detail" value="#{generalReportContoller.reportTitle}" rendered="#{generalReportContoller.renderEquipRegionPanel}"/>
+                    <div class="report-group" style="  background-color: #EEEEEE;">
+
+                        <h:panelGrid columns="4" style="margin-left: -20px" rendered="#{generalReportContoller.renderEquipPanel}">
+                            <h:outputLabel value="Client:"/>
+                            <h:selectOneMenu value="#{generalReportContoller.clientDetailId}">
+                                <f:selectItem itemLabel=".....Select One....."/>
+                                <f:selectItem itemLabel="ALL CLIENTS" itemValue="ALL_CLIENTS"/>
+                                <f:selectItems value="#{commonOptions.clientsDetailOptions}"/>
+                            </h:selectOneMenu>
+                            <h:outputLabel value="Eqip. Type"/>
+                            <h:selectOneMenu value="#{generalReportContoller.selectedProductType}">
+                                <f:selectItem itemLabel=".....Select One....."/>
+                                <f:selectItems value="#{commonOptions.productTypesOptions}"/>
+                            </h:selectOneMenu>
+                        </h:panelGrid>
+                        <h:panelGrid columns="4" rendered="#{generalReportContoller.renderEquipPanel}" style="margin-top: 10px">
+                            <h:commandLink value="Generate Report" target="_blank" action="#{generalReportContoller.generateClientReportByParameter()}"/>
+                        </h:panelGrid>
+
+                        <h:panelGrid columns="4" style="margin-left: -20px" rendered="#{generalReportContoller.renderEquipRegionPanel}">
+                            <h:outputLabel value="Client:"/>
+                            <h:selectOneMenu value="#{generalReportContoller.clientDetailId}">
+                                <f:selectItem itemLabel=".....Select One....."/>
+                                <f:selectItem itemLabel="ALL CLIENTS" itemValue="ALL_CLIENTS"/>
+                                <f:selectItems value="#{commonOptions.clientsDetailOptions}"/>
+                            </h:selectOneMenu>
+                            <h:outputLabel value="Eqip. Type"/>
+                            <h:selectOneMenu value="#{generalReportContoller.selectedProductType}">
+                                <f:selectItem itemLabel=".....Select One....."/>
+                                <f:selectItems value="#{commonOptions.productTypesOptions}"/>
+                            </h:selectOneMenu>
+                        </h:panelGrid>
+                        <h:panelGrid columns="4" rendered="#{generalReportContoller.renderEquipRegionPanel}" style="margin-top: 10px">
+                            <h:commandLink value="Generate Report" target="_blank" action="#{generalReportContoller.generateClientEquipByRegion()}"/>
+                        </h:panelGrid>
+
+                    </div>
     </h:body>
 </html>
 

@@ -29,21 +29,21 @@ import javax.persistence.Transient;
 public class ClientProduct extends CommonEntity {
 
     @ManyToOne
-    @JoinColumn(name = "client_detail")
+    @JoinColumn(name = "client_detail")//
     private ClientDetail clientDetail;
 
     @ManyToOne
-    @JoinColumn(name = "product_model")
+    @JoinColumn(name = "product_model")//
     private ProductTypesModel productTypeModel;
 
     @ManyToOne
-    @JoinColumn(name = "regions")
+    @JoinColumn(name = "regions")//
     private Regions regions;
 
-    @Column(name = "product_location")
+    @Column(name = "product_location")//
     private String productLocation;
 
-    @Column(name = "serial_number")
+    @Column(name = "serial_number")//
     private String serialNumber;
 
     @Column(name = "software_installed")

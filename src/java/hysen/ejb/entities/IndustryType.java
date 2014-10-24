@@ -36,6 +36,10 @@ public class IndustryType implements Serializable {
     @Size(max = 255)
     @Column(name = "industry_name")
     private String industryName;
+    @Column(name = "status")
+    private String status;
+    @Column(name = "deleted")
+    private Character deleted;
 
     public IndustryType() {
     }
@@ -50,6 +54,22 @@ public class IndustryType implements Serializable {
 
     public void setIndustryTypeId(String industryTypeId) {
         this.industryTypeId = industryTypeId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Character getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Character deleted) {
+        this.deleted = deleted;
     }
 
     public String getIndustryName() {

@@ -9,25 +9,30 @@ import hysen.ejb.entities.ClientContact;
 import hysen.ejb.entities.ClientDetail;
 import hysen.ejb.entities.IndustryType;
 import hysen.ejb.services.CrudService;
+import hysen.ejb.services.CustomCrudService;
 import hysen.web.utils.StringConstants;
 import hysen.web.utils.UserSession;
 import javax.inject.Named;
-import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.List;
 import javax.enterprise.context.Conversation;
 import javax.inject.Inject;
 
 /**
  *
- * @author AbdulMumin
+ * @author HDSL_MUMIN
  */
-@Named(value = "clientInfoController")
-@ConversationScoped
-public class ClientInfoController implements Serializable {
+@Named(value = "companyDetailController")
+@SessionScoped
+public class CompanyDetailController implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Declaration and Initialisation">
     @Inject
     private CrudService crudService;
+    
+    @Inject
+    private CustomCrudService customCrudService;
 
     @Inject
     private Conversation conversation;
@@ -35,16 +40,18 @@ public class ClientInfoController implements Serializable {
     @Inject
     private UserSession userSession;
 
-    String saveEditButtonText = "Save", industryTypeId, selectedClient;
+    String saveEditButtonText = "Save", industryTypeId, selectedClient, companyStatus;
 
     boolean renderForm = false;
 
     ClientDetail clientDetail = new ClientDetail();
     ClientContact clientContact = new ClientContact();
+    
+    List<ClientContact> companyContactList;
 //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Methods">
-    public ClientInfoController() {
+    public CompanyDetailController() {
     }
 
     private void beginConversation() {
@@ -63,48 +70,61 @@ public class ClientInfoController implements Serializable {
         renderForm = false;
     }
 
-    public void addClient() {
-        beginConversation();
+    public void showCustomerDetail() {
 
-        clientDetail.setCommonId(StringConstants.generateID());
+        industryTypeId = clientDetail.getIndustryType().getIndustryTypeId();
+        companyStatus = clientDetail.getCompanyStatus().getIndustryTypeId();
+        
+        companyContactList = customCrudService.
+                findByParameter(ClientContact.class, "companyDetail.commonId", clientDetail.getCommonId(), 'N');        
 
-        renderForm = true;
+        saveEditButtonText = "Update";
+
     }
 
-    public String saveEditButtonAction() {
+    public void saveEditButtonAction() {
 
         beginConversation();
 
-        if (saveEditButtonText.equals("Save")) {
-
-            clientDetail.setIndustryType(crudService.find(IndustryType.class, industryTypeId));
-            clientDetail.setLastModifiedBy(userSession.getUsername());
-
-            if (crudService.save(clientDetail) != null) {
-
-                StringConstants.showApprioprateMessage(StringConstants.SAVE_MESSAGE);
-                resetButtonAction();
-
-                return "pretty:clientDetail";
-
-            } else {
-                StringConstants.showApprioprateMessage(StringConstants.SAVE_ERRORMESSAGE);
-
-                return null;
-            }
-
+        if (industryTypeId.equals("null")) {
+            StringConstants.showApprioprateMessage("Please select the industry type");
+        } else if (companyStatus.equals("null")) {
+            StringConstants.showApprioprateMessage("Please select the company status");
         } else {
+            if (saveEditButtonText.equals("Save")) {
 
-            clientDetail.setIndustryType(crudService.find(IndustryType.class, industryTypeId));
+                clientDetail.setIndustryType(crudService.find(IndustryType.class, industryTypeId));
+                clientDetail.setCompanyStatus(crudService.find(IndustryType.class, companyStatus));
+                clientDetail.setCommonId(StringConstants.generateID());
 
-            if (crudService.update(clientDetail) == true) {
+                clientDetail.setLastModifiedBy(userSession.getUsername());
 
-                StringConstants.showApprioprateMessage(StringConstants.EDIT_MESSAGE);
-                resetButtonAction();
-                return "pretty:clientDetail";
+                if (crudService.save(clientDetail) != null) {
+
+                    StringConstants.showApprioprateMessage(StringConstants.SAVE_MESSAGE);
+                    resetButtonAction();
+
+//                    return "pretty:clientDetail";
+                } else {
+                    StringConstants.showApprioprateMessage(StringConstants.SAVE_ERRORMESSAGE);
+
+//                    return null;
+                }
+
             } else {
-                StringConstants.showApprioprateMessage(StringConstants.EDIT_ERRORMESSAGE);
-                return null;
+
+                clientDetail.setIndustryType(crudService.find(IndustryType.class, industryTypeId));
+                clientDetail.setCompanyStatus(crudService.find(IndustryType.class, companyStatus));
+
+                if (crudService.update(clientDetail) == true) {
+
+                    StringConstants.showApprioprateMessage(StringConstants.EDIT_MESSAGE);
+                    resetButtonAction();
+//                    return "pretty:clientDetail";
+                } else {
+                    StringConstants.showApprioprateMessage(StringConstants.EDIT_ERRORMESSAGE);
+//                    return null;
+                }
             }
         }
 
@@ -114,6 +134,8 @@ public class ClientInfoController implements Serializable {
 
         endConversation();
         saveEditButtonText = "Save";
+        industryTypeId = null;
+        companyStatus = null;
         clientDetail = new ClientDetail();
         clientContact = new ClientContact();
 
@@ -126,13 +148,13 @@ public class ClientInfoController implements Serializable {
         saveEditButtonText = "Update";
     }
 
-    public void deleteButtonAction(ClientDetail cd) {
+    public void deleteButtonAction() {
 
         beginConversation();
 
-        cd.setLastModifiedBy(userSession.getUsername());
+        clientDetail.setLastModifiedBy(userSession.getUsername());
 
-        if (crudService.delete(cd, true) == true) {
+        if (crudService.delete(clientDetail, true) == true) {
 
             StringConstants.showApprioprateMessage(StringConstants.DELETE_MESSAGE);
             resetButtonAction();
@@ -150,6 +172,38 @@ public class ClientInfoController implements Serializable {
 
     public void setCrudService(CrudService crudService) {
         this.crudService = crudService;
+    }
+
+    public CustomCrudService getCustomCrudService() {
+        return customCrudService;
+    }
+
+    public void setCustomCrudService(CustomCrudService customCrudService) {
+        this.customCrudService = customCrudService;
+    }
+
+    public List<ClientContact> getCompanyContactList() {
+        return companyContactList;
+    }
+
+    public void setCompanyContactList(List<ClientContact> companyContactList) {
+        this.companyContactList = companyContactList;
+    }
+
+    public UserSession getUserSession() {
+        return userSession;
+    }
+
+    public void setUserSession(UserSession userSession) {
+        this.userSession = userSession;
+    }
+
+    public String getCompanyStatus() {
+        return companyStatus;
+    }
+
+    public void setCompanyStatus(String companyStatus) {
+        this.companyStatus = companyStatus;
     }
 
     public ClientContact getClientContact() {

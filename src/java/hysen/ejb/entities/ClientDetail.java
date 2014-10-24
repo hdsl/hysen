@@ -24,108 +24,100 @@ import javax.persistence.Table;
     @NamedQuery(name = "ClientDetail.findAll", query = "SELECT a FROM ClientDetail a")})
 public class ClientDetail extends CommonEntity {
 
-    @Column(name = "client_name")
-    private String clientName;
+    @Column(name = "company_name")
+    private String companyName;
 
-    @Column(name = "client_location")
-    private String clientLocation;
+    @Column(name = "primary_contact")
+    private String primaryContact;
 
-    @Column(name = "client_address")
-    private String clientAddress;
+    @Column(name = "other_contact")
+    private String otherContact;  
+    
+    @Column(name = "company_email")
+    private String companyEmail;
 
-    @Column(name = "client_email")
-    private String clientEmail;
+    @Column(name = "primary_address")
+    private String primaryAddress;
+    
+    @Column(name = "other_address")
+    private String otherAddress;
+    
+    @Column(name = "company_website")
+    private String companyWebsite;
 
-    @Column(name = "client_primary_contact")
-    private String clientPrimaryContact;
-
-    @Column(name = "client_other_contact")
-    private String clientOtherContact;
-
-    @Column(name = "client_website")
-    private String clientWebsite;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "company_status")
+    private IndustryType companyStatus;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "industry_type")
     private IndustryType industryType;
 
-    @Column(name = "contact_person")
-    private String contactPerson;
-
-    @Column(name = "contact_person_email")
-    private String contactPersonEmail;
-
-    @Column(name = "contact_person_phone_number")
-    private String contactPersonPhoneNumber;
-
-    @Column(name = "contact_job_title")
-    private String contactJobTitle;
-
     public ClientDetail() {
     }
 
-    public String getClientName() {
-        return clientName;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setClientName(String clientName) {
-        this.clientName = clientName;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
-    public String getContactJobTitle() {
-        return contactJobTitle;
+    public String getCompanyWebsite() {
+        return companyWebsite;
     }
 
-    public void setContactJobTitle(String contactJobTitle) {
-        this.contactJobTitle = contactJobTitle;
+    public void setCompanyWebsite(String companyWebsite) {
+        this.companyWebsite = companyWebsite;
     }
 
-    public String getClientLocation() {
-        return clientLocation;
+    public String getPrimaryContact() {
+        return primaryContact;
     }
 
-    public void setClientLocation(String clientLocation) {
-        this.clientLocation = clientLocation;
+    public void setPrimaryContact(String primaryContact) {
+        this.primaryContact = primaryContact;
     }
 
-    public String getClientAddress() {
-        return clientAddress;
+    public String getOtherContact() {
+        return otherContact;
     }
 
-    public void setClientAddress(String clientAddress) {
-        this.clientAddress = clientAddress;
+    public void setOtherContact(String otherContact) {
+        this.otherContact = otherContact;
     }
 
-    public String getClientEmail() {
-        return clientEmail;
+    public String getCompanyEmail() {
+        return companyEmail;
     }
 
-    public void setClientEmail(String clientEmail) {
-        this.clientEmail = clientEmail;
+    public void setCompanyEmail(String companyEmail) {
+        this.companyEmail = companyEmail;
     }
 
-    public String getClientPrimaryContact() {
-        return clientPrimaryContact;
+    public String getPrimaryAddress() {
+        return primaryAddress;
     }
 
-    public void setClientPrimaryContact(String clientPrimaryContact) {
-        this.clientPrimaryContact = clientPrimaryContact;
+    public void setPrimaryAddress(String primaryAddress) {
+        this.primaryAddress = primaryAddress;
     }
 
-    public String getClientOtherContact() {
-        return clientOtherContact;
+    public String getOtherAddress() {
+        return otherAddress;
     }
 
-    public void setClientOtherContact(String clientOtherContact) {
-        this.clientOtherContact = clientOtherContact;
+    public void setOtherAddress(String otherAddress) {
+        this.otherAddress = otherAddress;
     }
 
-    public String getClientWebsite() {
-        return clientWebsite;
+    public IndustryType getCompanyStatus() {
+        return companyStatus;
     }
 
-    public void setClientWebsite(String clientWebsite) {
-        this.clientWebsite = clientWebsite;
+    public void setCompanyStatus(IndustryType companyStatus) {
+        this.companyStatus = companyStatus;
     }
 
     public IndustryType getIndustryType() {
@@ -134,30 +126,6 @@ public class ClientDetail extends CommonEntity {
 
     public void setIndustryType(IndustryType industryType) {
         this.industryType = industryType;
-    }
-
-    public String getContactPerson() {
-        return contactPerson;
-    }
-
-    public void setContactPerson(String contactPerson) {
-        this.contactPerson = contactPerson;
-    }
-
-    public String getContactPersonEmail() {
-        return contactPersonEmail;
-    }
-
-    public void setContactPersonEmail(String contactPersonEmail) {
-        this.contactPersonEmail = contactPersonEmail;
-    }
-
-    public String getContactPersonPhoneNumber() {
-        return contactPersonPhoneNumber;
-    }
-
-    public void setContactPersonPhoneNumber(String contactPersonPhoneNumber) {
-        this.contactPersonPhoneNumber = contactPersonPhoneNumber;
     }
 
 }

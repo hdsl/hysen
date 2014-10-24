@@ -32,139 +32,97 @@
 	<title>
 		<band height="81" splitType="Stretch">
 			<line>
-				<reportElement uuid="b7ebc3a7-3bca-47b2-98d4-0822967bd070" x="-1" y="79" width="550" height="2"/>
+				<reportElement x="0" y="78" width="549" height="1" forecolor="#A0B630" backcolor="#A0B630" uuid="fe6be4cb-2bca-477a-ae20-863c74062851"/>
 				<graphicElement>
-					<pen lineWidth="2.0" lineColor="#CCCCCC"/>
-				</graphicElement>
-			</line>
-			<line>
-				<reportElement uuid="fe6be4cb-2bca-477a-ae20-863c74062851" x="0" y="78" width="549" height="1"/>
-				<graphicElement>
-					<pen lineWidth="1.5"/>
+					<pen lineWidth="1.0"/>
 				</graphicElement>
 			</line>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="b693f51f-c27b-4051-a8ea-059259070be8" x="418" y="39" width="128" height="12" forecolor="#A0B630"/>
+				<reportElement x="395" y="39" width="152" height="12" forecolor="#A0B630" uuid="b693f51f-c27b-4051-a8ea-059259070be8"/>
 				<textElement>
 					<font size="8" isBold="true" isItalic="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{companyName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="8605f950-dd0d-4685-8554-bddcad3074e7" x="418" y="52" width="128" height="12" forecolor="#A0B630"/>
+				<reportElement x="395" y="52" width="152" height="12" forecolor="#A0B630" uuid="8605f950-dd0d-4685-8554-bddcad3074e7"/>
 				<textElement>
 					<font size="8" isBold="true" isItalic="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{companyAddress}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="b9a2d08f-7781-4960-96b0-ef7e13a6f3fb" x="418" y="64" width="128" height="12" forecolor="#A0B630"/>
+				<reportElement x="395" y="64" width="152" height="12" forecolor="#A0B630" uuid="b9a2d08f-7781-4960-96b0-ef7e13a6f3fb"/>
 				<textElement>
 					<font size="8" isBold="true" isItalic="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{companyTelephone}]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement uuid="64344dea-c6ec-4fdc-a8fa-d8dc83e10df9" x="4" y="36" width="149" height="39"/>
+				<reportElement x="4" y="35" width="149" height="40" uuid="b9e92f28-0a3e-40cb-b59a-0dfd72fe2e60"/>
 				<imageExpression><![CDATA[$P{companyLogo}]]></imageExpression>
 			</image>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="25" splitType="Stretch">
+		<band height="23" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement uuid="35150476-2852-4e6e-a5cb-1db49ba0afe2" key="textField" mode="Opaque" x="0" y="2" width="549" height="21" forecolor="#FFFFFF" backcolor="#A0B630"/>
+				<reportElement key="textField" mode="Opaque" x="5" y="2" width="539" height="15" forecolor="#003366" backcolor="#FFFFFF" uuid="35150476-2852-4e6e-a5cb-1db49ba0afe2"/>
 				<box>
-					<bottomPen lineWidth="0.5" lineStyle="Double" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Double" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Segoe UI" size="14" isBold="true" pdfFontName="Helvetica-Bold"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="11" isBold="true" isItalic="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{reportTitle}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="1" y="21" width="548" height="1" forecolor="#A0B630" backcolor="#A0B630" uuid="c58efb96-2f3e-4834-aeb2-b64aeeac60dc"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</line>
 		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="64a528d6-b702-4d11-b70f-cbdb7eb714b0" key="staticText-7" mode="Opaque" x="20" y="0" width="133" height="19" forecolor="#FFFFFF" backcolor="#003366"/>
-				<box>
-					<pen lineWidth="0.5" lineColor="#009999"/>
-					<topPen lineWidth="0.5" lineColor="#009999"/>
-					<leftPen lineWidth="0.5" lineColor="#009999"/>
-					<bottomPen lineWidth="0.5" lineColor="#009999"/>
-					<rightPen lineWidth="0.5" lineColor="#009999"/>
-				</box>
+				<reportElement key="staticText-7" mode="Opaque" x="20" y="0" width="133" height="19" forecolor="#000000" backcolor="#F0F0F0" uuid="64a528d6-b702-4d11-b70f-cbdb7eb714b0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Client Name]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="8abadf7a-2b3c-41d6-ba4a-33a8f9558752" key="staticText-7" mode="Opaque" x="153" y="0" width="98" height="19" forecolor="#FFFFFF" backcolor="#003366"/>
-				<box leftPadding="2">
-					<pen lineWidth="0.5" lineColor="#009999"/>
-					<topPen lineWidth="0.5" lineColor="#009999"/>
-					<leftPen lineWidth="0.5" lineColor="#009999"/>
-					<bottomPen lineWidth="0.5" lineColor="#009999"/>
-					<rightPen lineWidth="0.5" lineColor="#009999"/>
-				</box>
+				<reportElement key="staticText-7" mode="Opaque" x="153" y="0" width="98" height="19" forecolor="#000000" backcolor="#F0F0F0" uuid="8abadf7a-2b3c-41d6-ba4a-33a8f9558752"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Industry Type]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bdb9679c-3749-43f4-b904-6f2e3d8dacea" key="staticText-11" mode="Opaque" x="250" y="0" width="96" height="19" forecolor="#FFFFFF" backcolor="#003366"/>
-				<box>
-					<pen lineWidth="0.5" lineColor="#009999"/>
-					<topPen lineWidth="0.5" lineColor="#009999"/>
-					<leftPen lineWidth="0.5" lineColor="#009999"/>
-					<bottomPen lineWidth="0.5" lineColor="#009999"/>
-					<rightPen lineWidth="0.5" lineColor="#009999"/>
-				</box>
+				<reportElement key="staticText-11" mode="Opaque" x="250" y="0" width="96" height="19" forecolor="#000000" backcolor="#F0F0F0" uuid="bdb9679c-3749-43f4-b904-6f2e3d8dacea"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Phone Contact(s)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="2c2d4861-ff2e-4b52-a3cb-108167626867" key="staticText-8" mode="Opaque" x="0" y="0" width="20" height="19" forecolor="#FFFFFF" backcolor="#003366"/>
-				<box>
-					<pen lineWidth="0.5" lineColor="#009999"/>
-					<topPen lineWidth="0.5" lineColor="#009999"/>
-					<leftPen lineWidth="0.5" lineColor="#009999"/>
-					<bottomPen lineWidth="0.5" lineColor="#009999"/>
-					<rightPen lineWidth="0.5" lineColor="#009999"/>
-				</box>
+				<reportElement key="staticText-8" mode="Opaque" x="0" y="0" width="20" height="19" forecolor="#000000" backcolor="#F0F0F0" uuid="2c2d4861-ff2e-4b52-a3cb-108167626867"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="417f4528-2b0f-4e36-8e8b-901562ee3795" key="staticText-11" mode="Opaque" x="346" y="0" width="117" height="19" forecolor="#FFFFFF" backcolor="#003366"/>
-				<box>
-					<pen lineWidth="0.5" lineColor="#009999"/>
-					<topPen lineWidth="0.5" lineColor="#009999"/>
-					<leftPen lineWidth="0.5" lineColor="#009999"/>
-					<bottomPen lineWidth="0.5" lineColor="#009999"/>
-					<rightPen lineWidth="0.5" lineColor="#009999"/>
-				</box>
+				<reportElement key="staticText-11" mode="Opaque" x="346" y="0" width="117" height="19" forecolor="#000000" backcolor="#F0F0F0" uuid="417f4528-2b0f-4e36-8e8b-901562ee3795"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Email Address]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="640889b1-a11a-4185-8ec9-8ee85bf7854f" key="staticText-11" mode="Opaque" x="462" y="0" width="87" height="19" forecolor="#FFFFFF" backcolor="#003366"/>
-				<box>
-					<pen lineWidth="0.5" lineColor="#009999"/>
-					<topPen lineWidth="0.5" lineColor="#009999"/>
-					<leftPen lineWidth="0.5" lineColor="#009999"/>
-					<bottomPen lineWidth="0.5" lineColor="#009999"/>
-					<rightPen lineWidth="0.5" lineColor="#009999"/>
-				</box>
+				<reportElement key="staticText-11" mode="Opaque" x="462" y="0" width="87" height="19" forecolor="#000000" backcolor="#F0F0F0" uuid="640889b1-a11a-4185-8ec9-8ee85bf7854f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
@@ -175,7 +133,7 @@
 	<detail>
 		<band height="14" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="9024c363-bf7c-4ca5-ae8e-5298205a2798" x="20" y="0" width="136" height="12"/>
+				<reportElement x="20" y="0" width="136" height="12" uuid="9024c363-bf7c-4ca5-ae8e-5298205a2798"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -185,7 +143,7 @@
 				<textFieldExpression><![CDATA[$F{clientName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="64eaf792-6338-4adc-b7c1-67d24e404f8e" x="0" y="0" width="20" height="12"/>
+				<reportElement x="0" y="0" width="20" height="12" uuid="64eaf792-6338-4adc-b7c1-67d24e404f8e"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -195,7 +153,7 @@
 				<textFieldExpression><![CDATA[$V{clientCount}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="0fd9d218-cf0d-4de4-b65b-5ca8177fa159" x="156" y="0" width="97" height="12"/>
+				<reportElement x="156" y="0" width="97" height="12" uuid="0fd9d218-cf0d-4de4-b65b-5ca8177fa159"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -205,7 +163,7 @@
 				<textFieldExpression><![CDATA[$F{industryName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="5d532539-5e07-469d-a6d1-82e427a5a91b" x="251" y="0" width="95" height="12"/>
+				<reportElement x="251" y="0" width="95" height="12" uuid="5d532539-5e07-469d-a6d1-82e427a5a91b"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -215,7 +173,7 @@
 				<textFieldExpression><![CDATA[$F{clientPrimaryContact}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="2f0d14d9-f7b0-4c2e-9cf0-dbf756885c1a" x="347" y="0" width="116" height="12"/>
+				<reportElement x="347" y="0" width="116" height="12" uuid="2f0d14d9-f7b0-4c2e-9cf0-dbf756885c1a"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -225,7 +183,7 @@
 				<textFieldExpression><![CDATA[$F{clientEmail}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="9d58e05c-6c2a-40d3-bab6-60eb01eb1d47" x="462" y="0" width="87" height="12"/>
+				<reportElement x="462" y="0" width="87" height="12" uuid="9d58e05c-6c2a-40d3-bab6-60eb01eb1d47"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -245,14 +203,14 @@
 	<lastPageFooter>
 		<band height="34" splitType="Stretch">
 			<textField isBlankWhenNull="false">
-				<reportElement uuid="6bfcc6b0-25c8-4b2d-9731-f2bdd7e647f6" key="textField" x="428" y="20" width="100" height="14" forecolor="#666666"/>
+				<reportElement key="textField" x="428" y="20" width="100" height="14" forecolor="#666666" uuid="6bfcc6b0-25c8-4b2d-9731-f2bdd7e647f6"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{todayDate}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="71ac72a4-4cbf-41ca-a200-cbb735a6daab" x="5" y="21" width="330" height="13" forecolor="#666666"/>
+				<reportElement x="5" y="21" width="330" height="13" forecolor="#666666" uuid="71ac72a4-4cbf-41ca-a200-cbb735a6daab"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>

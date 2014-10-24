@@ -48,11 +48,11 @@ public class PMController implements Serializable {
 
     GeneratePk generatePk = new GeneratePk();
 
-    Integer countId = 0, pmYear;
+    Integer countId = 0, pmYear,serviceRequestId = 0;
 
-    String serviceRequestId, customerId = null, productId = null, assignedEngineer, pmPeriod = null;
+    String customerId = null, productId = null, assignedEngineer, pmPeriod = null;
 
-    String searchAttribute, searchtext;
+    String searchAttribute, searchtext,commonId;
 
     Date scheduledDate;
 
@@ -67,6 +67,7 @@ public class PMController implements Serializable {
     SelectItem[] searchAttributeOption;
 
 //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Methods">
     public PMController() {
     }
@@ -78,7 +79,10 @@ public class PMController implements Serializable {
         int in = generatePk.getPkValue();
         countId = 1 + in;
 
-        serviceRequestId = "HD(PM) " + countId.toString();
+        serviceRequestId = countId;
+        
+        commonId = "HD(PM) " + countId.toString();
+        
         serviceRequest = new ServiceRequest();
     }
 
@@ -188,12 +192,14 @@ public class PMController implements Serializable {
                     int in = generatePk.getPkValue();
                     countId = 1 + in;
 
-                    serviceRequestId = "HD(PM) " + countId.toString();
+                    commonId = "HD(PM) " + countId.toString();
+                    
+                    serviceRequestId = countId;
 
                     generatePk.setPkValue(countId);
                     customCrudService.generatePkUpdate(generatePk);
 
-                    serviceReq.setCommonId(StringConstants.generateID());
+                    serviceReq.setCommonId(commonId);
                     serviceReq.setServiceRequestId(serviceRequestId);
                     serviceReq.setClientDetail(crudService.find(ClientProduct.class, srtm.getClientProductId()).getClientDetail());
                     serviceReq.setProductType(crudService.find(ClientProduct.class, srtm.getClientProductId()).getProductTypeModel().getProductTypes());
@@ -215,6 +221,9 @@ public class PMController implements Serializable {
 
             }
             StringConstants.showApprioprateMessage("Schedule submitted successfully");
+            
+            returnToHomePage();            
+            
         }
 
     }
@@ -236,7 +245,7 @@ public class PMController implements Serializable {
 
             for (ClientDetail si : clientDetailList) {
 
-                searchAttributeOption[count] = new SelectItem(si.getCommonId(), si.getClientName().toUpperCase());
+                searchAttributeOption[count] = new SelectItem(si.getCommonId(), si.getCompanyName().toUpperCase());
 
                 count++;
             }
@@ -274,8 +283,6 @@ public class PMController implements Serializable {
 
     public void searchPMList() {
 
-        System.out.println("search attibute........."+searchAttribute);
-        System.out.println("search attibute........."+searchtext);
         serviceRequestList = new ArrayList<>();
 
         if (searchAttribute.equals("null")) {
@@ -294,6 +301,7 @@ public class PMController implements Serializable {
             serviceRequestList = customCrudService.clientPMServiceList(searchtext, "engineer_name");
         }
     }
+    
         //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters and Setters">
@@ -393,11 +401,11 @@ public class PMController implements Serializable {
         this.countId = countId;
     }
 
-    public String getServiceRequestId() {
+    public Integer getServiceRequestId() {
         return serviceRequestId;
     }
 
-    public void setServiceRequestId(String serviceRequestId) {
+    public void setServiceRequestId(Integer serviceRequestId) {
         this.serviceRequestId = serviceRequestId;
     }
 

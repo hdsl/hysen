@@ -300,24 +300,6 @@ public class ClientProductsController implements Serializable {
         }
     }
 
-    public void deleteButtonAction() {
-
-        beginConversation();
-
-        if (clientProduct == null) {
-            StringConstants.showApprioprateMessage("Please select client service");
-        } else {
-            clientProduct.setLastModifiedBy(userSession.getUsername());
-
-            if (crudService.delete(clientProduct, true) == true) {
-                StringConstants.showApprioprateMessage(StringConstants.DELETE_MESSAGE);
-                resetButtonAction();
-            } else {
-                StringConstants.showApprioprateMessage(StringConstants.DELETE_ERRORMESSAGE);
-            }
-        }
-    }
-
     public void rowSelectButtonAction() {
 
         if (clientProduct == null) {
@@ -351,6 +333,11 @@ public class ClientProductsController implements Serializable {
             saveEditButtonText = "Update";
 
         }
+    }
+
+    public String showCompanyServiceRequest() {
+
+        return "pretty:companyServiceRequest";
     }
 
     public void resetButtonAction() {
@@ -389,8 +376,6 @@ public class ClientProductsController implements Serializable {
         renderClientServiceListPanel = false;
         renderClientServiceSearchPanel = true;
 
-        //client contacts
-        //model components  
         modelComponents = "";
 
         if (clientProduct.getModelComponents() == null) {
@@ -444,6 +429,30 @@ public class ClientProductsController implements Serializable {
 
             serviceRequestList
                     = customCrudService.serviceRequestList(clientProduct.getCommonId());
+        }
+    }
+
+    public void deleteButtonAction() {
+
+        beginConversation();
+
+        if (clientProduct == null) {
+            StringConstants.showApprioprateMessage("Please select client service");
+        } else {
+
+            clientProduct.setLastModifiedBy(userSession.getUsername());
+
+            if (crudService.delete(clientProduct, true) == true) {
+
+                StringConstants.showApprioprateMessage(StringConstants.DELETE_MESSAGE);
+
+                returnFromViewClientService();
+
+                resetButtonAction();
+
+            } else {
+                StringConstants.showApprioprateMessage(StringConstants.DELETE_ERRORMESSAGE);
+            }
         }
     }
 

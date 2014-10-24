@@ -61,6 +61,7 @@ public class CommonOptions implements Serializable {
     private SelectItem[] clientsDetailOptions;
     private SelectItem[] engineeringStaffOption;
     private SelectItem[] serviceSoftwareOption;
+    private SelectItem[] customerStatusOption;
 
     public CommonOptions() {
 
@@ -84,8 +85,30 @@ public class CommonOptions implements Serializable {
         this.calendarYears = calendarYears;
     }
 
-    public SelectItem[] getServiceSoftwareOption() {        
-        
+    public SelectItem[] getCustomerStatusOption() {        
+       
+        List<IndustryType> industryTypeList
+                = customCrudService.findByParameter(IndustryType.class, "status", "STD", 'N');
+
+        customerStatusOption = new SelectItem[industryTypeList.size()];
+
+        int count = 0;
+
+        for (IndustryType si : industryTypeList) {
+
+            customerStatusOption[count] = new SelectItem(si.getIndustryTypeId(), si.getIndustryName());
+
+            count++;
+        }
+        return customerStatusOption;
+    }
+
+    public void setCustomerStatusOption(SelectItem[] customerStatusOption) {
+        this.customerStatusOption = customerStatusOption;
+    }
+
+    public SelectItem[] getServiceSoftwareOption() {
+
         List<ServiceSoftware> serviceSoftwareList
                 = crudService.findAll(ServiceSoftware.class, false);
 
@@ -99,9 +122,9 @@ public class CommonOptions implements Serializable {
 
             count++;
         }
-        
+
         return serviceSoftwareOption;
-        
+
     }
 
     public void setServiceSoftwareOption(SelectItem[] serviceSoftwareOption) {
@@ -173,7 +196,7 @@ public class CommonOptions implements Serializable {
     public SelectItem[] getClientsDetailOptions() {
 
         List<ClientDetail> clientDetailList
-                = crudService.findAll(ClientDetail.class, true, "clientName");
+                = crudService.findAll(ClientDetail.class, true, "companyName");
 
         clientsDetailOptions = new SelectItem[clientDetailList.size()];
 
@@ -181,7 +204,7 @@ public class CommonOptions implements Serializable {
 
         for (ClientDetail si : clientDetailList) {
 
-            clientsDetailOptions[count] = new SelectItem(si.getCommonId(), si.getClientName().toUpperCase());
+            clientsDetailOptions[count] = new SelectItem(si.getCommonId(), si.getCompanyName().toUpperCase());
 
             count++;
         }
@@ -217,7 +240,7 @@ public class CommonOptions implements Serializable {
     public SelectItem[] getIndustryTypeOptions() {
 
         List<IndustryType> industryTypeList
-                = crudService.findAll(IndustryType.class, true, "industryName");
+                = customCrudService.findByParameter(IndustryType.class, "status", "IND", 'N');
 
         industryTypeOptions = new SelectItem[industryTypeList.size()];
 
@@ -229,6 +252,7 @@ public class CommonOptions implements Serializable {
 
             count++;
         }
+        
         return industryTypeOptions;
     }
 
@@ -274,7 +298,7 @@ public class CommonOptions implements Serializable {
 
     public SelectItem[] getDepartmentOptions() {
         List<Department> departmentList
-                = crudService.findAll(Department.class, true);
+                = crudService.findAll(Department.class, true, "departmentName");
 
         departmentOptions = new SelectItem[departmentList.size()];
 
@@ -494,4 +518,5 @@ public class CommonOptions implements Serializable {
     }
 
 //    //</editor-fold>
+    
 }

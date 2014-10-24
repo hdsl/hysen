@@ -34,57 +34,68 @@
                         <p:commandButton style="margin-left: 5px" value="Search" ajax="false" icon="ui-icon-search" action="#{pMController.searchPMList()}"/>  
 
                         <p:separator />  
-                        <p:commandButton value="Edit PM Detail" style="margin-left: 30px"
+                        <p:commandButton value="Edit PM Detail" style="margin-left: 5px"
                                          icon="ui-icon-pencil"  ajax="false"
-                                         action="#{serviceRequestController.selectToEditButtonAction()}"/>
-                        <p:commandButton value="Delete PM Detail" icon="ui-icon-trash"
+                                         action="#{serviceRequestController.selectToEditButtonAction(sr)}"/>
+                        <p:commandButton value="Delete PM" icon="ui-icon-trash"
                                          style="margin-left: 20px"  ajax="false"
                                          action="#{serviceRequestController.deleteButtonAction()}"/> 
-                    </p:toolbarGroup>   
+                    </p:toolbarGroup> 
+
+                    <p:toolbarGroup align="right">  
+                        <h:selectOneMenu styleClass="textarea" value="#{serviceRequestController.parameterId}"
+                                         style="font-weight: bolder">
+                            <f:selectItem itemLabel="....Sort by client...." itemValue="null"/>
+                            <f:selectItems value="#{commonOptions.clientsDetailOptions}"/>
+                            <p:ajax event="change" listener="#{serviceRequestController.queryServiceRequest()}" update="pMScheduleDataTable"/>
+                        </h:selectOneMenu>
+                    </p:toolbarGroup>  
+
                 </p:toolbar>
 
                 <p:dataTable style="margin-top: 20px;font-size: 11px"
-                             value="#{pMController.serviceRequestList}" var="service"
-                             rowKey="#{service.commonId}"  
+                             value="#{pMController.srtmList}" var="service"
+                             rowKey="#{service.serialNumber}"  
                              selection="#{pMController.serviceRequest}"
-                             selectionMode="single">
+                             selectionMode="single" id="pMScheduleDataTable">
                     <p:column>
                         <f:facet name="header">Customer Name</f:facet>
-                        <h:outputText value="#{service.clientDetail.clientName}"/>
+                        <h:outputText value="#{service.clientName}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">Service Type</f:facet>
-                        <h:outputText value="#{service.clientProduct.productTypeModel.productTypes.productName}"/>
+                        <h:outputText value="#{service.serviceType}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">Service Model</f:facet>
-                        <h:outputText value="#{service.clientProduct.productTypeModel.productTypes.productName}"/>
+                        <h:outputText />
+
                     </p:column>
                     <p:column>
                         <f:facet name="header">Location</f:facet>
-                        <h:outputText value="#{service.clientProduct.productLocation}"/>
+                        <h:outputText/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">Service Period</f:facet>
-                        <h:outputText value="#{service.pmPeriod}"/>
+                        <h:outputText/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">Service Year</f:facet>
-                        <h:outputText value="#{service.pmYear}"/>
+                        <h:outputText/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">Engineer</f:facet>
-                        <h:outputText value="#{service.staffDetail.staffName}"/>
+                        <h:outputText/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">Scheduled Date</f:facet>
-                        <h:outputText value="#{service.serviceStartDate}">
+                        <h:outputText>
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </h:outputText>
                     </p:column>
                     <p:column>
                         <f:facet name="header">Closed Date</f:facet>
-                        <h:outputText  value="#{service.serviceEndDate}">
+                        <h:outputText>
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </h:outputText>
                     </p:column>
@@ -97,7 +108,81 @@
             </p:panel>
         </h:form>
 
+        <h:form rendered="#{pMController.renderPMForm}">
 
+            <p:panel style="overflow: auto;">
+                <f:facet name="header"><span style="float: left;font-weight: bolder;font-variant: small-caps">Preventive Maintenance(PM) Schedule</span></f:facet>
+
+                <!--<p:fieldset legend="Customer Detail">-->
+                <h:panelGrid columns="8" style="margin-left: -20px">
+                    <h:outputLabel value="Customer Name:"/>
+                    <h:selectOneMenu styleClass="textarea"
+                                     value="#{pMController.customerId}">
+                        <f:selectItem itemLabel="....Select One...." itemValue="null"/>
+                        <f:selectItems value="#{commonOptions.clientsDetailOptions}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="Service Product:" style="float: right"/>
+                    <h:selectOneMenu styleClass="textarea"
+                                     value="#{pMController.productId}">
+                        <f:selectItem itemLabel="....Select One...." itemValue="null"/>
+                        <f:selectItems value="#{commonOptions.productTypesOptions}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="Service Period:" style="float: right"/>
+                    <h:selectOneMenu styleClass="textarea" value="#{pMController.pmPeriod}">
+                        <f:selectItem itemLabel="....Select One...." itemValue="null"/>
+                        <f:selectItem itemLabel="First Quarter" itemValue="First Quarter"/>
+                        <f:selectItem itemLabel="Second Quarter" itemValue="Second Quarter"/>
+                        <f:selectItem itemLabel="Third Quarter" itemValue="Third Quarter"/>
+                        <f:selectItem itemLabel="Fourth Quarter" itemValue="Fourth Quarter"/>
+                    </h:selectOneMenu>
+
+                    <h:selectOneMenu styleClass="textarea"  value="#{pMController.pmYear}">
+                        <f:selectItems value="#{commonOptions.calendarYears}"/>
+                    </h:selectOneMenu>
+
+                    <h:commandButton value="Load Customer Products" style="margin-left: 10px;background: #E53C15;color: #fff;font-weight: bolder"
+                                     action="#{pMController.showSelectedCustomerServices()}" />
+                </h:panelGrid>
+                <!--</p:fieldset>-->            
+
+                <p:dataTable style="margin-top: 15px;font-size: 11px"
+                             value="#{pMController.srtmList}" var="pMSchedule">
+                    <p:column>
+                        <f:facet name="header">Serial No.</f:facet>
+                        <h:outputText value="#{pMSchedule.serialNumber}"/>
+                    </p:column>
+                    <p:column style="width: 15%">
+                        <f:facet name="header">Model</f:facet>
+                        <h:outputText value="#{pMSchedule.serviceModel}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Location</f:facet>
+                        <h:outputText value="#{pMSchedule.serviceLocation}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Engineer</f:facet>
+                        <h:selectOneMenu styleClass="textarea" value="#{pMSchedule.serviceEngineerId}">
+                            <f:selectItem itemLabel="....Select One...."/>
+                            <f:selectItems value="#{commonOptions.engineeringStaffOption}"/>
+                        </h:selectOneMenu>  
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Scheduled Date</f:facet>
+                        <p:calendar navigator="true" showOn="button" value="#{pMSchedule.pmScheduledDate}"/>
+                    </p:column>
+                </p:dataTable>
+
+                <h:panelGrid columns="3" style="margin-top: 20px;margin-left: 400px">
+
+                    <p:commandButton value="Submit PM Schedule"
+                                     icon="ui-icon-disk" ajax="false"
+                                     action="#{pMController.submitPMSchedules()}"/>
+                    <p:commandButton icon="ui-icon-arrowthick-1-w" ajax="false"
+                                     value="Return" action="#{pMController.returnToHomePage()}"/>
+                </h:panelGrid>
+
+            </p:panel>
+        </h:form>
     </h:body>
 </html>
 

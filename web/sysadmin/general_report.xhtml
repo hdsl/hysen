@@ -12,45 +12,115 @@
         <div style="float:left; width:49%; margin-right:1%;">
             <h:form id="display">
                 <h:panelGroup layout="block">
-                    <h2 class="report-group-heading">Client Reports</h2>
+                    <h2 class="report-group-heading">Company(Clients) Reports</h2>
                     <div class="report-group">
                         <h:panelGrid columns="1">
-                            <h:commandLink value="Client Detail List" target="_blank"
+                            <h:commandLink value="Company Detail List" target="_blank" styleClass="commandLink"
                                            action="#{generalReportContoller.generateClientDetailReport()}"/>
                         </h:panelGrid>
 
                         <h:panelGrid columns="1" style="margin-top: 10px">
-                            <h:commandLink value="Client Contact List" target="_blank"
-                                           action="#{generalReportContoller.generateClientDetailReport()}"/>
+                            <h:commandLink value="Company Contact List" target="_blank"  styleClass="commandLink"
+                                           action="#{generalReportContoller.generateCompanyContactReport()}"/>
                         </h:panelGrid>
 
                         <h:panelGrid columns="1" style="margin-top: 10px">
-                            <p:commandLink value="Client Equipments List" onclick="PF('dlg').show()"/>
+                            <p:commandLink value="Company Equipments List"  styleClass="commandLink" ajax="false"
+                                           action="#{generalReportContoller.showEqipReportPanel()}"/>
+                        </h:panelGrid>
+
+                        <h:panelGroup layout="block" rendered="#{generalReportContoller.renderEquipPanel}">
+
+                            <h:outputText styleClass="report-title-detail" value="#{generalReportContoller.reportTitle}"/>
+
+                            <div class="report-group" style="  background-color: #EEEEEE;" >
+
+                                <h:panelGrid columns="4" style="margin-left: -20px">
+                                    <h:outputLabel value="Company:" style="font-weight: bolder"/>
+                                    <h:selectOneMenu value="#{generalReportContoller.clientDetailId}">
+                                        <f:selectItem itemLabel=".....Select One....."/>
+                                        <f:selectItem itemLabel="ALL CLIENTS" itemValue="ALL_CLIENTS"/>
+                                        <f:selectItems value="#{commonOptions.clientsDetailOptions}"/>
+                                    </h:selectOneMenu>
+                                    <h:outputLabel value="Type:" style="font-weight: bolder"/>
+                                    <h:selectOneMenu value="#{generalReportContoller.selectedProductType}">
+                                        <f:selectItem itemLabel="...Select One..."/>
+                                        <f:selectItems value="#{commonOptions.productTypesOptions}"/>
+                                    </h:selectOneMenu>
+                                </h:panelGrid>
+                                <h:panelGrid columns="4" style="margin-top: 10px">
+                                    <h:commandLink value="Generate Report" target="_blank" action="#{generalReportContoller.generateClientReportByParameter()}"/>
+                                </h:panelGrid>
+
+                            </div>
+
+                        </h:panelGroup>
+
+                        <h:panelGrid columns="1" style="margin-top: 10px">
+                            <p:commandLink value="Company Equipments Detail" ajax="false"
+                                           action="#{generalReportContoller.showIndividualEqipReportPanel()}"/>
+                        </h:panelGrid>
+
+                        <h:panelGroup layout="block" rendered="#{generalReportContoller.renderIndividualEquipPanel}">
+
+                            <h:outputText styleClass="report-title-detail" value="#{generalReportContoller.reportTitle}"/>
+
+                            <div class="report-group" style="  background-color: #EEEEEE;" >
+
+                                <h:panelGrid columns="4" style="margin-left: -20px">
+
+                                    <h:outputLabel value="Company" style="float: right;font-weight: bolder"/>
+                                    <h:selectOneMenu value="#{generalReportContoller.serviceModelClient}">
+                                        <f:selectItem itemLabel=".....Select One....."/>                              
+                                        <f:selectItems value="#{commonOptions.clientsDetailOptions}"/>
+                                        <p:ajax event="change" listener="#{generalReportContoller.customerDetailPDP()}"/>
+                                    </h:selectOneMenu>
+                                    <h:outputLabel value="Type:" style="font-weight: bolder"/>
+                                    <h:selectOneMenu value="#{generalReportContoller.selectedProductType}">
+                                        <f:selectItem itemLabel="...Select One..."/>
+                                        <f:selectItems value="#{commonOptions.productTypesOptions}"/>
+                                        <p:ajax event="change" listener="#{generalReportContoller.populateClientServiceModel()}" update="clientServiceModel"/>
+                                    </h:selectOneMenu>
+                                </h:panelGrid>
+                                
+                                <h:panelGrid columns="4">                                    
+                                    <h:outputLabel value="Model:" style="font-weight: bolder;float: right"/>
+                                    <h:selectOneMenu id="clientServiceModel"
+                                                     value="#{generalReportContoller.serviceModelTypeId}">
+                                        <f:selectItem itemLabel=".....Select One....."/>                                
+                                        <f:selectItems value="#{generalReportContoller.clientEquipmentOption}"/>
+                                    </h:selectOneMenu>
+                                </h:panelGrid>
+
+                                <h:panelGrid columns="4" style="margin-left: 0px;margin-top:15px ">
+
+                                    <h:outputText/>
+                                    <h:commandLink value="Generate Report" target="_blank" action="#{generalReportContoller.generateServiceModelReport()}"/>
+                                </h:panelGrid>
+
+                            </div>
+                        </h:panelGroup>
+
+                        <h:panelGrid columns="1" style="margin-top: 10px">
+                            <p:commandLink value="Company Equipments by Region(Summary)"/>
+                        </h:panelGrid>
+
+                        <h:panelGrid columns="1" style="margin-top: 10px">
+                            <p:commandLink value="Company Equipments by Region(Detailed)" ajax="false"/>
+                        </h:panelGrid>
+
+                        <h:panelGrid columns="1" style="margin-top: 10px">
+                            <p:commandLink value="Company Service Requests by Date" onclick="PF('dlg').show()"/>
 
                         </h:panelGrid>
 
                         <h:panelGrid columns="1" style="margin-top: 10px">
-                            <p:commandLink value="Individual Equipment Detail" onclick="PF('dlg').show()"/>
+                            <p:commandLink value="Company Service Requests by Region" onclick="PF('dlg').show()"/>
 
                         </h:panelGrid>
 
                         <h:panelGrid columns="1" style="margin-top: 10px">
-                            <p:commandLink value="Client Equipments by Region" onclick="PF('dlg').show()"/>
-
-                        </h:panelGrid>
-
-                        <h:panelGrid columns="1" style="margin-top: 10px">
-                            <p:commandLink value="Client Service Requests by Date" onclick="PF('dlg').show()"/>
-
-                        </h:panelGrid>
-
-                        <h:panelGrid columns="1" style="margin-top: 10px">
-                            <p:commandLink value="Client Service Requests by Region" onclick="PF('dlg').show()"/>
-
-                        </h:panelGrid>
-
-                        <h:panelGrid columns="1" style="margin-top: 10px">
-                            <p:commandLink value="Client Preventive Maintenance Report" onclick="PF('dlg').show()"/>
+                            <p:commandLink value="Company Preventive Maintenance Report" onclick="PF('dlg').show()"/>
 
                         </h:panelGrid>
 

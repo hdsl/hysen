@@ -9,7 +9,9 @@ package hysen.ejb.entities;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -25,15 +27,18 @@ import javax.persistence.Temporal;
     @NamedQuery(name = "ServiceRequest.findAll", query = "SELECT s FROM ServiceRequest s")})
 public class ServiceRequest extends CommonEntity{
 
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_detail")
     private ClientDetail clientDetail;
     
     @Column(name = "client_contact_person")
     private String clientContactPerson;
 
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_type")
     private ProductTypes productType;
  
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_product")
     private ClientProduct clientProduct;
    
@@ -53,7 +58,7 @@ public class ServiceRequest extends CommonEntity{
     private String requestPriority;
    
     @Column(name = "service_request_id")
-    private String serviceRequestId;
+    private Integer serviceRequestId;
     
     @Column(name = "pm_period")
     private String pmPeriod;
@@ -64,9 +69,11 @@ public class ServiceRequest extends CommonEntity{
     @Column(name = "email_to_notify")
     private String emailToNotify;
   
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "service_component")
     private ServiceModelComponent serviceComponent;
     
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "staff_detail")
     private StaffDetail staffDetail;
     
@@ -120,11 +127,11 @@ public class ServiceRequest extends CommonEntity{
         this.pmYear = pmYear;
     }
 
-    public String getServiceRequestId() {
+    public Integer getServiceRequestId() {
         return serviceRequestId;
     }
 
-    public void setServiceRequestId(String serviceRequestId) {
+    public void setServiceRequestId(Integer serviceRequestId) {
         this.serviceRequestId = serviceRequestId;
     }
 

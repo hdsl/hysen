@@ -10,103 +10,90 @@
     <h:body>
         <p:messages/>
         <p:panel style="overflow: auto;">
-            <f:facet name="header"><span style="float: left;font-weight: bolder;font-variant: small-caps">Client Contact Person(s)</span></f:facet>
+            <f:facet name="header"><span style="float: left;font-weight: bolder;font-variant: small-caps">Company Contacts</span></f:facet>
 
             <h:form>
-
                 <p:panel  style="overflow: auto;">
                     <h:panelGroup layout="block">
 
-                        <div style=" width: 64%;height: auto;float: left;">
-                            <h:outputLabel value="Client Name:"/>
+                        <h:panelGrid columns="4" style="margin-left: -20px">
+                            <h:outputLabel value="Contact Name:" style="font-weight: bolder;float: right"/>
+                            <h:inputText value="#{companyContactController.clientContact.contactName}"/>
+                            <h:outputLabel value="Address 1:"   style="font-weight: bolder;float: right"/>
+                            <h:inputText value="#{companyContactController.clientContact.primaryAddress}"/>
+                            <h:outputLabel value="Company:"  style="font-weight: bolder;float: right"/>
                             <h:selectOneMenu styleClass="textarea"
-                                             value="#{clientContactController.selectedClient}">
-                                <f:selectItem itemLabel="....Select One...."/>
+                                             value="#{companyContactController.selectedCompany}">
+                                <f:selectItem itemLabel="....Select One...." itemValue="null"/>
                                 <f:selectItems value="#{commonOptions.clientsDetailOptions}"/>
-                                <p:ajax event="change" listener="#{clientContactController.showClientDetail()}"
-                                        update="cName,cIndustry,cPhone,cEmail,cPostal,cLocation"/>
                             </h:selectOneMenu>
+                            <h:outputLabel value="Address 2:"   style="font-weight: bolder;float: right"/>
+                            <h:inputText value="#{companyContactController.clientContact.otherAddress}"/>
+                            <h:outputLabel value="Department:"  style="font-weight: bolder;float: right"/>
+                            <h:selectOneMenu styleClass="textarea" 
+                                             value="#{companyContactController.selectedDepartment}">
+                                <f:selectItem itemLabel="....Select One...." itemValue="null"/>
+                                <f:selectItems value="#{commonOptions.departmentOptions}"/>
+                            </h:selectOneMenu>                            
+                            <h:outputLabel value="Email:"  style="font-weight: bolder;float: right"/>
+                            <h:inputText value="#{companyContactController.clientContact.contactEmail}"/>
+                            <h:outputLabel value="Job Title:"  style="font-weight: bolder;float: right"/>
+                            <h:inputText value="#{companyContactController.clientContact.jobTitle}"/>
+                            <h:outputLabel value="City:"  style="font-weight: bolder;float: right"/>
+                            <h:selectOneMenu styleClass="textarea" value="#{companyContactController.selectedRegion}">
+                                <f:selectItem itemLabel="....Select One...." itemValue="null"/>
+                                <f:selectItems value="#{commonOptions.regionsOptions}"/>
+                            </h:selectOneMenu>
+                            <h:outputLabel value="Primary Contact:"  style="font-weight: bolder;float: right"/>
+                            <p:inputMask mask="999 9999 999" value="#{companyContactController.clientContact.primaryContact}"/>
+                            <h:outputLabel value="Other Contact:"  style="font-weight: bolder;float: right"/>
+                            <p:inputMask mask="999 9999 999" value="#{companyContactController.clientContact.otherContact}"/>
+                        </h:panelGrid>
 
-                            <p:fieldset legend="New Contact Detail" style="margin-top: 20px">
-
-                                <h:panelGrid columns="4" style="margin-left: -20px">
-                                    <h:outputLabel value="Contact Name:"/>
-                                    <h:inputText value="#{clientContactController.clientContact.contactName}"/>
-                                    <h:outputLabel value="Phone Contact:"/>
-                                    <h:inputText value="#{clientContactController.clientContact.contactMobile}"/>
-                                    <h:outputLabel value="Email Address:"/>
-                                    <h:inputText value="#{clientContactController.clientContact.contactEmail}"/>
-                                    <h:outputLabel value="Job Title:"/>
-                                    <h:inputText value="#{clientContactController.clientContact.jobTitle}"/>
-                                </h:panelGrid>
-
-
-                                <h:panelGrid columns="3" style="margin-top: 20px">
-                                    <p:commandButton  styleClass="buttons"
-                                                      value="#{clientContactController.saveEditButtonText}"
-                                                      action="#{clientContactController.saveEditButtonAction()}"
-                                                      icon="ui-icon-disk" ajax="false"/>
-                                    <p:commandButton value="Clear" styleClass="buttons"
-                                                     action="#{clientContactController.resetButtonAction()}"
-                                                     icon="ui-icon-cancel" ajax="false"/>
-                                </h:panelGrid>
-
-                            </p:fieldset>
-                        </div>
-
-                        <div style=" width: 35%;float: left;margin-left: 5px">
-
-                            <h:panelGrid columns="2" styleClass="data_table_panel" style="width: 98%;float: left;margin-left: 10px">
-                                <h:outputText value="Client Name:" />
-                                <h:inputText id="cName" size="25" readonly="true" value="#{clientContactController.clientDetail.clientName}"/>
-                                <h:outputText value="Industry Type:" />
-                                <h:inputText id="cIndustry" size="25" readonly="true" value="#{clientContactController.clientDetail.industryType.industryName}"/>
-                                <h:outputText value="Phone Number:" />
-                                <h:inputText id="cPhone"  size="25" readonly="true" value="#{clientContactController.clientDetail.clientPrimaryContact}"/>
-                                <h:outputText value="Email:" />
-                                <h:inputText id="cEmail" size="25" readonly="true" value="#{clientContactController.clientDetail.clientEmail}"/>
-                                <h:outputText value="Postal Address:" />
-                                <h:inputText id="cPostal" size="25" readonly="true" value="#{clientContactController.clientDetail.clientAddress}"/>
-                                <h:outputText value="Physical Location:" />
-                                <h:inputText id="cLocation" size="25" readonly="true" value="#{clientContactController.clientDetail.clientLocation}"/>
-                            </h:panelGrid>
-
-                        </div>
+                        <h:panelGrid columns="3" style="margin-top: 20px">
+                            <p:commandButton  styleClass="buttons"
+                                              value="#{companyContactController.saveEditButtonText}"
+                                              action="#{companyContactController.saveEditButtonAction()}"
+                                              icon="ui-icon-disk" ajax="false"/>
+                            <p:commandButton value="Clear" styleClass="buttons"
+                                             action="#{companyContactController.resetButtonAction()}"
+                                             icon="ui-icon-cancel" ajax="false"/>
+                        </h:panelGrid>
 
                     </h:panelGroup>
                 </p:panel>
-
-
             </h:form>
 
-
             <h:form>
-
-                <p:dataTable var="emp" style="font-size: 11px;margin-top: 10px">  
+                <p:dataTable var="contact" style="font-size: 11px;margin-top: 10px"
+                             value="#{companyContactView.clientContactList}">  
                     <p:column>
-                        <f:facet name="header">Client Name</f:facet>
-                        <h:outputText/>
+                        <f:facet name="header">Company Name</f:facet>
+                        <h:outputText value="#{contact.companyDetail.companyName}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">Contact Name</f:facet>
-                        <h:outputText/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">Phone Number</f:facet>
-                        <h:outputText/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">Email</f:facet>
-                        <h:outputText/>
+                        <h:outputText value="#{contact.contactName}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">Job Title</f:facet>
-                        <h:outputText/>
+                        <h:outputText value="#{contact.jobTitle}"/>
                     </p:column>
                     <p:column>
+                        <f:facet name="header">Phone Number</f:facet>
+                        <h:outputText  value="#{contact.primaryContact}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Email</f:facet>
+                        <h:outputText  value="#{contact.contactEmail}"/>
+                    </p:column>                    
+                    <p:column>
                         <f:facet name="header"></f:facet>
-                        <p:commandLink value="Edit" style="text-decoration: none;color:blue"/>
-                        <p:commandLink value="Delete" style="text-decoration: none;color: red;margin-left: 20px"/>
+                        <p:commandLink value="Edit" style="text-decoration: none;color:blue" ajax="false"
+                                       action="#{companyContactController.rowSelectButtonAction(contact)}"/>
+                        <p:commandLink value="Delete" style="text-decoration: none;color: red;margin-left: 20px"
+                                       ajax="false"
+                                       action="#{companyContactController.deleteButtonAction(contact)}"/>
                     </p:column>
                 </p:dataTable>
             </h:form>

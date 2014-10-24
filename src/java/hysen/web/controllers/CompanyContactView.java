@@ -6,7 +6,7 @@
 package hysen.web.controllers;
 
 import hysen.ejb.entities.ClientContact;
-import hysen.ejb.entities.ClientDetail;
+import hysen.ejb.entities.Department;
 import hysen.ejb.services.CrudService;
 import java.io.Serializable;
 import java.util.List;
@@ -17,27 +17,33 @@ import javax.inject.Inject;
 
 /**
  *
- * @author AbdulMumin
+ * @author HDSL_MUMIN
  */
-@Named(value = "clientInformatioView")
+@Named(value = "companyContactView")
 @ViewScoped
-public class ClientInformationView implements Serializable {
+public class CompanyContactView implements Serializable {
 
     @Inject
     CrudService crudService;
 
-    List<ClientDetail> clientDetailList;
     List<ClientContact> clientContactList;
 
     @PostConstruct
     public void init() {
-
-        clientDetailList = crudService.findAll(ClientDetail.class, false);
-        clientContactList = crudService.findAll(ClientContact.class, false);
+        
+        clientContactList = crudService.findAll(ClientContact.class, false, "companyDetail.companyName");
+        
     }
 
-    public List<ClientDetail> getClientDetailList() {
-        return clientDetailList;
+    public CompanyContactView() {
+    }
+
+    public CrudService getCrudService() {
+        return crudService;
+    }
+
+    public void setCrudService(CrudService crudService) {
+        this.crudService = crudService;
     }
 
     public List<ClientContact> getClientContactList() {

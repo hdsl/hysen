@@ -40,6 +40,43 @@ public class CustomCrudService {
 
         }
     }
+    
+    public List searchByParameter(Class t, String parameterQuery, String productTypeId, Character includeLogicallyDelete) {
+
+        String qry = "SELECT t FROM " + t.getSimpleName() + " t "
+                + "WHERE t." + parameterQuery +"="+ productTypeId+ " "
+                + "AND t.deleted='" + includeLogicallyDelete + "' ";
+
+        try {
+
+            return em.createQuery(qry).getResultList();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            return Collections.EMPTY_LIST;
+
+        }
+    }
+
+    public List findByParameter(Class t, String searchAttribute1, String searcText1, String searchAttribute2, String searcText2, Character includeLogicallyDelete) {
+
+        String qry = "SELECT t FROM " + t.getSimpleName() + " t "
+                + "WHERE t." + searchAttribute1 + " LIKE '%" + searcText1 + "%' "
+                + "AND t." + searchAttribute2 + " LIKE '%" + searcText2 + "%' "
+                + "AND t.deleted='" + includeLogicallyDelete + "' ";
+
+        try {
+
+            return em.createQuery(qry).getResultList();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            return Collections.EMPTY_LIST;
+
+        }
+    }
 
     public List<ClientProduct> clientProductsList(String clientId, String productType) {
 

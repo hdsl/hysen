@@ -20,9 +20,9 @@ import javax.inject.Inject;
  *
  * @author HYSEN SOFTWARE DEPT
  */
-@Named(value = "clientContactController")
+@Named(value = "companyContactController")
 @ConversationScoped
-public class ClientContactController implements Serializable {
+public class CompanyContactController implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Declaration and Initialisation">
     @Inject
@@ -34,7 +34,8 @@ public class ClientContactController implements Serializable {
     @Inject
     private Conversation conversation;
 
-    String saveEditButtonText = "Save", industryTypeId, selectedClient,selectedClientId;
+    String saveEditButtonText = "Save", industryTypeId, selectedCompany, selectedCompanyId;
+    String selectedDepartment, selectedRegion;
 
     boolean renderForm = false;
 
@@ -43,7 +44,7 @@ public class ClientContactController implements Serializable {
 //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Methods">
-    public ClientContactController() {
+    public CompanyContactController() {
     }
 
     private void beginConversation() {
@@ -62,55 +63,52 @@ public class ClientContactController implements Serializable {
         renderForm = false;
     }
 
-    public void showClientDetail() {
-
-        if (selectedClient != null) {
-
-            clientDetail = crudService.find(ClientDetail.class, selectedClient);
-            
-            selectedClientId = clientDetail.getCommonId();
-            
-            System.out.println("client detail............."+clientDetail);
-       
-        }
-        
-    }
-
     public void saveEditButtonAction() {
 
-//        beginConversation();
-        
-        if (clientDetail == null) {
-            StringConstants.showApprioprateMessage("Please select a client");
+        beginConversation();
+
+        if (selectedCompany.equals("null")) {
+
+            StringConstants.showApprioprateMessage("Please select a company");
+
         } else {
-            if (saveEditButtonText.equals("Save")) {
 
-                 System.out.println("selected client............."+selectedClientId);
-                 
-                 System.out.println("client1............."+clientDetail.getCommonId());
-                 
-                clientContact.setCommonId(StringConstants.generateID());
-                
-                clientContact.setClientDetail(clientDetail.getCommonId());
+            clientDetail = crudService.find(ClientDetail.class, selectedCompany);
 
-                if (crudService.save(clientContact) != null) {
-
-                    StringConstants.showApprioprateMessage(StringConstants.SAVE_MESSAGE);
-//                    resetButtonAction();
-                } else {
-                    StringConstants.showApprioprateMessage(StringConstants.SAVE_ERRORMESSAGE);
-                }
+            if (clientDetail == null) {
+                StringConstants.showApprioprateMessage("Please select a client");
             } else {
+                if (saveEditButtonText.equals("Save")) {
 
-                clientContact.setClientDetail(clientDetail.getCommonId());
-                if (crudService.update(clientDetail) == true) {
+                    clientContact.setCommonId(StringConstants.generateID());
+                    clientContact.setCompanyDetail(clientDetail);
+                    clientContact.setContactDepartment(selectedDepartment);
+                    clientContact.setContactRegion(selectedRegion);
 
-                    StringConstants.showApprioprateMessage(StringConstants.EDIT_MESSAGE);
-                    resetButtonAction();
+                    if (crudService.save(clientContact) != null) {
+
+                        StringConstants.showApprioprateMessage(StringConstants.SAVE_MESSAGE);
+                        resetButtonAction();
+
+                    } else {
+                        StringConstants.showApprioprateMessage(StringConstants.SAVE_ERRORMESSAGE);
+                    }
                 } else {
-                    StringConstants.showApprioprateMessage(StringConstants.EDIT_ERRORMESSAGE);
+
+                    clientContact.setCompanyDetail(clientDetail);
+                    clientContact.setContactDepartment(selectedDepartment);
+                    clientContact.setContactRegion(selectedRegion);
+
+                    if (crudService.update(clientContact) == true) {
+
+                        StringConstants.showApprioprateMessage(StringConstants.EDIT_MESSAGE);
+                        resetButtonAction();
+                    } else {
+                        StringConstants.showApprioprateMessage(StringConstants.EDIT_ERRORMESSAGE);
+                    }
                 }
             }
+
         }
 
     }
@@ -121,16 +119,28 @@ public class ClientContactController implements Serializable {
         saveEditButtonText = "Save";
         clientDetail = new ClientDetail();
         clientContact = new ClientContact();
+        selectedCompany = null;
+        selectedCompanyId = null;
+        selectedDepartment = null;
+        selectedRegion = null;
 
     }
 
-    public void rowSelectButtonAction(ClientDetail cd) {
+    public void rowSelectButtonAction(ClientContact cc) {
+        
         beginConversation();
-        this.clientDetail = cd;
+        
+        this.clientContact = cc;
+        
+        selectedCompany = clientContact.getCompanyDetail().getCommonId();
+        selectedDepartment = clientContact.getContactDepartment();
+        selectedRegion = clientContact.getContactRegion();
+        
         saveEditButtonText = "Update";
+        
     }
 
-    public void deleteButtonAction(ClientDetail cd) {
+    public void deleteButtonAction(ClientContact cd) {
 
         beginConversation();
 
@@ -142,7 +152,7 @@ public class ClientContactController implements Serializable {
             StringConstants.showApprioprateMessage(StringConstants.DELETE_ERRORMESSAGE);
         }
     }
-
+   
     public void saveEditContactButtonAction() {
 
     }
@@ -161,6 +171,14 @@ public class ClientContactController implements Serializable {
         this.crudService = crudService;
     }
 
+    public String getSelectedDepartment() {
+        return selectedDepartment;
+    }
+
+    public void setSelectedDepartment(String selectedDepartment) {
+        this.selectedDepartment = selectedDepartment;
+    }
+
     public ClientContact getClientContact() {
         return clientContact;
     }
@@ -169,12 +187,28 @@ public class ClientContactController implements Serializable {
         this.clientContact = clientContact;
     }
 
-    public String getSelectedClient() {
-        return selectedClient;
+    public CustomCrudService getCustomCrudService() {
+        return customCrudService;
     }
 
-    public void setSelectedClient(String selectedClient) {
-        this.selectedClient = selectedClient;
+    public void setCustomCrudService(CustomCrudService customCrudService) {
+        this.customCrudService = customCrudService;
+    }
+
+    public String getSelectedCompany() {
+        return selectedCompany;
+    }
+
+    public void setSelectedCompany(String selectedCompany) {
+        this.selectedCompany = selectedCompany;
+    }
+
+    public String getSelectedCompanyId() {
+        return selectedCompanyId;
+    }
+
+    public void setSelectedCompanyId(String selectedCompanyId) {
+        this.selectedCompanyId = selectedCompanyId;
     }
 
     public String getIndustryTypeId() {
@@ -207,6 +241,14 @@ public class ClientContactController implements Serializable {
 
     public void setRenderForm(boolean renderForm) {
         this.renderForm = renderForm;
+    }
+
+    public String getSelectedRegion() {
+        return selectedRegion;
+    }
+
+    public void setSelectedRegion(String selectedRegion) {
+        this.selectedRegion = selectedRegion;
     }
 
     public ClientDetail getClientDetail() {

@@ -7,7 +7,9 @@ package hysen.ejb.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -23,31 +25,47 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "ClientContact.findAll", query = "SELECT c FROM ClientContact c")})
 public class ClientContact extends CommonEntity {
 
-    @Column(name = "client_detail")
-    private String clientDetail;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "company_detail")
+    private ClientDetail companyDetail;
 
     @Size(max = 255)
     @Column(name = "contact_name")
     private String contactName;
+    
     @Size(max = 255)
     @Column(name = "contact_email")
     private String contactEmail;
+    
     @Size(max = 255)
-    @Column(name = "contact_mobile")
-    private String contactMobile;
+    @Column(name = "primary_contact")
+    private String primaryContact;
+    
+    @Size(max = 255)
+    @Column(name = "other_contact")
+    private String otherContact;    
+    
+    @Size(max = 255)
+    @Column(name = "primary_address")
+    private String primaryAddress;
+    
+    @Size(max = 255)
+    @Column(name = "other_address")
+    private String otherAddress;
+    
+    @Size(max = 255)
+    @Column(name = "contact_department")
+    private String contactDepartment;
+    
     @Size(max = 255)
     @Column(name = "job_title")
     private String jobTitle;
+    
+    @Size(max = 255)
+    @Column(name = "contact_region")
+    private String contactRegion;
 
     public ClientContact() {
-    }
-
-    public String getClientDetail() {
-        return clientDetail;
-    }
-
-    public void setClientDetail(String clientDetail) {
-        this.clientDetail = clientDetail;
     }
 
     public String getContactName() {
@@ -66,12 +84,60 @@ public class ClientContact extends CommonEntity {
         this.contactEmail = contactEmail;
     }
 
-    public String getContactMobile() {
-        return contactMobile;
+    public ClientDetail getCompanyDetail() {
+        return companyDetail;
     }
 
-    public void setContactMobile(String contactMobile) {
-        this.contactMobile = contactMobile;
+    public void setCompanyDetail(ClientDetail companyDetail) {
+        this.companyDetail = companyDetail;
+    }
+
+    public String getPrimaryContact() {
+        return primaryContact;
+    }
+
+    public void setPrimaryContact(String primaryContact) {
+        this.primaryContact = primaryContact;
+    }
+
+    public String getOtherContact() {
+        return otherContact;
+    }
+
+    public void setOtherContact(String otherContact) {
+        this.otherContact = otherContact;
+    }
+
+    public String getPrimaryAddress() {
+        return primaryAddress;
+    }
+
+    public void setPrimaryAddress(String primaryAddress) {
+        this.primaryAddress = primaryAddress;
+    }
+
+    public String getOtherAddress() {
+        return otherAddress;
+    }
+
+    public void setOtherAddress(String otherAddress) {
+        this.otherAddress = otherAddress;
+    }
+
+    public String getContactDepartment() {
+        return contactDepartment;
+    }
+
+    public void setContactDepartment(String contactDepartment) {
+        this.contactDepartment = contactDepartment;
+    }
+
+    public String getContactRegion() {
+        return contactRegion;
+    }
+
+    public void setContactRegion(String contactRegion) {
+        this.contactRegion = contactRegion;
     }
 
     public String getJobTitle() {

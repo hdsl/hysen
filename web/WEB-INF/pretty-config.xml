@@ -42,6 +42,11 @@
         <view-id>/hysen/sysadmin/client_detail.xhtml</view-id>
     </url-mapping>
     
+    <url-mapping id="companyServiceRequest">
+        <pattern value="/sysadmin/service_request"></pattern>
+        <view-id>/hysen/sysadmin/service_request.xhtml</view-id>
+    </url-mapping>
+    
 
 <!--    <url-mapping id="aa">
         <pattern value="/aa/alhaji/seidu/#{navHandler.param}"></pattern>

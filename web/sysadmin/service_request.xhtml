@@ -23,13 +23,7 @@
                         <p:commandButton value="Search" ajax="false" icon="ui-icon-search" action="#{serviceRequestController.searchButtonAction()}"/>  
                         <p:watermark value="Service Request Id" for="requestId"/>
                         <p:separator />  
-                        <p:commandButton value="Edit Request Detail" style="margin-left: 30px"
-                                         icon="ui-icon-pencil"  ajax="false"
-                                         action="#{serviceRequestController.selectToEditButtonAction()}"/>
-                        <p:commandButton value="Delete Request Detail" icon="ui-icon-trash"
-                                         style="margin-left: 20px"  ajax="false"
-                                         action="#{serviceRequestController.deleteButtonAction()}"/> 
-                    </p:toolbarGroup>  
+                    </p:toolbarGroup>
                     <p:toolbarGroup align="right">  
                         <h:selectOneMenu styleClass="textarea" value="#{serviceRequestController.parameterId}">
                             <f:selectItem itemLabel="....Select One...." itemValue="null"/>
@@ -42,7 +36,7 @@
                     </p:toolbarGroup>  
                 </p:toolbar>
 
-                <p:dataTable style="margin-top: 20px;font-size: 11px" id="requestDataTable"
+                <p:dataTable style="margin-top: 20px" id="requestDataTable"
                              value="#{serviceRequestController.serviceRequestList}" var="service"
                              rowKey="#{service.commonId}"  
                              selection="#{serviceRequestController.serviceRequest}"
@@ -53,10 +47,10 @@
                     </p:column>
                     <p:column>
                         <f:facet name="header">Requester Name</f:facet>
-                        <h:outputText value="#{service.clientDetail.clientName}"/>
+                        <h:outputText value="#{service.clientDetail.companyName}"/>
                     </p:column>
                     <p:column>
-                        <f:facet name="header">Service Type</f:facet>
+                        <f:facet name="header">Type</f:facet>
                         <h:outputText value="#{service.clientProduct.productTypeModel.productTypes.productName}"/>
                     </p:column>
                     <p:column>
@@ -68,7 +62,7 @@
                         <h:outputText value="#{service.serviceComponent.componentName}"/>
                     </p:column>
                     <p:column>
-                        <f:facet name="header">Assigned To</f:facet>
+                        <f:facet name="header">Engineer</f:facet>
                         <h:outputText value="#{service.staffDetail.staffName}"/>
                     </p:column>
                     <p:column>
@@ -79,7 +73,12 @@
                     </p:column>
                     <p:column>
                         <f:facet name="header">Status</f:facet>
-                        <h:outputText value="#{service.requestStatus}" style="color: #142054;font-weight: bolder"/>
+                        <h:outputText value="#{service.requestStatus}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header"></f:facet>
+                        <p:commandLink ajax="false" value="Detail" style="color: #142054;font-weight: bolder;text-decoration: none"
+                                      action="#{serviceRequestController.selectToEditButtonAction(service)}"/>
                     </p:column>
                 </p:dataTable>
 
@@ -104,7 +103,8 @@
                                     update="selectedClientContact,equipLocation,serviceProduct"/>
                         </h:selectOneMenu>
                         <h:outputLabel value="Contact:" style="float: right"/>
-                        <h:selectOneMenu styleClass="textarea" id="selectedClientContact">
+                        <h:selectOneMenu styleClass="textarea" id="selectedClientContact"
+                                         value="#{serviceRequestController.companyContact}">
                             <f:selectItem itemLabel="....Select One...."/>
                             <f:selectItems value="#{serviceRequestController.selectClientContactOption}"/>
                         </h:selectOneMenu>
@@ -226,10 +226,14 @@
                     </p:column>
                 </p:dataTable>
 
-                <h:panelGrid columns="3" style="margin-top: 20px;margin-left: 400px">
+                <h:panelGrid columns="4" style="margin-top: 20px;margin-left: 300px">
                     <p:commandButton value="#{serviceRequestController.saveEditButtonText}"
                                      icon="ui-icon-disk" ajax="false"
                                      action="#{serviceRequestController.saveEditButtonAction()}"/>
+                    <p:commandButton value="Delete Request"
+                                     icon="ui-icon-disk" ajax="false"
+                                     action="#{serviceRequestController.deleteButtonAction()}"
+                                     onclick="confirm('Are you sure you want to delete?')"/>
                     <p:commandButton value="Clear Request" action="#{serviceRequestController.resetButtonAction()}"
                                      icon="ui-icon-cancel" ajax="false"/>
                     <p:commandButton icon="ui-icon-arrowthick-1-w" ajax="false"

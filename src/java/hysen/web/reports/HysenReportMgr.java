@@ -16,6 +16,8 @@ public class HysenReportMgr extends JasperReportManager implements Serializable 
     public static final String REPORT_BASE_DIR = "/hysen/web/reports/";
 
     public static final String CLIENT_DETAILED_REPORT = REPORT_BASE_DIR + "client_detail.jasper";
+    
+    public static final String COMPANY_CONTACT_REPORT = REPORT_BASE_DIR + "company_contact.jasper";
 
     public static final String CLIENT_EQUIPMENT_REPORT = REPORT_BASE_DIR + "client_equipment.jasper";
 
@@ -23,7 +25,7 @@ public class HysenReportMgr extends JasperReportManager implements Serializable 
 //
     public static final String CLIENT_SERVICE_MODEL_REQUEST_REPORT = REPORT_BASE_DIR + "ind_equip_request.jasper";
 //
-//    public static final String FEES_PAYMENT_RECEIPT = REPORT_BASE_DIR + "fees_receipt.jasper";
+    public static final String EQUIPMENT_BY_REGION = REPORT_BASE_DIR + "region_equipment.jasper";
 //
 //    public static final String STUDENT_LEDGER = REPORT_BASE_DIR + "student_ledger.jasper";
 //

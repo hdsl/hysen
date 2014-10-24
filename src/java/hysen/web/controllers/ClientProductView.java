@@ -5,6 +5,7 @@
  */
 package hysen.web.controllers;
 
+import hysen.ejb.entities.ClientContact;
 import hysen.ejb.entities.ClientProduct;
 import hysen.ejb.services.CrudService;
 import java.io.Serializable;
@@ -29,7 +30,10 @@ public class ClientProductView implements Serializable {
 
     @PostConstruct
     public void init() {
-        clientProductList = crudService.findAll(ClientProduct.class, false,"lastModifiedDate DESC");
+        
+        clientProductList = 
+                crudService.findAll(ClientProduct.class, false, "clientDetail.companyName,t.productLocation");
+        
     }
 
     public List<ClientProduct> getClientProductList() {

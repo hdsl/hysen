@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="client_equipment" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="549" leftMargin="23" rightMargin="23" topMargin="20" bottomMargin="20" uuid="f2b006ed-1e08-492a-9ca3-66852b8d3a13">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="company_contact" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="549" leftMargin="23" rightMargin="23" topMargin="20" bottomMargin="20" uuid="f2b006ed-1e08-492a-9ca3-66852b8d3a13">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -15,19 +15,19 @@
 	<parameter name="companyTelephone" class="java.lang.String"/>
 	<parameter name="footerText" class="java.lang.String"/>
 	<parameter name="companyAddress" class="java.lang.String"/>
-	<field name="serviceRegion" class="java.lang.String"/>
+	<field name="contactName" class="java.lang.String"/>
+	<field name="contactDepartment" class="java.lang.String"/>
+	<field name="jobTitle" class="java.lang.String"/>
+	<field name="phoneNumber" class="java.lang.String"/>
+	<field name="emailAddress" class="java.lang.String"/>
 	<field name="clientName" class="java.lang.String"/>
-	<field name="serviceModel" class="java.lang.String"/>
-	<field name="serialNumber" class="java.lang.String"/>
-	<field name="serviceLocation" class="java.lang.String"/>
-	<field name="dateDeployed" class="java.util.Date"/>
 	<variable name="todayDate" class="java.util.Date">
 		<variableExpression><![CDATA[new java.util.Date()]]></variableExpression>
 	</variable>
-	<variable name="equipCount" class="java.lang.Integer" resetType="Group" resetGroup="ServiceGroup" calculation="Count">
-		<variableExpression><![CDATA[$F{serialNumber}]]></variableExpression>
+	<variable name="equipCount" class="java.lang.Integer" resetType="Group" resetGroup="CompanyGroup" calculation="Count">
+		<variableExpression><![CDATA[$F{contactName}]]></variableExpression>
 	</variable>
-	<group name="ServiceGroup">
+	<group name="CompanyGroup">
 		<groupExpression><![CDATA[$F{clientName}]]></groupExpression>
 		<groupHeader>
 			<band height="38">
@@ -42,7 +42,7 @@
 					<textFieldExpression><![CDATA[$F{clientName}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement key="staticText-7" mode="Opaque" x="20" y="18" width="70" height="19" forecolor="#000000" backcolor="#F0F0F0" uuid="64a528d6-b702-4d11-b70f-cbdb7eb714b0"/>
+					<reportElement key="staticText-7" mode="Opaque" x="20" y="18" width="102" height="19" forecolor="#000000" backcolor="#F0F0F0" uuid="64a528d6-b702-4d11-b70f-cbdb7eb714b0"/>
 					<box>
 						<pen lineWidth="0.5" lineColor="#00000F"/>
 						<topPen lineWidth="0.5" lineColor="#F0F0F0"/>
@@ -53,10 +53,10 @@
 					<textElement verticalAlignment="Middle">
 						<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 					</textElement>
-					<text><![CDATA[Serial Number]]></text>
+					<text><![CDATA[Contact Name]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-7" mode="Opaque" x="89" y="18" width="109" height="19" forecolor="#000000" backcolor="#F0F0F0" uuid="8abadf7a-2b3c-41d6-ba4a-33a8f9558752"/>
+					<reportElement key="staticText-7" mode="Opaque" x="122" y="18" width="109" height="19" forecolor="#000000" backcolor="#F0F0F0" uuid="8abadf7a-2b3c-41d6-ba4a-33a8f9558752"/>
 					<box leftPadding="2">
 						<pen lineWidth="0.5" lineColor="#F0F0F0"/>
 						<topPen lineWidth="0.5" lineColor="#F0F0F0"/>
@@ -67,10 +67,10 @@
 					<textElement verticalAlignment="Middle">
 						<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 					</textElement>
-					<text><![CDATA[Model]]></text>
+					<text><![CDATA[Department]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-11" mode="Opaque" x="198" y="18" width="197" height="19" forecolor="#000000" backcolor="#F0F0F0" uuid="bdb9679c-3749-43f4-b904-6f2e3d8dacea"/>
+					<reportElement key="staticText-11" mode="Opaque" x="231" y="18" width="104" height="19" forecolor="#000000" backcolor="#F0F0F0" uuid="bdb9679c-3749-43f4-b904-6f2e3d8dacea"/>
 					<box>
 						<pen lineWidth="0.5" lineColor="#F0F0F0"/>
 						<topPen lineWidth="0.5" lineColor="#F0F0F0"/>
@@ -81,7 +81,7 @@
 					<textElement verticalAlignment="Middle">
 						<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 					</textElement>
-					<text><![CDATA[Location]]></text>
+					<text><![CDATA[Job Title]]></text>
 				</staticText>
 				<staticText>
 					<reportElement key="staticText-8" mode="Opaque" x="0" y="18" width="20" height="19" forecolor="#000000" backcolor="#F0F0F0" uuid="2c2d4861-ff2e-4b52-a3cb-108167626867"/>
@@ -98,7 +98,7 @@
 					<text><![CDATA[No]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-11" mode="Opaque" x="394" y="18" width="77" height="19" forecolor="#000000" backcolor="#F0F0F0" uuid="417f4528-2b0f-4e36-8e8b-901562ee3795"/>
+					<reportElement key="staticText-11" mode="Opaque" x="335" y="18" width="105" height="19" forecolor="#000000" backcolor="#F0F0F0" uuid="417f4528-2b0f-4e36-8e8b-901562ee3795"/>
 					<box>
 						<pen lineWidth="0.5" lineColor="#F0F0F0"/>
 						<topPen lineWidth="0.5" lineColor="#F0F0F0"/>
@@ -109,10 +109,10 @@
 					<textElement verticalAlignment="Middle">
 						<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 					</textElement>
-					<text><![CDATA[Region]]></text>
+					<text><![CDATA[Phone Contact]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-11" mode="Opaque" x="471" y="18" width="78" height="19" forecolor="#000000" backcolor="#F0F0F0" uuid="640889b1-a11a-4185-8ec9-8ee85bf7854f"/>
+					<reportElement key="staticText-11" mode="Opaque" x="440" y="18" width="109" height="19" forecolor="#000000" backcolor="#F0F0F0" uuid="640889b1-a11a-4185-8ec9-8ee85bf7854f"/>
 					<box>
 						<pen lineWidth="0.5" lineColor="#F0F0F0"/>
 						<topPen lineWidth="0.5" lineColor="#F0F0F0"/>
@@ -123,7 +123,7 @@
 					<textElement verticalAlignment="Middle">
 						<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 					</textElement>
-					<text><![CDATA[Date Deployed]]></text>
+					<text><![CDATA[Email Address]]></text>
 				</staticText>
 			</band>
 		</groupHeader>
@@ -170,7 +170,7 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="37" splitType="Stretch">
+		<band height="22" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
 				<reportElement key="textField" mode="Opaque" x="5" y="2" width="539" height="15" forecolor="#003366" backcolor="#FFFFFF" uuid="35150476-2852-4e6e-a5cb-1db49ba0afe2"/>
 				<box>
@@ -181,22 +181,8 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$P{reportTitle}]]></textFieldExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="true">
-				<reportElement key="textField" x="99" y="23" width="139" height="13" uuid="963d7efd-8be6-433b-89fe-fbbf64150ea8"/>
-				<textElement>
-					<font fontName="Calibri" size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{equipmentType}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement key="staticText-4" x="5" y="22" width="126" height="12" uuid="f6f2137d-4031-4b14-9793-faf403f9b8d1"/>
-				<textElement>
-					<font fontName="Calibri" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
-				</textElement>
-				<text><![CDATA[Equipment Type:]]></text>
-			</staticText>
 			<line>
-				<reportElement x="1" y="35" width="548" height="1" forecolor="#A0B630" backcolor="#A0B630" uuid="c58efb96-2f3e-4834-aeb2-b64aeeac60dc"/>
+				<reportElement x="1" y="20" width="548" height="1" forecolor="#A0B630" backcolor="#A0B630" uuid="c58efb96-2f3e-4834-aeb2-b64aeeac60dc"/>
 				<graphicElement>
 					<pen lineWidth="1.0"/>
 				</graphicElement>
@@ -209,14 +195,14 @@
 	<detail>
 		<band height="14" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement x="20" y="0" width="70" height="12" uuid="9024c363-bf7c-4ca5-ae8e-5298205a2798"/>
+				<reportElement x="20" y="0" width="102" height="12" uuid="9024c363-bf7c-4ca5-ae8e-5298205a2798"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{serialNumber}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{contactName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="0" y="0" width="20" height="12" uuid="64eaf792-6338-4adc-b7c1-67d24e404f8e"/>
@@ -229,44 +215,44 @@
 				<textFieldExpression><![CDATA[$V{equipCount}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="89" y="0" width="109" height="12" uuid="0fd9d218-cf0d-4de4-b65b-5ca8177fa159"/>
+				<reportElement x="122" y="0" width="109" height="12" uuid="0fd9d218-cf0d-4de4-b65b-5ca8177fa159"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{serviceModel}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{contactDepartment}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="198" y="0" width="197" height="12" uuid="5d532539-5e07-469d-a6d1-82e427a5a91b"/>
+				<reportElement x="231" y="0" width="105" height="12" uuid="5d532539-5e07-469d-a6d1-82e427a5a91b"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{serviceLocation}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{jobTitle}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="395" y="0" width="79" height="12" uuid="2f0d14d9-f7b0-4c2e-9cf0-dbf756885c1a"/>
+				<reportElement x="336" y="0" width="105" height="12" uuid="2f0d14d9-f7b0-4c2e-9cf0-dbf756885c1a"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{serviceRegion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{phoneNumber}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="474" y="0" width="75" height="12" uuid="9d58e05c-6c2a-40d3-bab6-60eb01eb1d47"/>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="440" y="0" width="109" height="12" uuid="9d58e05c-6c2a-40d3-bab6-60eb01eb1d47"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{dateDeployed}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{emailAddress}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

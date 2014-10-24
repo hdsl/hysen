@@ -19,10 +19,12 @@
     <class>hysen.ejb.entities.Nationality</class>
     <class>hysen.ejb.entities.ProductTypes</class>
     <class>hysen.ejb.entities.ProductTypesModel</class>
+    <class>hysen.ejb.entities.Regions</class>
     <class>hysen.ejb.entities.SaleDetail</class>
     <class>hysen.ejb.entities.SaleSummary</class>
     <class>hysen.ejb.entities.ServiceModelComponent</class>
     <class>hysen.ejb.entities.ServiceRequest</class>
+    <class>hysen.ejb.entities.ServiceSoftware</class>
     <class>hysen.ejb.entities.Setting</class>
     <class>hysen.ejb.entities.StaffDetail</class>
     <class>hysen.ejb.entities.StockCategory</class>
@@ -32,9 +34,7 @@
     <class>hysen.ejb.entities.Supplier</class>
     <class>hysen.ejb.entities.TransType</class>
     <class>hysen.ejb.entities.UserAccount</class>
-    <class>hysen.ejb.entities.Regions</class>
-    <class>hysen.ejb.entities.ServiceSoftware</class>
-    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties/>
   </persistence-unit>
 </persistence>

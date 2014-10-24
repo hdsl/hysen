@@ -19,6 +19,7 @@ public class ClientProductTableModel {
     String serviceModel;
     String serialNumber;
     String serviceLocation;
+    String serviceRegion;
     Date dateDeployed;
 
     public String getClientName() {
@@ -27,6 +28,14 @@ public class ClientProductTableModel {
 
     public void setClientName(String clientName) {
         this.clientName = clientName;
+    }
+
+    public String getServiceRegion() {
+        return serviceRegion;
+    }
+
+    public void setServiceRegion(String serviceRegion) {
+        this.serviceRegion = serviceRegion;
     }
 
     public String getServiceType() {

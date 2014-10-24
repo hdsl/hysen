@@ -5,8 +5,12 @@
  */
 package hysen.web.controllers;
 
+import hysen.ejb.entities.ClientContact;
 import hysen.ejb.entities.ClientDetail;
 import hysen.ejb.entities.ClientProduct;
+import hysen.ejb.entities.Department;
+import hysen.ejb.entities.ProductTypes;
+import hysen.ejb.entities.Regions;
 import hysen.ejb.entities.ServiceRequest;
 import hysen.ejb.services.CrudService;
 import hysen.ejb.services.CustomCrudService;
@@ -21,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
@@ -50,10 +53,15 @@ public class GeneralReportContoller implements Serializable {
 
     String clientDetailId, reportParameter, serviceRequestParameter, serviceModelTypeId;
 
-    String serviceClientId, serviceModelClient, selectedProductType;
+    String serviceClientId, serviceModelClient, selectedProductType, reportTitle;
+
     private Date activityFrom, activityTo;
     private Date serviceModelActivityFrom, serviceModelActivityTo;
     private SelectItem[] clientEquipmentOption;
+
+    boolean renderEquipPanel = false;
+    boolean renderIndividualEquipPanel = false;
+    boolean renderEquipRegionPanel = false;
 //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Methods">
@@ -70,28 +78,54 @@ public class GeneralReportContoller implements Serializable {
 
     public void endConversation() {
 
+        clientDetailId = "";
+        selectedProductType = "";
 //        if (!conversation.isTransient()) {
 //            conversation.end();
 //        }
     }
 
+    //<editor-fold defaultstate="collapsed" desc="Panel Rendering">
+    public void showEqipReportPanel() {
+        endConversation();
+        renderEquipPanel = true;
+        renderIndividualEquipPanel = false;
+        renderEquipRegionPanel = false;
+        reportTitle = "Report : Company Equipments List";
+    }
+
+    public void showIndividualEqipReportPanel() {
+        endConversation();
+        renderEquipPanel = false;
+        renderIndividualEquipPanel = true;
+        renderEquipRegionPanel = false;
+        reportTitle = "Report : Company Equipment Detail";
+    }
+
+//    public void renderEqipRegionReportPanel() {
+//        System.out.println("in here.................");
+//        endConversation();
+//        renderEquipPanel = true;
+//        reportTitle = "Report : Client Equipments by Region(Detailed)";
+//    }
+//</editor-fold>
     public void generateClientDetailReport() {
 
         List<ClientTableModel> clientTableModelList = new ArrayList<>();
 
         beginConversation();
 
-        List<ClientDetail> clientDetailList = crudService.findAll(ClientDetail.class, true, "clientName");
+        List<ClientDetail> clientDetailList = crudService.findAll(ClientDetail.class, true, "companyName");
 
         for (ClientDetail cd : clientDetailList) {
 
             ClientTableModel ctm = new ClientTableModel();
 
-            ctm.setClientName(cd.getClientName());
+            ctm.setClientName(cd.getCompanyName());
             ctm.setIndustryName(cd.getIndustryType().getIndustryName());
-            ctm.setClientPrimaryContact(cd.getClientPrimaryContact());
-            ctm.setClientEmail(cd.getClientEmail());
-            ctm.setClientAddress(cd.getClientAddress());
+            ctm.setClientPrimaryContact(cd.getPrimaryContact());
+            ctm.setClientEmail(cd.getCompanyEmail());
+            ctm.setClientAddress(cd.getPrimaryAddress());
 
             clientTableModelList.add(ctm);
 
@@ -99,34 +133,81 @@ public class GeneralReportContoller implements Serializable {
 
         HysenReportMgr.instance().initDefaultParamenters(userSession.getInstList());
 
-        HysenReportMgr.instance().addParam("reportTitle", "Client Detailed List");
+        HysenReportMgr.instance().addParam("reportTitle", "Company(Clients) Detailed List");
 
         HysenReportMgr.instance().showPDFReport(clientTableModelList, HysenReportMgr.CLIENT_DETAILED_REPORT);
 
-        endConversation();
+//        endConversation();
     }
-    
+
+    public void generateCompanyContactReport() {
+
+        List<ClientTableModel> clientTableModelList = new ArrayList<>();
+
+        List<ClientDetail> clientDetailList = crudService.findAll(ClientDetail.class, false);
+
+        if (clientDetailList != null) {
+
+            for (ClientDetail cd : clientDetailList) {
+
+                List<ClientContact> companyContactList = customCrudService.
+                        findByParameter(ClientContact.class, "companyDetail.commonId", cd.getCommonId(), 'N');
+
+                for (ClientContact cc : companyContactList) {
+
+                    ClientTableModel ctm = new ClientTableModel();
+
+                    ctm.setClientName(cd.getCompanyName());
+                    ctm.setContactName(cc.getContactName());
+
+                    Department department = crudService.find(Department.class, cc.getContactDepartment());
+
+                    if (department != null) {
+                        ctm.setContactDepartment(department.getDepartmentName());
+                    } else {
+                        ctm.setContactDepartment(null);
+                    }
+
+                    ctm.setJobTitle(cc.getJobTitle());
+                    ctm.setPhoneNumber(cc.getPrimaryContact() + "/" + cc.getOtherContact());
+                    ctm.setEmailAddress(cc.getContactEmail());
+
+                    clientTableModelList.add(ctm);
+                }
+            }
+
+            HysenReportMgr.instance().initDefaultParamenters(userSession.getInstList());
+
+            HysenReportMgr.instance().addParam("reportTitle", "Company Contacts List");
+            
+            HysenReportMgr.instance().showPDFReport(clientTableModelList, HysenReportMgr.COMPANY_CONTACT_REPORT);
+
+        }
+    }
+
     public void generateClientReportByParameter() {
 
-        System.out.println("come home..............."+clientDetailId);
         reportParameter = "EQUIPMENTS";
         beginConversation();
 
         List<ClientProductTableModel> productTableModelList = new ArrayList<>();
 
-            System.out.println("in here111..............."+clientDetailId);
         if (clientDetailId == null || clientDetailId.equals("")) {
             StringConstants.showApprioprateMessage("Please select client");
         } else {
             if (reportParameter.equals("EQUIPMENTS")) {
-                System.out.println("client selected.............."+clientDetailId);
 
                 if (clientDetailId.equals("ALL_CLIENTS")) {
 
+                    List<ClientDetail> clientDetailList = crudService.findAll(ClientDetail.class, false);
+
+                    for (ClientDetail cd : clientDetailList) {
+
+                    }
+
                 } else {
 
-                    List<ClientProduct> clientProductList
-                            = customCrudService.findByParameter(ClientProduct.class, "clientDetail.commonId", clientDetailId, 'N');
+                    List<ClientProduct> clientProductList = customCrudService.clientProductsList(clientDetailId, selectedProductType);
 
                     ClientDetail clientDetail = crudService.find(ClientDetail.class, clientDetailId);
 
@@ -134,12 +215,13 @@ public class GeneralReportContoller implements Serializable {
 
                         ClientProductTableModel cptm = new ClientProductTableModel();
 
-                        cptm.setClientName(clientDetail.getClientName());
+                        cptm.setClientName(clientDetail.getCompanyName());
                         cptm.setServiceType(cp.getProductTypeModel().getProductTypes().getProductName());
                         cptm.setServiceModel(cp.getProductTypeModel().getProductModel());
                         cptm.setSerialNumber(cp.getSerialNumber());
                         cptm.setServiceLocation(cp.getProductLocation());
-                        cptm.setDateDeployed(null);
+                        cptm.setServiceRegion(cp.getRegions().getRegionName());
+                        cptm.setDateDeployed(cp.getDeploymentDate());
 
                         productTableModelList.add(cptm);
 
@@ -148,13 +230,80 @@ public class GeneralReportContoller implements Serializable {
 
                 HysenReportMgr.instance().initDefaultParamenters(userSession.getInstList());
 
-                HysenReportMgr.instance().addParam("reportTitle", "Client Equipment/Service List");
+                HysenReportMgr.instance().addParam("reportTitle", "Client Equipments List");
+                HysenReportMgr.instance().addParam("equipmentType", crudService.find(ProductTypes.class, selectedProductType).getProductName());
 
                 HysenReportMgr.instance().showPDFReport(productTableModelList, HysenReportMgr.CLIENT_EQUIPMENT_REPORT);
 
             }
         }
-        endConversation();
+//        endConversation();
+    }
+
+    public void generateClientEquipByRegion() {
+        reportParameter = "EQUIPMENTS";
+        beginConversation();
+
+        List<ClientProductTableModel> productTableModelList = new ArrayList<>();
+
+        if (clientDetailId == null || clientDetailId.equals("")) {
+            StringConstants.showApprioprateMessage("Please select client");
+        } else {
+            if (reportParameter.equals("EQUIPMENTS")) {
+
+                if (clientDetailId.equals("ALL_CLIENTS")) {
+
+                    List<ClientDetail> clientDetailList = crudService.findAll(ClientDetail.class, false);
+
+                    for (ClientDetail cd : clientDetailList) {
+
+                    }
+
+                } else {
+
+                    List<Regions> regionsList = crudService.findAll(Regions.class, false);
+
+                    for (Regions r : regionsList) {
+
+                        List<ClientProduct> clientProductList = customCrudService.
+                                findByParameter(ClientProduct.class, "clientDetail.commonId", clientDetailId, "regions.regionId", r.getRegionId(), 'N');
+
+                        for (ClientProduct cp : clientProductList) {
+
+                            ClientProductTableModel cptm = new ClientProductTableModel();
+
+                            cptm.setServiceType(cp.getProductTypeModel().getProductTypes().getProductName());
+                            cptm.setServiceModel(cp.getProductTypeModel().getProductModel());
+                            cptm.setSerialNumber(cp.getSerialNumber());
+                            cptm.setServiceLocation(cp.getProductLocation());
+                            cptm.setServiceRegion(r.getRegionName());
+                            cptm.setDateDeployed(cp.getDeploymentDate());
+
+                            productTableModelList.add(cptm);
+
+                        }
+
+                    }
+
+                }
+
+                ClientDetail clientDetail = crudService.find(ClientDetail.class, clientDetailId);
+
+                HysenReportMgr.instance().initDefaultParamenters(userSession.getInstList());
+
+                HysenReportMgr.instance().addParam("reportTitle", "Client Equipments List");
+                HysenReportMgr.instance().addParam("clientName", clientDetail.getCompanyName());
+                HysenReportMgr.instance().addParam("industryType", clientDetail.getIndustryType().getIndustryName());
+                HysenReportMgr.instance().addParam("phoneContact", clientDetail.getPrimaryContact());
+                HysenReportMgr.instance().addParam("emailAddress", clientDetail.getCompanyEmail());
+                HysenReportMgr.instance().addParam("clientContact", "");
+                HysenReportMgr.instance().addParam("equipmentType", crudService.find(ProductTypes.class, selectedProductType).getProductName());
+
+                HysenReportMgr.instance().showPDFReport(productTableModelList, HysenReportMgr.EQUIPMENT_BY_REGION);
+
+            }
+        }
+//        endConversation();
     }
 
     public void generateClientServiceRequestReport() {
@@ -180,7 +329,7 @@ public class GeneralReportContoller implements Serializable {
 
                         ServiceRequestTableModel srtm = new ServiceRequestTableModel();
 
-                        srtm.setClientName(sr.getClientDetail().getClientName());
+                        srtm.setClientName(sr.getClientDetail().getCompanyName());
                         srtm.setRequestId(sr.getCommonId());
                         srtm.setSerialNumber(sr.getClientProduct().getProductTypeModel().getProductTypes().getProductName() + " - " + sr.getClientProduct().getSerialNumber());
                         srtm.setServiceLocation(sr.getClientProduct().getProductLocation());
@@ -213,7 +362,7 @@ public class GeneralReportContoller implements Serializable {
             }
         }
 
-        endConversation();
+//        endConversation();
     }
 
     public void customerDetailPDP() {
@@ -263,7 +412,7 @@ public class GeneralReportContoller implements Serializable {
 
             HysenReportMgr.instance().initDefaultParamenters(userSession.getInstList());
 
-            HysenReportMgr.instance().addParam("clientName", clientProduct.getClientDetail().getClientName());
+            HysenReportMgr.instance().addParam("clientName", clientProduct.getClientDetail().getCompanyName());
             HysenReportMgr.instance().addParam("serviceLocation", clientProduct.getProductLocation());
             HysenReportMgr.instance().addParam("serviceType", clientProduct.getProductTypeModel().getProductTypes().getProductName());
             HysenReportMgr.instance().addParam("serviceModel", clientProduct.getProductTypeModel().getProductModel());
@@ -288,6 +437,30 @@ public class GeneralReportContoller implements Serializable {
 
     public void setCrudService(CrudService crudService) {
         this.crudService = crudService;
+    }
+
+    public boolean isRenderIndividualEquipPanel() {
+        return renderIndividualEquipPanel;
+    }
+
+    public void setRenderIndividualEquipPanel(boolean renderIndividualEquipPanel) {
+        this.renderIndividualEquipPanel = renderIndividualEquipPanel;
+    }
+
+    public boolean isRenderEquipRegionPanel() {
+        return renderEquipRegionPanel;
+    }
+
+    public void setRenderEquipRegionPanel(boolean renderEquipRegionPanel) {
+        this.renderEquipRegionPanel = renderEquipRegionPanel;
+    }
+
+    public boolean isRenderEquipPanel() {
+        return renderEquipPanel;
+    }
+
+    public void setRenderEquipPanel(boolean renderEquipPanel) {
+        this.renderEquipPanel = renderEquipPanel;
     }
 
     public Date getServiceModelActivityFrom() {
@@ -400,6 +573,14 @@ public class GeneralReportContoller implements Serializable {
 
     public void setClientDetailId(String clientDetailId) {
         this.clientDetailId = clientDetailId;
+    }
+
+    public String getReportTitle() {
+        return reportTitle;
+    }
+
+    public void setReportTitle(String reportTitle) {
+        this.reportTitle = reportTitle;
     }
 
     public String getReportParameter() {

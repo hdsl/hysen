@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="individual_equipment" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c71503c0-e882-4006-afa7-a5253b0d1e9f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="reportTitle" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="companyLogo" class="java.io.InputStream" isForPrompting="false"/>
+	<parameter name="companyName" class="java.lang.String"/>
+	<parameter name="companyTelephone" class="java.lang.String"/>
+	<parameter name="footerText" class="java.lang.String"/>
+	<parameter name="companyAddress" class="java.lang.String"/>
+	<parameter name="clientName" class="java.lang.String"/>
+	<parameter name="serviceType" class="java.lang.String"/>
+	<parameter name="serviceModel" class="java.lang.String"/>
+	<parameter name="serialNumber" class="java.lang.String"/>
+	<parameter name="serviceLocation" class="java.lang.String"/>
+	<parameter name="dateDeployed" class="java.util.Date"/>
+	<parameter name="serviceRegion" class="java.lang.String"/>
+	<parameter name="serviceEngineer" class="java.lang.String"/>
+	<parameter name="softwareInstalled" class="java.lang.String"/>
+	<parameter name="serviceComponent" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="81" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="78" width="549" height="1" forecolor="#A0B630" backcolor="#A0B630" uuid="fe6be4cb-2bca-477a-ae20-863c74062851"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="395" y="39" width="152" height="12" forecolor="#A0B630" uuid="b693f51f-c27b-4051-a8ea-059259070be8"/>
+				<textElement>
+					<font size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{companyName}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="395" y="52" width="152" height="12" forecolor="#A0B630" uuid="8605f950-dd0d-4685-8554-bddcad3074e7"/>
+				<textElement>
+					<font size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{companyAddress}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="395" y="64" width="152" height="12" forecolor="#A0B630" uuid="b9a2d08f-7781-4960-96b0-ef7e13a6f3fb"/>
+				<textElement>
+					<font size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{companyTelephone}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="4" y="35" width="149" height="40" uuid="b9e92f28-0a3e-40cb-b59a-0dfd72fe2e60"/>
+				<imageExpression><![CDATA[$P{companyLogo}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="37" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField" mode="Opaque" x="5" y="2" width="539" height="15" forecolor="#003366" backcolor="#FFFFFF" uuid="35150476-2852-4e6e-a5cb-1db49ba0afe2"/>
+				<box>
+					<bottomPen lineWidth="0.0" lineStyle="Double" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="11" isBold="true" isItalic="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{reportTitle}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="19" width="549" height="17" backcolor="#FFFFFF" uuid="49e216f5-07b3-4d91-8ee6-d9246672d7c0"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{clientName}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<summary>
+		<band height="199" splitType="Stretch">
+			<rectangle>
+				<reportElement x="403" y="82" width="144" height="20" backcolor="#666666" uuid="8e00d1c5-f9fc-4506-b40b-ec7222034ba8"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="209" y="82" width="165" height="20" backcolor="#666666" uuid="940fd172-5778-4a8c-b272-bec9d7c0040b"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="11" y="82" width="157" height="20" backcolor="#666666" uuid="d9ebf0ce-9d2b-48df-8148-c573240540d6"/>
+			</rectangle>
+			<staticText>
+				<reportElement key="staticText-3" x="5" y="10" width="80" height="15" uuid="40279398-541b-40d0-a4ce-3f5233d8f429"/>
+				<textElement textAlignment="Right">
+					<font fontName="Book Antiqua" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Service Type:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-2" x="90" y="28" width="162" height="13" uuid="d5731c7e-8435-4c69-951d-5d5ea8803e02"/>
+				<box>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{serialNumber}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-1" x="374" y="43" width="156" height="13" uuid="3bac30f6-1cd0-4738-ba4d-f0fcc2aef0ae"/>
+				<box>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{serviceRegion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-5" x="263" y="27" width="104" height="13" uuid="2135b934-5bfd-4ef3-b513-e55d39530b72"/>
+				<textElement textAlignment="Right">
+					<font fontName="Book Antiqua" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Location:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="373" y="27" width="156" height="13" uuid="52171e81-2882-40db-828b-a774bf7f2259"/>
+				<box>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{serviceLocation}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="89" y="10" width="163" height="15" uuid="c1bbfbd0-443d-47c1-89a5-b6ff76fc222e"/>
+				<box>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{serviceType}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-4" x="263" y="10" width="104" height="15" uuid="dad6d389-f7e6-4c89-9148-b87ba95cd67d"/>
+				<textElement textAlignment="Right">
+					<font fontName="Book Antiqua" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Service Model:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="373" y="10" width="156" height="15" uuid="2c044008-4bdd-4397-bb1f-0475a8845967"/>
+				<box>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{serviceModel}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-5" x="263" y="41" width="104" height="13" uuid="032b9334-8699-402f-adb9-cd263290fdf0"/>
+				<textElement textAlignment="Right">
+					<font fontName="Book Antiqua" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Region:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-16" x="10" y="28" width="79" height="13" uuid="b3cd96e1-5398-4a2d-8ece-9fdaf508bedd"/>
+				<textElement textAlignment="Right">
+					<font fontName="Book Antiqua" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Serial Number:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-5" x="10" y="43" width="77" height="13" uuid="31505507-9e41-4bad-bca2-e7ed7872e8b4"/>
+				<textElement textAlignment="Right">
+					<font fontName="Book Antiqua" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Date Deployed:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement key="textField-1" x="92" y="43" width="159" height="13" uuid="e45d062f-4798-4c1f-a424-b7af4742ccd4"/>
+				<box>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{dateDeployed}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="81" width="158" height="20" forecolor="#FFFFFF" uuid="a83e2797-3358-46fc-908e-23db35ef28ab"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Equipment Component(s)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="207" y="81" width="167" height="20" forecolor="#FFFFFF" uuid="ba2b16df-3569-4c90-82cc-8368eba14ca0"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Software Installed]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="403" y="81" width="144" height="20" forecolor="#FFFFFF" uuid="7d8b2d80-9393-4031-8347-52fddbe654fa"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Engineer(s)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="12" y="107" width="156" height="16" uuid="ee22377b-bb36-4548-a8b2-a0ba00d729c8"/>
+				<textFieldExpression><![CDATA[$P{serviceComponent}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="209" y="107" width="165" height="16" uuid="d53afb4f-0c51-4287-8ea3-514c371f065f"/>
+				<textFieldExpression><![CDATA[$P{softwareInstalled}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="403" y="107" width="146" height="16" uuid="81112ece-d5ec-4524-97c6-30433e0af08d"/>
+				<textFieldExpression><![CDATA[$P{serviceEngineer}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

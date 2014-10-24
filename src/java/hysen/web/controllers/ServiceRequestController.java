@@ -20,8 +20,7 @@ import hysen.web.utils.StringConstants;
 import java.io.Serializable;
 import java.util.List;
 import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
-//import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -31,7 +30,7 @@ import javax.inject.Named;
  * @author HYSEN SOFTWARE DEPT
  */
 @Named
-@ConversationScoped
+@SessionScoped
 public class ServiceRequestController implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Declaration and Initialisation">
@@ -48,13 +47,13 @@ public class ServiceRequestController implements Serializable {
 
     boolean renderRequestForm = false;
 
-    Integer countId = 0;
+    Integer countId = 0,serviceRequestId=0;
 
-    String selectedClientId, selectedProductType, selectedEquipLocation, serviceRequestId, searchRequestId;
+    String selectedClientId, selectedProductType, selectedEquipLocation, searchRequestId;
 
-    String saveEditButtonText = "Submit Request Detail", serviceComponentId, assignedEngineer;
+    String saveEditButtonText = "Submit Request Detail", serviceComponentId, assignedEngineer, companyContact;
 
-    String parameterId = null;
+    String parameterId = null,commonId;
 
     private SelectItem[] selectClientContactOption;
 
@@ -69,7 +68,6 @@ public class ServiceRequestController implements Serializable {
     GeneratePk generatePk = new GeneratePk();
 
 //</editor-fold>
-    
     //<editor-fold defaultstate="collapsed" desc="Methods">
     public ServiceRequestController() {
         //serviceRequest = new ServiceRequest();
@@ -82,22 +80,25 @@ public class ServiceRequestController implements Serializable {
         int in = generatePk.getPkValue();
         countId = 1 + in;
 
-        serviceRequestId = "HD(SR) " + countId.toString();
+        commonId = "SR" + countId.toString();
+        
+        serviceRequestId = countId;
+        
         serviceRequest = new ServiceRequest();
     }
 
     public void beginConversation() {
 
-        if (conversation.isTransient()) {
-            conversation.begin();
-        }
+//        if (conversation.isTransient()) {
+//            conversation.begin();
+//        }
     }
 
     public void endConversation() {
 
-        if (!conversation.isTransient()) {
-            conversation.end();
-        }
+//        if (!conversation.isTransient()) {
+//            conversation.end();
+//        }
     }
 
     public void showNewRequestForm() {
@@ -122,7 +123,7 @@ public class ServiceRequestController implements Serializable {
 
         beginConversation();
 
-        List<ClientContact> clientContactList = customCrudService.findByParameter(ClientContact.class, "clientDetail.commonId", selectedClientId, 'N');
+        List<ClientContact> clientContactList = customCrudService.findByParameter(ClientContact.class, "companyDetail.commonId", selectedClientId, 'N');
 
         selectClientContactOption = new SelectItem[clientContactList.size()];
 
@@ -186,13 +187,14 @@ public class ServiceRequestController implements Serializable {
                 ServiceModelComponent modelComponent = crudService.find(ServiceModelComponent.class, serviceComponentId);
                 StaffDetail staffDetail = crudService.find(StaffDetail.class, assignedEngineer);
 
-                serviceRequest.setCommonId(StringConstants.generateID());
+                serviceRequest.setCommonId(commonId);
                 serviceRequest.setServiceRequestId(serviceRequestId);
                 serviceRequest.setClientDetail(clientDetail);
                 serviceRequest.setProductType(productTypes);
                 serviceRequest.setClientProduct(clientProduct);
                 serviceRequest.setServiceComponent(modelComponent);
                 serviceRequest.setStaffDetail(staffDetail);
+                serviceRequest.setClientContactPerson(companyContact);
 
                 CommonEntity serviceReq;
 
@@ -227,6 +229,7 @@ public class ServiceRequestController implements Serializable {
                 serviceRequest.setClientProduct(clientProduct);
                 serviceRequest.setServiceComponent(modelComponent);
                 serviceRequest.setStaffDetail(staffDetail);
+                serviceRequest.setClientContactPerson(companyContact);
 
                 if (crudService.update(serviceRequest) == true) {
 
@@ -255,6 +258,9 @@ public class ServiceRequestController implements Serializable {
                 serviceRequestList
                         = customCrudService.findByParameter(ServiceRequest.class, "commonId", serviceRequest.getCommonId(), 'N');
 
+                renderRequestForm = false;
+                renderRequestListForm = true;
+                queryServiceRequest();
             } else {
 
                 StringConstants.showApprioprateMessage(StringConstants.DELETE_ERRORMESSAGE);
@@ -270,8 +276,7 @@ public class ServiceRequestController implements Serializable {
             StringConstants.showApprioprateMessage("Service Request Id is required");
         } else {
             serviceRequestList
-                    = customCrudService.findByParameter(ServiceRequest.class, "commonId", searchRequestId, 'N');
-
+                    = customCrudService.searchByParameter(ServiceRequest.class, "serviceRequestId", searchRequestId, 'N');
         }
     }
 
@@ -287,7 +292,12 @@ public class ServiceRequestController implements Serializable {
         saveEditButtonText = "Submit Request Detail";
     }
 
-    public void selectToEditButtonAction() {
+    public void selectToEditButtonAction(ServiceRequest sr) {
+
+        this.serviceRequest = sr;
+
+        renderRequestListForm = false;
+        renderRequestForm = true;
 
         beginConversation();
 
@@ -326,11 +336,24 @@ public class ServiceRequestController implements Serializable {
                 modelCount++;
             }
 
+            List<ClientContact> clientContactList = customCrudService.
+                    findByParameter(ClientContact.class, "companyDetail.commonId", serviceRequest.getClientDetail().getCommonId(), 'N');
+
+            selectClientContactOption = new SelectItem[clientContactList.size()];
+
+            int count1 = 0;
+
+            for (ClientContact cc : clientContactList) {
+
+                selectClientContactOption[count1] = new SelectItem(cc.getCommonId(), cc.getContactName());
+                count1++;
+            }
+
+            companyContact = serviceRequest.getClientContactPerson();
+
             serviceComponentId = serviceRequest.getServiceComponent().getCommonId();
 
             saveEditButtonText = "Update Request Detail";
-            renderRequestListForm = false;
-            renderRequestForm = true;
 
         }
     }
@@ -349,6 +372,22 @@ public class ServiceRequestController implements Serializable {
 
     public void setCrudService(CrudService crudService) {
         this.crudService = crudService;
+    }
+
+    public Conversation getConversation() {
+        return conversation;
+    }
+
+    public void setConversation(Conversation conversation) {
+        this.conversation = conversation;
+    }
+
+    public String getCompanyContact() {
+        return companyContact;
+    }
+
+    public void setCompanyContact(String companyContact) {
+        this.companyContact = companyContact;
     }
 
     public String getParameterId() {
@@ -391,11 +430,11 @@ public class ServiceRequestController implements Serializable {
         this.generatePk = generatePk;
     }
 
-    public String getServiceRequestId() {
+    public Integer getServiceRequestId() {
         return serviceRequestId;
     }
 
-    public void setServiceRequestId(String serviceRequestId) {
+    public void setServiceRequestId(Integer serviceRequestId) {
         this.serviceRequestId = serviceRequestId;
     }
 
